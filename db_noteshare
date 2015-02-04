@@ -1,0 +1,45 @@
+
+user		username,firstname,lastname,password,id,credits,college
+uploads		userid,filename,name,id,views,ratings
+tagmap		uploadid,tagid
+tag		name,id
+downloads 	userid,uploadid
+
+
+CREATE TABLE user (
+	username VARCHAR(100),
+	firstname VARCHAR(100),
+	lastname VARCHAR(100),
+	password VARCHAR(100),
+	id INT AUTO_INCREMENT,
+	credits INT,
+	college VARCHAR(100),
+	PRIMARY KEY(id),
+	UNIQUE (username)
+); 
+
+CREATE TABLE uploads(
+	userid INT,
+	filename VARCHAR(100) UNIQUE,
+	name VARCHAR(400),
+	id INT AUTO_INCREMENT,
+	views INT,
+	rating INT,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE tag(
+	name VARCHAR(100),
+	id INT AUTO_INCREMENT,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE tagmap(
+	tagid INT ,
+	uploadid INT
+);
+
+CREATE TABLE downloads(
+	userid INT,
+	uploadid INT
+);
