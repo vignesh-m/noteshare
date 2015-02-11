@@ -35,7 +35,7 @@ router.get('/', function(req, res, next) {
     }
     if(req.query.sort){
         if(req.query.sort.length)
-            sort.push(mysql.escape(req.query.sort));
+            sort.push(mysql.escapeId(req.query.sort));
         else {
             sort=req.query.sort;
         }
@@ -76,7 +76,7 @@ router.get('/', function(req, res, next) {
     if(sort.length>0)
         querystring+=' ORDER BY ';
     for(var i=0;i<sort.length;i++){
-        if(i<sort.length-1) querystring+=sort[i]+" AND ";
+        if(i<sort.length-1) querystring+=mysql.escapeId(sort[i])+" , ";
         else querystring+=sort[i];
     }
     querystring+=';';
