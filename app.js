@@ -4,9 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var flash = require('connect-flash');
+var session = require('express-session');
+var multer = require('multer');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var search = require('./routes/search');
+var upload = require('./routes/upload');
 
 var app = express();
 
@@ -21,10 +26,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'SeKRetKeeY' } ));
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+app.use(multer({
+    dest: './uploads/',
+    onFileUploadComplete: function (file) {
+        console.log(file.fieldname + ' uploaded to  ' + file.path)
+    }
+}))
 
 app.use('/', routes);
-app.use('/users', users);
-
+app.use('/search', search);
+app.use('/upload', upload);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
