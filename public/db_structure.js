@@ -13,6 +13,11 @@ function querydb(querystring,callback){
         });
     });
 }
+var connection = mysql.createConnection({
+    'host': 'localhost',
+    'user': 'root',
+    'password': 'root'
+})
 module.exports={
     pool:pool,
     querydb:querydb,
