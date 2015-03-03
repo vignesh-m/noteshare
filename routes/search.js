@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
      */
     tables.push('uploads');
     if(req.query.name){
-        conditions.push('uploads.name LIKE '+mysql.escape('%'+req.query.name+'%'));
+       conditions.push('uploads.name LIKE '+mysql.escape('%'+req.query.name+'%'));
     }
     if(req.query.user){
         conditions.push('user.username = '+mysql.escape(req.query.user));
@@ -85,4 +85,5 @@ router.get('/', function(req, res, next) {
         res.end(JSON.stringify(result));
     });
 });
+
 module.exports = router;
