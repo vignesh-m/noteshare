@@ -364,7 +364,7 @@ table { border-collapse: collapse; }
 </style>
 
 <html ng-app="">
-<div  ng-controller="myProfile">
+<div  ng-controller="myProfile" ng-init="user = <%= JSON.stringify(user) %>">
 	<head>
 		<link rel="stylesheet" href="css/my-profile.css">
 		<meta charset="utf-8">
@@ -399,8 +399,7 @@ table { border-collapse: collapse; }
 						<ul id="notification-li-dropdown" class="dropdown-menu"> 
 							<li class="notifications-panel-head">
 								Notifications
-                                {{user2}}
-                                <%= user %>
+                                {{user}}
 							</li>
 							<div style="background:#aaaaaa">
 								<div class="row separator-very-small">

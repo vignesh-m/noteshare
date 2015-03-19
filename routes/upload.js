@@ -8,20 +8,20 @@ var db = require('../public/db_structure');
 var notification = require('./util/notification');
 var isAuth = function(req, res, next) {
     console.log('Authenticating');
-    next();
-    /*if (req.isAuthenticated())
+    if (req.isAuthenticated())
         next();
     else {
         req.flash('login', 'LOGIN');
         res.redirect('/login')
-    }*/
+    }
 };
 router.get('/',isAuth,function(req,res){
     res.render('upload');
 });
 router.post('/',isAuth,function(req,res){
     console.log(req.files);
-    var files = req.files.upload;
+    console.log(req.headers.x);
+    var files = req.files.uploadedFile;
     if(!files){
         res.end('error no files sent');
     } else {
