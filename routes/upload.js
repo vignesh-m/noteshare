@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var mysql=require('mysql');
 var db = require('../public/db_structure');
+var notification = require('./util/notification');
 var isAuth = function(req, res, next) {
     console.log('Authenticating');
     next();
@@ -17,7 +18,7 @@ var isAuth = function(req, res, next) {
 };
 router.get('/',isAuth,function(req,res){
     res.render('upload');
-})
+});
 router.post('/',isAuth,function(req,res){
     console.log(req.files);
     var files = req.files.upload;
@@ -40,6 +41,7 @@ router.post('/',isAuth,function(req,res){
         querystring+='0,3);';
         db.querydb(querystring,function(result){
             console.log(querystring);
+            notification.notifyAllFollowers(req.user.id,"upload",req.user.username + " has uploaded a file : " + files.originalname);
             res.end(JSON.stringify(result));
         })
     }

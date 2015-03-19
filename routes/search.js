@@ -4,7 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql= require('mysql');
-var db=require('../public/db_structure.js');
+var db=require('../public/db_structure');
 router.get('/', function(req, res, next) {
     var querystring='';
     var tables=[];
