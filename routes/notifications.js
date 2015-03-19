@@ -15,14 +15,9 @@ var isAuth = function(req, res, next) {
     }
 };
 app.get('/get', isAuth,function(req, res) {
-	var errobj = error.err_insuff_params(res, req, ['user_id']);
 	var querystring = "";
 
-	if(!errobj) {
-		return;
-	}
-
-	var user_id = req.query.user_id;
+	var user_id = req.user.id;
 
 	querystring = "SELECT * FROM noteshare.notifications WHERE userid=" + mysql.escape(user_id);
 

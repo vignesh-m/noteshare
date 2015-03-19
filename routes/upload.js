@@ -41,7 +41,7 @@ router.post('/',isAuth,function(req,res){
         querystring+='0,3);';
         db.querydb(querystring,function(result){
             console.log(querystring);
-            notification.notifyAllFollowers(req.user.id,"upload",req.user.username + " has uploaded a file : " + files.originalname);
+            notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname);
             res.end(JSON.stringify(result));
         })
     }

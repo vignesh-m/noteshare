@@ -399,6 +399,7 @@ table { border-collapse: collapse; }
 						<ul id="notification-li-dropdown" class="dropdown-menu"> 
 							<li class="notifications-panel-head">
 								Notifications
+
 							</li>
 							<div style="background:#aaaaaa">
 								<div class="row separator-very-small">
@@ -407,7 +408,7 @@ table { border-collapse: collapse; }
 							<li ng-repeat="notification in notifications">
 								<div class="notification-item">
 									<div class="notification-item-text-body">
-										{{notification.text}}
+                                        {{notification.textDescription}}
 									</div>
 									<div style="background:#aaaaaa">
 										<div class="row separator-very-small">
@@ -424,7 +425,7 @@ table { border-collapse: collapse; }
 								<a href="javascript:void(0)" ng-click="settings()"><i class="fa fa-fw fa-cog"></i> Settings</a>
 							</li>         
 							<li>
-								<a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+								<a href="/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
 							</li>
 						</ul>
 					</li>
@@ -452,7 +453,7 @@ table { border-collapse: collapse; }
 					<div class="detail detail-small">Downloads</div>
 				</div>
 				<div class="col-lg-2 detail nopadding">
-					<div class="detail detail-large">{{user.creditsCount}}</div>
+					<div class="detail detail-large">{{user.credits}}</div>
 					<div class="detail detail-small">Credits</div>
 				</div>
 				<div class="col-lg-2 detail nopadding">
@@ -479,6 +480,7 @@ table { border-collapse: collapse; }
 				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=true;">
 					<div class="nav-link">
 						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Uploads
+
 					</div>
 				</div>
 			</div>
@@ -511,7 +513,7 @@ table { border-collapse: collapse; }
 
 		</div>
 		<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-show="visDashboard">
-			<span style="font:italic bold 20px Arial,Helvetica,sans-serif;color:#555555">Welcome {{ user.userName }},</span>
+			<span style="font:italic bold 20px Arial,Helvetica,sans-serif;color:#555555">Welcome {{ user.firstname +" "+user.lastname }},</span>
 			<div class="container-fluid card-container" ng-show="!visUploadProgress">
 				<h3>Upload Notes & Earn Credits</h3>
 				<br>
@@ -606,6 +608,7 @@ table { border-collapse: collapse; }
 			</div>
 			<p>
 				<h3 class="disclaimer"><b>Disclaimer</b></h3>
+
 				<big class="disclaimer">The file you are uploading is now of complete rights for NoteShare Ltd.,
 					and you are accepting that your file will be downloaded for free by any user.</big>
 				</p>
