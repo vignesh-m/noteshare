@@ -4,6 +4,7 @@ var error = require('./error');
 var mysql = require('mysql');
 var db = require('../public/db_structure');
 var _ = require('underscore');
+ var notification = require('./util/notification');
 
 var isAuth = function(req, res, next) {
 	console.log('Authenticating');
@@ -36,6 +37,7 @@ app.get('/create', isAuth, function (req, res) {
 			db.querydb(querystring3,function(result){
 				console.log(querystring3);
 				console.log(result);
+				notification.notify(upload[0].userid, "Unread", req.user.name + "has downloaded your file : " + upload[0].name);
 				res.end(JSON.stringify(result));
 			});
 		});
