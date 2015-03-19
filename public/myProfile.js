@@ -13,7 +13,7 @@ function myProfile($scope) {
 		"followersCount":"40",
 		"followingCount":"0"
 	};
-	$scope.user.notifications=[];
+	$scope.notifications=[];
 	$scope.visUploadProgress = false;
 	$scope.files = [];
 
