@@ -43,3 +43,18 @@ CREATE TABLE downloads(
 	userid INT,
 	uploadid INT
 );
+
+CREATE TABLE followers(
+	userid INT,
+	follows INT
+);
+
+CREATE TABLE notifications(
+	id INT AUTO_INCREMENT,
+	type VARCHAR(10),
+	uploadedid INT,
+	downloadedid INT,
+	uploadeduserid INT,
+	downloadeduserid INT,
+	PRIMARY KEY(id)
+);
