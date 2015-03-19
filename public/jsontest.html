@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+	<head>
+		<title>JSON Testing</title>
+	</head>
+	<style>
+	table, th, td {
+		padding:10px;
+		border:1px solid black;
+	}
+	table {
+		border-collapse:collapse;
+		width:100%;
+	}
+	</style>
+	<body>
+		<!------------------------------------------------------------------
+			You will need to include an input tag to actually search once
+			the url is ready. This is just a dummy button.
+		------------------------------------------------------------------->
+		<button onclick="showResults()">Click to show search results</button>
+		<h1 id="successTag"></h1>
+		<p id="resultsCountTag"></p>
+		<table id="resultsTable">
+			<tr>
+				<th>File name</th>
+				<th>Download(s)</th>
+				<th>File average rating</th>
+				<th>Author</th>
+				<th>Author average rating</th>
+				<th>Tag(s)</th>
+				<th>Hash</th>
+			</tr>
+		</table>
+	</body>
+	<script src="js/jsontest.js"></script>
+</html>

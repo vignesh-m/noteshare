@@ -1,0 +1,12 @@
+$(document).ready(function(){
+    		$("#bu1,#bu2,#bu3").hover(function(){
+    				$(this).removeClass("toolbutton").addClass("toolbuttonhover");
+        		},function(){
+    				$(this).removeClass("toolbuttonhover").addClass("toolbutton");
+        		});
+    		$("#search").hover(function(){
+    				$(this).removeClass("searchbutton").addClass("searchhover");
+        		},function(){
+    				$(this).removeClass("searchhover").addClass("searchbutton");
+        		});
+});

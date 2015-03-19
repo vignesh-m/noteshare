@@ -1,0 +1,140 @@
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-switch.css" rel="stylesheet">
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+<link href="css/bootstrap-switch.css" rel="stylesheet">
+<link href="css/card-2.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="css/sb-admin.css" rel="stylesheet">
+<!-- Morris Charts CSS -->
+<link href="css/plugins/morris.css" rel="stylesheet">
+<link href="css/timeline.css" rel="stylesheet">
+<link href="sb-admin-2.css" rel="stylesheet">
+<link href="css/bootstrap-switch.css" rel="stylesheet">
+<link href="css/timeline.css" rel="stylesheet">
+<link href="css/plugins/morris.css" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<script src="uploadNotes.js"></script>x
+
+<style>
+.vert-center-note {
+	margin-top: 0.2%;
+}
+#uploadNotesModalLabel {
+	color:#339999;
+}
+
+.border-bottom-text {
+	border-top: 0px solid;
+	border-left: 0px solid;
+	border-right: 0px solid;
+	border-bottom: 1px solid;
+	border-color: rgba(0, 103, 23, 0.5);
+}
+
+.border-bottom-text:focus {   
+	border-top: 0px solid;
+	border-left: 0px solid;
+	border-right: 0px solid;
+	border-bottom: 1px solid;
+	border-color: rgba(0, 103, 23, 1);
+	box-shadow: 0 1px 1px rgba(229, 103, 23, 0.0) inset, 0 0 8px rgba(229, 103, 23, 0);
+	outline: 0 none;
+}
+
+.panel-form-body {
+	padding: 15px;
+}
+
+.panel-form-title {
+	padding: 30px;
+}
+
+.btn-flat-note {
+	background-color: #339999;
+	border-radius: 0px;
+	color: white;
+}
+.btn-flat-note:hover {
+	background-color: #339999;
+	border-radius: 0px;
+	color: white;
+	box-shadow: 0 1px 1px #349a9a inset, 0 0 8px #349a9a;
+}
+.btn-flat-note:active {
+	background-color: #339999;
+	border-radius: 0px;
+	color: white;
+	box-shadow: 0 1px 1px #349a9a inset, 0 0 8px #349a9a;
+}
+</style>
+
+<div ng-controller="uploadNotes">
+	<br><br><br>
+	<center>
+		<a href="javascript:void(0)" data-toggle="modal" ng-click="loadImage()" data-target="#uploadNotes">
+			<button type="button" class="btn btn-default btn-flat-note" data-dismiss="modal">Upload Notes</button>
+		</a>
+	</center>
+
+	<div class="modal fade" id="uploadNotes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h3 class="modal-title panel-form-title" id="uploadNotesModalLabel">Fill in details to share your Notes</h3>
+				</div>
+				<div class="modal-body">
+					<div class="panel panel-form-body">
+						<div class="panel-body">
+							<br>
+							<div class="row">
+								<div class="col-md-2 vert-center-note"><small>File name</small></div>
+								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Filename"></div>
+							</div><br>
+
+							<div class="row">
+								<div class="col-md-2 vert-center-note"><small>Semester</small></div>
+								<div class="col-md-3"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Semester"></div>
+								<div class="col-md-1 vert-center-note"><small>Year</small></div>
+								<div class="col-md-4"><input type="text" class="border-bottom-text col-lg-10" ng-model="filename" placeholder="Year"></div>
+							</div><br>
+
+							<div class="row">
+								<div class="col-md-2 vert-center-note"><small>Department</small></div>
+								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Department"></div>
+							</div><br>
+
+							<div class="row">
+								<div class="col-md-2 vert-center-note"><small>Source</small></div>
+								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Source"></div>
+							</div><br>
+
+							<div class="row">
+								<div class="col-md-2 vert-center-note"><small>Description</small></div>
+								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Description"></div>
+							</div><br>
+
+							<div class="row">
+								<div class="col-md-2 vert-center-note"><small>Tags</small></div>
+								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Tags separated with a space (max. 5)"></div>
+							</div><br><br><br>
+
+							<div class="row">
+								<center>
+									<button type="button" class="btn btn-default btn-flat-note" data-dismiss="modal" ng-click="uploadNotes()"><big>&nbsp&nbspShare&nbsp&nbsp</big></button>
+								</center>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

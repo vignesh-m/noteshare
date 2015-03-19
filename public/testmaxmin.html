@@ -1,0 +1,27 @@
+<script LANGUAGE="JavaScript">
+
+function Minimize() 
+{
+	console.log('min');
+window.innerWidth = 100;
+window.innerHeight = 100;
+window.screenX = screen.width;
+window.screenY = screen.height;
+alwaysLowered = true;
+}
+
+function Maximize() 
+{
+	console.log('max');
+window.innerWidth = screen.width;
+window.innerHeight = screen.height;
+window.screenX = 0;
+window.screenY = 0;
+alwaysLowered = false;
+}
+</script>
+
+<div>
+	<a href="javascript:void(0)" onclick="Minimize()">Minimize</a>
+	<a href="javascript:void(0)" onclick="Maximize()">Maximize</a>
+</div>

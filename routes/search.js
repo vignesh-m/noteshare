@@ -5,6 +5,15 @@ var express = require('express');
 var router = express.Router();
 var mysql= require('mysql');
 var db=require('../public/db_structure');
+function match_name(search_str){
+    var search_words=search_str.split(" ");
+    var s1="";
+    for(var i=0;i<search_words.length;i++){
+        s1+="*"+search_words[i]+"* ";
+    }
+    var s="match(uploads.name) against(\""+s1+"\" IN BOOLEAN MODE) as score";
+    return s;
+}
 router.get('/', function(req, res, next) {
     var querystring='';
     var tables=[];
@@ -21,8 +30,11 @@ router.get('/', function(req, res, next) {
      *      college - by user.college
      */
     tables.push('uploads');
+    columns.push('uploads.*');
     if(req.query.name){
-       conditions.push('uploads.name LIKE '+mysql.escape('%'+req.query.name+'%'));
+        columns.push(match_name(req.query.name));
+        sort.push("score DESC");
+       //conditions.push('uploads.name LIKE '+mysql.escape('%'+req.query.name+'%'));
     }
     if(req.query.user){
         conditions.push('user.username = '+mysql.escape(req.query.user));
@@ -56,7 +68,7 @@ router.get('/', function(req, res, next) {
         conditions.push('uploads.userid=user.id');
         columns.push('user.*');
     }
-    columns.push('uploads.*');
+
     querystring ='SELECT ';
     for(var i=0;i<columns.length;i++){
         if(i<columns.length-1) querystring+=columns[i]+",";

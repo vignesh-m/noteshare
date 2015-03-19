@@ -1,0 +1,271 @@
+<style>
+.vert-center-note {
+	margin-top: 0.2%;
+}
+#uploadNotesModalLabel {
+	color:#339999;
+}
+
+.border-bottom-text {
+	border-top: 0px solid;
+	border-left: 0px solid;
+	border-right: 0px solid;
+	border-bottom: 1px solid;
+	border-color: rgba(0, 103, 23, 0.5);
+}
+
+.border-bottom-text:focus {   
+	border-top: 0px solid;
+	border-left: 0px solid;
+	border-right: 0px solid;
+	border-bottom: 1px solid;
+	border-color: rgba(0, 103, 23, 1);
+	box-shadow: 0 1px 1px rgba(229, 103, 23, 0.0) inset, 0 0 8px rgba(229, 103, 23, 0);
+	outline: 0 none;
+}
+
+.panel-form-body {
+	padding: 15px;
+}
+
+.panel-form-title {
+	padding: 30px;
+}
+
+.btn-flat-note {
+	background-color: #339999 !important;
+	border-radius: 0px !important;
+	color: white !important;
+}
+.btn-flat-note:hover {
+	background-color: #339999 !important;
+	border-radius: 0px !important;
+	color: white !important;
+	box-shadow: 0 1px 1px #349a9a inset, 0 0 8px #349a9a !important;
+}
+.btn-flat-note:active {
+	background-color: #339999 !important;
+	border-radius: 0px !important;
+	color: white !important;
+	box-shadow: 0 1px 1px #349a9a inset, 0 0 8px #349a9a !important;
+}
+.profile-pic {
+	width: 83.3%;
+	height: 38%;
+	border: 1px solid;
+	border-color: black;
+}
+.fixed-top-nav {
+	position: fixed !important;
+	z-index: 1 !important;
+}
+.detail-large {
+	font-size: 1.4em;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	padding-left: 5px;
+	margin-top: 0px;
+	text-align: center;
+	font-weight: bold;
+}
+.detail-small {
+	font-size: 0.75em;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	padding-left: 5px;
+	margin-top: 0px;
+	text-align: center;
+}
+.nopadding {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+.detail {
+	background: #333333;
+	color: white;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-left: 0px;
+	text-align: center;
+}
+.nav-link {
+	background: #bbaaaa;
+	color: #444444;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 92.3%;
+	font-size: 1.1em;
+}
+.nav-link:hover {
+	background: #333333;
+	color: #ffffff;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 92.3%;
+	font-size: 1.1em;
+	cursor: pointer;
+}
+.separator-small {
+	width:auto;
+	background-color: transparent;
+	height:2px;
+}
+.card-container {
+	background-color:white;
+	padding:25px;
+	margin-top:20px;
+	border:1px solid grey;
+}
+.disclaimer {
+	color:grey !important;
+}
+.nav-button>a {
+	background: #2e9ba0 !important;
+	color: #ffffff !important;
+	padding-top: 18px !important;
+	padding-bottom: 18px !important;
+	font-size: 1.0em;
+}
+.nav-button>a:hover {
+	background: #ffffff !important;
+	color: #2e9ba0 !important;
+	font-size: 1.0em;
+}
+.navbar-schema {
+	background: #2e9ba0 !important;
+	color: #ffffff !important;
+	border: 0px solid;
+	border-radius: 0px !important;
+}
+.navbar-logo {
+	width:8%;
+	height:auto;
+	position: absolute;
+	left: 5%;
+	top: 5%;
+}
+.nav-center {
+	margin-top:1.8%;
+	margin-left: 30%;
+}
+.nav-gly-search {
+	left: 10% !important;
+}
+</style>
+
+<html>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/sb-admin.css" rel="stylesheet">
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+<title>Noteshare</title>
+<!--<nav class="fixed-top-nav navbar navbar-default col-md-12">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Noteshare</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Contact us</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>-->
+<nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
+	<div class="container-fluid">
+		<a href="#"><img class="navbar-logo" src="logo.png"></img></a>
+		<div class="collapse navbar-collapse navbar-center-buttons">
+			<ul class="nav navbar-nav navbar-right">
+				<li class="nav-button"><a href="#">HOME</a></li>
+				<li class="nav-button"><a href="#">ABOUT US</a></li>
+				<li class="nav-button"><a href="#">CONTACT US</a></li>
+				<li class="nav-button"><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp&nbspSIGN UP</a></li>
+				<li class="nav-button"><a href="#"><span class="glyphicon glyphicon-log-in"></span>&nbsp&nbspLOGIN</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <div class="panel" id="center-info">
+      <div class="panel-heading">
+        <h2><center>Notes worth sharing</center></h2>
+      </div>
+      <a href="#">
+        <div class="panel-footer">
+            <div class="col-md-12">
+              <input placeholder="Search notes.." id="filter-by" class="form-control input-lg" style="position: relative; background-color: transparent;"/>
+              <!-- <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><i class="fa fa-search fa-2x"></i></button>
+                </span>
+              </div> -->
+            </div>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="container-fluid spanning">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <div class="panel" id="center-info">
+      <div class="panel-heading">
+        <h2><center>Notes worth sharing</center></h2>
+      </div>
+      <a href="#">
+        <div class="panel-footer">
+            <div class="col-md-12">
+              <input placeholder="Search notes.." id="filter-by" class="form-control input-lg" style="position: relative; background-color: transparent;"/>
+              <!-- <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><i class="fa fa-search fa-2x"></i></button>
+                </span>
+              </div> -->
+            </div>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+The minivan is no longer the vehicle of choice for growing families; the traditional SUV is either. Instead it compact crossovers, like the Nissan Rogue and Honda CR-V. These vehicles are more fuel efficient and can be equipped to near-luxury levels of comfort. Plus, they retain much of the appeal of a full-size SUV, without the added heft
+
+<html>
