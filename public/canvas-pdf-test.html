@@ -1,0 +1,43 @@
+ <script type="text/javascript" src="js/pdf.js"></script>
+
+<!--    <div>
+    	<canvas id='cv'></canvas>
+    </div>
+<script>
+var pdf = null;
+PDFJS.disableWorker = true;
+var pages = new Array();
+    //Prepare some things
+    var canvas = document.getElementById('cv');
+    var context = canvas.getContext('2d');
+    var scale = 1.5;
+    var url = 'http://www.corsproxy.com/www.ohio.edu/technology/training/upload/Java-Script-Reference-Guide.pdf';
+    PDFJS.getDocument(url).then(function getPdfHelloWorld(_pdf) {
+    	pdf = _pdf;
+        //Render all the pages on a single canvas
+        for(var i = 1; i <= pdf.numPages; i ++){
+        	pdf.getPage(i).then(function getPage(page){
+        		var viewport = page.getViewport(scale);
+        		canvas.width = viewport.width;
+        		canvas.height = viewport.height;
+        		page.render({canvasContext: context, viewport: viewport});
+        		pages[i-1] = context.getImageData(0, 0, canvas.width, canvas.height);
+        		context.clearRect(0, 0, canvas.width, canvas.height);
+        		p.Out("pre-rendered page " + i);
+        	});
+        }
+
+    //Now we have all 'dem Pages in "pages" and need to render 'em out
+    canvas.height = 0;
+    var start = 0;
+    for(var i = 0; i < pages.length; i++){
+    	if(canvas.width < pages[i].width) canvas.width = pages[i].width;
+    	canvas.height = canvas.height + pages[i].height;
+    	context.putImageData(pages[i], 0, start);
+    	start += pages[i].height;
+    }
+});
+    </script>
+ -->
+<!-- 
+ <iframe src="http://mozilla.github.io/pdf.js/web/viewer.html?file=http://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf" width="500px" height="400px" /> -->
