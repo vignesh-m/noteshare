@@ -5,7 +5,16 @@ var mysql = require('mysql');
 var db = require('../public/db_structure');
 var _ = require('underscore');
 
-app.get('/get', function(req, res) {
+var isAuth = function(req, res, next) {
+    console.log('Authenticating');
+    if (req.isAuthenticated())
+        next();
+    else {
+        req.flash('login', 'LOGIN');
+        res.redirect('/login')
+    }
+};
+app.get('/get', isAuth,function(req, res) {
 	var errobj = error.err_insuff_params(res, req, ['user_id']);
 	var querystring = "";
 

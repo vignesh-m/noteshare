@@ -4,11 +4,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <link rel="stylesheet" href="css/normalize.css">
-<link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
 <link rel="stylesheet" href="css/ospb.css">
 <link rel="stylesheet" href="css/horizontal.css">
 <script src="js/vendor/modernizr.js"></script>
-<script src="js/vendor/plugins.js"></script>
+<script src="js/plugins/plugins.js"></script>
 <script src="js/sly.min.js"></script>
 <script src="js/horizontal.js"></script>
 
@@ -20,7 +20,7 @@
 <!-- Morris Charts CSS -->
 <link href="css/plugins/morris.css" rel="stylesheet">
 <link href="css/timeline.css" rel="stylesheet">
-<link href="sb-admin-2.css" rel="stylesheet">
+<link href="css/sb-admin-2.css" rel="stylesheet">
 <link href="css/bootstrap-switch.css" rel="stylesheet">
 <link href="css/timeline.css" rel="stylesheet">
 <link href="css/plugins/morris.css" rel="stylesheet">
@@ -364,7 +364,7 @@ table { border-collapse: collapse; }
 </style>
 
 <html ng-app="">
-<div  ng-controller="myProfile">
+<div  ng-controller="myProfile" ng-init="user = <%= JSON.stringify(user) %>">
 	<head>
 		<link rel="stylesheet" href="css/my-profile.css">
 		<meta charset="utf-8">
@@ -376,7 +376,7 @@ table { border-collapse: collapse; }
 
 	<nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
 		<div class="container-fluid">
-			<a href="#"><img class="navbar-logo" src="logo.png"></img></a>			
+			<a href="#"><img class="navbar-logo" src="logo.png"></img></a>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav row">
 					<div class="col-lg-2"></div>
@@ -404,13 +404,10 @@ table { border-collapse: collapse; }
 								<div class="row separator-very-small">
 								</div>
 							</div>
-							<li ng-repeat="notification in user.notifications">
+							<li ng-repeat="notification in notifications">
 								<div class="notification-item">
-									<div class="notification-item-text-header">
-										{{notification.textHeading + " " + ($index+1)}}
-									</div>
 									<div class="notification-item-text-body">
-										{{notification.textDescription}}
+										{{notification.text}}
 									</div>
 									<div style="background:#aaaaaa">
 										<div class="row separator-very-small">

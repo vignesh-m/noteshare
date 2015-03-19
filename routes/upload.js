@@ -8,7 +8,6 @@
  var notification = require('./util/notification');
  var isAuth = function(req, res, next) {
     console.log('Authenticating');
-    next();
     if (req.isAuthenticated())
         next();
     else {
@@ -28,7 +27,8 @@ router.get('/',isAuth,function(req, res){
 });*/
 router.post('/',isAuth,function(req,res){
     console.log(req.files);
-    var files = req.files.upload;
+    console.log(req.headers.x);
+    var files = req.files.uploadedFile;
     if(!files){
         res.end('error no files sent');
     } else {

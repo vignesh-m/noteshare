@@ -1,5 +1,6 @@
 function myProfile($scope) {
 	// TODO get info from backend and populate user class object
+    $scope.user2={user:'Admin'};
 	$scope.notificationCount = 7;
 	console.log('started');
     $scope.visDashboard = true;
@@ -12,7 +13,7 @@ function myProfile($scope) {
 		"followersCount":"40",
 		"followingCount":"0"
 	};
-	$scope.user.notifications=[];
+	$scope.notifications=[];
 	$scope.visUploadProgress = false;
 	$scope.files = [];
 
@@ -138,7 +139,8 @@ function myProfile($scope) {
         xhr.addEventListener("load", uploadComplete, false)
         xhr.addEventListener("error", uploadFailed, false)
         xhr.addEventListener("abort", uploadCanceled, false)
-        xhr.open("POST", "/fileupload")
+        xhr.open("POST", "/upload")
+        xhr.setRequestHeader("x","hello");
         $scope.progressVisible = true
         xhr.send(fd)
     }
