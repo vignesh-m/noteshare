@@ -4,7 +4,7 @@ var error = require('./error');
 var mysql = require('mysql');
 var db = require('../public/db_structure');
 var _ = require('underscore');
- var notification = require('./util/notification');
+var notification = require('./util/notification');
 
 var isAuth = function(req, res, next) {
 	console.log('Authenticating');
@@ -69,7 +69,6 @@ app.get('/get', isAuth, function(req, res) {
 			});			
 		}
 	});
-
 });
 
 module.exports = app;
