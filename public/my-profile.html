@@ -1,0 +1,715 @@
+<link href="css/bootstrap-switch.css" rel="stylesheet">
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="css/ospb.css">
+<link rel="stylesheet" href="css/horizontal.css">
+<script src="js/vendor/modernizr.js"></script>
+<script src="js/vendor/plugins.js"></script>
+<script src="js/sly.min.js"></script>
+<script src="js/horizontal.js"></script>
+
+<script src="js/sly.min.js"></script>
+<script src="js/jasny-bootstrap.js"></script>
+<link href="css/card-2.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="css/sb-admin.css" rel="stylesheet">
+<!-- Morris Charts CSS -->
+<link href="css/plugins/morris.css" rel="stylesheet">
+<link href="css/timeline.css" rel="stylesheet">
+<link href="sb-admin-2.css" rel="stylesheet">
+<link href="css/bootstrap-switch.css" rel="stylesheet">
+<link href="css/timeline.css" rel="stylesheet">
+<link href="css/plugins/morris.css" rel="stylesheet">
+<link href="css/notification-counter.css" rel="stylesheet">
+<link href="css/jasny-bootstrap.css" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<script src="uploadNotes.js"></script>
+<script src="myProfile.js"></script>
+
+<style>
+.vert-center-note {
+	margin-top: 0.2%;
+}
+#uploadNotesModalLabel {
+	color:#339999;
+}
+
+.border-bottom-text {
+	border-top: 0px solid;
+	border-left: 0px solid;
+	border-right: 0px solid;
+	border-bottom: 1px solid;
+	border-color: rgba(0, 103, 23, 0.5);
+}
+
+.border-bottom-text:focus {   
+	border-top: 0px solid;
+	border-left: 0px solid;
+	border-right: 0px solid;
+	border-bottom: 1px solid;
+	border-color: rgba(0, 103, 23, 1);
+	box-shadow: 0 1px 1px rgba(229, 103, 23, 0.0) inset, 0 0 8px rgba(229, 103, 23, 0);
+	outline: 0 none;
+}
+
+.panel-form-body {
+	padding: 15px;
+}
+
+.panel-form-title {
+	padding: 30px;
+}
+
+.btn-flat-note {
+	background-color: #339999 !important;
+	border-radius: 0px !important;
+	color: white !important;
+}
+.btn-flat-note:hover {
+	background-color: #339999 !important;
+	border-radius: 0px !important;
+	color: white !important;
+	box-shadow: 0 1px 1px #349a9a inset, 0 0 8px #349a9a !important;
+}
+.btn-flat-note:active {
+	background-color: #339999 !important;
+	border-radius: 0px !important;
+	color: white !important;
+	box-shadow: 0 1px 1px #349a9a inset, 0 0 8px #349a9a !important;
+}
+.profile-pic {
+	border: 1px solid;
+	border-color: black;
+	width: 263px;
+}
+.fixed-top-nav {
+	position: fixed !important;
+	z-index: 1 !important;
+}
+.detail-large {
+	font-size: 1.4em;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	padding-left: 5px;
+	margin-top: 0px;
+	text-align: center;
+	font-weight: bold;
+}
+.detail-small {
+	font-size: 0.75em;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	padding-left: 5px;
+	margin-top: 0px;
+	text-align: center;
+}
+.nopadding {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+.detail {
+	background: #333333;
+	color: white;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-left: 0px;
+	text-align: center;
+}
+.nav-link {
+	background: #bbaaaa;
+	color: #444444;
+	vertical-align: middle;
+	padding-top: 10px;
+	width: 100%;
+	padding-bottom: 10px;
+	font-size: 1.1em;
+}
+.nav-link:hover {
+	background: #333333;
+	color: #ffffff;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 100%;
+	font-size: 1.1em;
+	cursor: pointer;
+}
+.separator-small {
+	width:auto;
+	background-color: transparent;
+	height:2px;
+}
+.separator-very-small {
+	width:auto;
+	background-color: transparent;
+	height:1px;
+}
+.card-container {
+	background-color:white;
+	padding:25px;
+	margin-top:20px;
+	border:1px solid grey;
+}
+.disclaimer {
+	color:grey !important;
+}
+.nav-button>a {
+	background: #2e9ba0 !important;
+	color: #ffffff !important;
+	padding-top: 18px !important;
+	padding-bottom: 18px !important;
+	font-size: 1.0em;
+}
+.nav-button>a:hover {
+	background: #ffffff !important;
+	color: #2e9ba0 !important;
+	font-size: 1.0em;
+}
+.nav-button-active {
+	background: #ffffff !important;
+	color: #2e9ba0 !important;
+	font-size: 1.0em;
+}
+.navbar-schema {
+	background: #2e9ba0 !important;
+	color: #ffffff !important;
+	border: 0px solid;
+	border-radius: 0px !important;
+}
+.navbar-logo {
+	width:7%;
+	height:200%;
+	position: absolute;
+	left: 5%;
+	top: 5%;
+}
+.nav-center {
+	margin-top:2.8%;
+	margin-left: 10%;
+}
+.nav-gly-search {
+	left: 10% !important;
+}
+.block-white {
+	background: #ffffff;
+	color: #ffffff;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 100%;
+	font-size: 1.1em;
+}
+input[type="text"] {
+	color: black !important;
+	background: white !important;
+	line-height: auto !important;
+}
+.block-white {
+	background: #ffffff;
+	color: #ffffff;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 100%;
+	font-size: 1.1em;
+}
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+	width: 20%;
+	margin: auto;
+}
+.notification-item-text-header {
+	padding: 2px;
+	font-size: 0.9em;
+	font-weight: bolder;
+	background: transparent;
+	margin-left: 10px !important;
+	margin-right: 10px !important;
+}
+.notification-item-text-body {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 2px !important;
+	padding-right: 2px !important;
+	margin-left: 10px !important;
+	margin-right: 10px !important;
+	font-size: 0.8em;
+	background: transparent;	
+	margin-bottom: 10px !important;
+}
+.navbar-profile-pic-img-circular{
+	width: 28px;
+	height: 28px;
+	background-image: url('default-profile-pic.jpg');
+	background-size: cover;
+	display: block;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	margin-top: -2%;
+}
+.notification-item-image {
+
+}
+.notification-item {
+	color: black;
+	background: white;	
+	cursor: pointer;
+	padding-top: 10px !important;
+}
+.notification-item a:hover{
+	text-decoration: none;
+}
+.notification-item:hover {
+	color: black;
+	background: #eeeeee;
+}
+#notification-li-dropdown.dropdown-menu {
+	width: 400px !important;
+	height: 100px !important;
+}
+.notifications-panel-head {
+	text-align: center;
+	font-weight: bolder;
+	font-size: 1em;
+	color: black;
+	margin:5px !important;
+}
+.files-list-container {
+	border:1px solid #BBBBBB;
+	background-color:#DDDDDD;
+}
+.side-chevron {
+	width:2%;
+	padding:0;
+	margin-top:15%;
+	cursor:pointer;
+}
+.list-view {
+	width:96%
+}
+.grey-icon {
+	color:grey;
+}
+table { border-collapse: collapse; }
+.percent {
+	position: absolute; width: 300px; height: 14px; z-index: 1; text-align: center; font-size: 0.8em; color: white;
+}
+.progress-bar {
+	width: 300px; height: 14px;
+	border-radius: 10px;
+	border: 1px solid #CCC;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#6666cc), to(#4b4b95));
+	border-image: initial;
+}
+.uploaded {
+	padding: 0;
+	height: 14px;
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#66cc00), to(#4b9500));
+	border-image: initial;
+}
+.dropbox {
+	width: 30em;
+	height: 10em;
+	border: 2px solid #DDD;
+	border-radius: 8px;
+	background-color: #FEFFEC;
+	text-align: center;
+	color: #BBB;
+	font-size: 2em;
+	font-family: Arial, sans-serif;
+}
+.dropbox span {
+	margin-top: 0.9em;
+	display: inline;
+}
+.dropbox.not-available {
+	background-color: #F88;
+}
+.dropbox.over {
+	background-color: #bfb;
+}
+.book-preview
+{
+	-moz-box-shadow: 0 0 0px #349a9a;
+	-webkit-box-shadow: 0 0 0px #349a9a;
+	box-shadow: 0px 0px 0px #349a9a;
+	border-radius: 4px;
+	border: 1px solid #349a9a;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+.book-preview:hover
+{
+	-moz-box-shadow: 0 0 40px #222;
+	-webkit-box-shadow: 0 0 40px #222;
+	box-shadow: 0px 0px 40px #222;
+	border-radius: 2px;
+	border: 1px solid transparent;
+	padding: 5px;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+</style>
+
+<html ng-app="">
+<div  ng-controller="myProfile">
+	<head>
+		<link rel="stylesheet" href="css/my-profile.css">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">		
+		<title>
+			{{ user.userName + " | Noteshare" }}
+		</title>
+	</head>
+
+	<nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
+		<div class="container-fluid">
+			<a href="#"><img class="navbar-logo" src="logo.png"></img></a>			
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav row">
+					<div class="col-lg-2"></div>
+					<div class="col-lg-5 nopadding">
+						<li>
+							<div class="nav-center">
+								<div class="input-group">
+									<input placeholder="Search for notes.." id="filter-by" class="form-control input" style="line-height:2;"/>
+									<span class="input-group-btn">
+										<button class="btn btn-default" ng-click="updateNotificationCounter()" type="button">Go!
+										</button>
+									</span>
+								</div>
+							</div>
+						</li>
+					</div>
+					<div class="col-lg-1 nopadding"></div>
+					<li id="notification-li" class="nav-button notification-container dropdown">
+						<a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
+						<ul id="notification-li-dropdown" class="dropdown-menu"> 
+							<li class="notifications-panel-head">
+								Notifications
+							</li>
+							<div style="background:#aaaaaa">
+								<div class="row separator-very-small">
+								</div>
+							</div>
+							<li ng-repeat="notification in user.notifications">
+								<div class="notification-item">
+									<div class="notification-item-text-header">
+										{{notification.textHeading + " " + ($index+1)}}
+									</div>
+									<div class="notification-item-text-body">
+										{{notification.textDescription}}
+									</div>
+									<div style="background:#aaaaaa">
+										<div class="row separator-very-small">
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-button dropdown">
+						<a href="#" class="dropdown-toggle " id="dropdown" data-toggle="dropdown"><div class="navbar-profile-pic-img-circular"></div></a>
+						<ul class="dropdown-menu"> 
+							<li>
+								<a href="javascript:void(0)" ng-click="settings()"><i class="fa fa-fw fa-cog"></i> Settings</a>
+							</li>         
+							<li>
+								<a href="javascript:void(0)" ng-click="logout()"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row" style="height:20%">
+		</div>
+		<div class="col-md-3">
+			<div class="row">
+				<div class="col-lg-10 nopadding">
+					<img src="default-profile-pic.jpg" class="profile-pic"></img>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-2 detail nopadding">
+					<div class="detail detail-large">{{user.uploadsCount}}</div>
+					<div class="detail detail-small">Uploads</div>
+				</div>
+				<div class="col-lg-2 detail nopadding">
+					<div class="detail detail-large">{{user.downloadsCount}}</div>
+					<div class="detail detail-small">Downloads</div>
+				</div>
+				<div class="col-lg-2 detail nopadding">
+					<div class="detail detail-large">{{user.creditsCount}}</div>
+					<div class="detail detail-small">Credits</div>
+				</div>
+				<div class="col-lg-2 detail nopadding">
+					<div class="detail detail-large">{{user.followersCount}}</div>
+					<div class="detail detail-small">Followers</div>
+				</div>
+				<div class="col-lg-2 detail nopadding">
+					<center>
+						<div class="detail detail-large">{{user.followingCount}}</div>
+						<div class="detail detail-small">Following</div>
+					</center>
+				</div>
+			</div>
+			<div class="row separator-small"></div>
+			<div class="row">
+				<div class="col-lg-10 nopadding">
+					<div class="nav-link">
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspDashboard
+					</div>
+				</div>
+			</div>
+			<div class="row separator-small"></div>
+			<div class="row">
+				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=true;">
+					<div class="nav-link">
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Uploads
+					</div>
+				</div>
+			</div>
+			<div class="row separator-small"></div>
+			<div class="row">
+				<div class="col-lg-10 nopadding">
+					<div class="nav-link">
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Downloads
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-show="visMyUploads">
+
+			<div class="container-fluid card-container" >
+				<div class="row">
+					<center>
+						<div class="col-lg-2">
+							<img class="book-preview" src="prev-0.jpg" width="120" height="140"></img>
+							<div class="row">
+								<big>Harry Potter 6</big>
+								<br>
+								<b>4.7/5.0</b>
+							</div>
+						</div>
+					</center>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-show="visDashboard">
+			<span style="font:italic bold 20px Arial,Helvetica,sans-serif;color:#555555">Welcome {{ user.userName }},</span>
+			<div class="container-fluid card-container" ng-show="!visUploadProgress">
+				<h3>Upload Notes & Earn Credits</h3>
+				<br>
+				<a href="javascript:void(0)" data-toggle="modal" ng-click="loadImage()" data-target="#uploadNotes">
+					<button type="button" class="btn btn-default btn-flat-note">Upload Notes</button>
+				</a>
+			</div>
+			<!-- TODO replace above container with below container when uploading -->
+			<div class="container-fluid card-container" ng-show="visUploadProgress">
+				<div class="pull-right">
+					<a href="javascript:void(0)" class="close" ng-click="visUploadProgress=!visUploadProgress" style="float: none">
+						&times;
+					</a>
+				</div>
+				<h3>Uploading your file...</h3><br>
+				<!-- <div class="container-fluid">
+					<div ng-repeat="file in files track by $index">
+						<div class="row">
+							<div class="col-md-3">
+								<img src="default-profile-pic.jpg" alt="File" style="width:25px;height:25px;margin-right:30px"></img>
+								{{file.fileName}}
+							</div>
+							<div class="col-md-6 progress">
+								<div class="row progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="100"
+								aria-valuemin="0" aria-valuemax="100">
+								70%
+							</div>
+							<div class="col-md-3"></div>
+						</div>
+					</div>
+				</div> -->
+				<!-- <center>
+					<h3>Drag and Drop Files</h3>
+					<h3 style="color:grey"><b>or</b></h3>
+					<div class="fileinput fileinput-new" id="browseFileInput" data-provides="fileinput">
+						<span class="btn btn-default btn-flat-note btn-file cursor-pointer">
+							<span class="fileinput-new">
+								<span class="glyphicon glyphicon-search">
+								</span>
+								&nbsp Browse
+							</span>
+							<span class="fileinput-exists">
+								Change
+							</span>
+							<input type="file" name="...">
+						</span>&nbsp&nbsp&nbsp
+						<span class="fileinput-filename"></span>&nbsp&nbsp&nbsp
+						<a href="javascript:void(0)" id="removeSelectedFile" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">&times;</a>&nbsp&nbsp&nbsp
+						<a href="javascript:void(0)" style="color:black;" class="fileinput-exists" ng-click="startUpload()"><i class="fa fa-upload fa-1x"></i></a>
+					</div>
+				</center> -->
+				<div>
+					
+
+					<div id="dropbox" class="dropbox" ng-class="dropClass">
+						<br><br>
+						<span>
+							{{dropText}}
+						</span>
+						<br><br>
+						<center>
+							<a href="javascript:void(0)" ng-click="fileInputClick()">
+								<button type="button" class="btn btn-default btn-flat-note"><span class="glyphicon glyphicon-search">
+								</span>
+								&nbsp Browse</button>
+							</a>
+							<input type="file" style="visibility:hidden" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" />
+						</center>
+					</div>
+					<br>
+					<div>
+						<center>
+							<div ng-show="files.length">
+								<div ng-repeat="file in files.slice(0)">
+									<span>{{file.webkitRelativePath || file.name}}</span>
+									(<span ng-switch="file.size > 1024*1024">
+									<span ng-switch-when="true">{{file.size / 1024 / 1024 | number:2}} MB</span>
+									<span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
+								</span>)
+							</div>
+							<br>
+							<button type="button" class="btn btn-default btn-flat-note" ng-click="uploadFile()">Upload</button>
+							<div ng-show="progressVisible">
+								<div class="percent">{{progress}}%</div>
+								<div class="progress-bar">
+									<div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+								</div>
+							</div>
+						</div>
+					</center>
+				</div>
+			</div>
+			<p>
+				<h3 class="disclaimer"><b>Disclaimer</b></h3>
+				<big class="disclaimer">The file you are uploading is now of complete rights for NoteShare Ltd.,
+					and you are accepting that your file will be downloaded for free by any user.</big>
+				</p>
+			</div>
+			<div class="container-fluid card-container">
+				<!--<p style="font-size:25px;color:#339999">Recent Downloads</p>-->
+				<div class="col-md-4" style="font-size:25px;color:#339999;padding-left:0px">Recent Downloads</div>
+				<div class="col-md-8" style="font-size:20px;text-align:right">Sort:	Oldest - Newest</div>
+
+			</div>
+			<div class="container-fluid card-container">
+				<!--<p style="font-size:25px;color:#339999">Recent Uploads</p>-->
+				<div class="col-md-4" style="font-size:25px;color:#339999;padding-left:0px">Recent Uploads</div>
+				<div class="col-md-8" style="font-size:20px;text-align:right">Sort:	Oldest - Newest</div>
+				<div class="col-md-12 wrap files-list-container">
+					<div id="prevUpload" ng-click="prevUpload()" class="col-md-1 side-chevron">
+						<i class="fa fa-chevron-left fa-3x grey-icon prev"></i>
+					</div>
+					<div class="col-md-10 list-view">
+						<!--<h2>Centered <small>- activated or middle item is centered when possible</small></h2>-->
+					<!--<div class="scrollbar">
+						<div class="handle" style="transform: translateZ(0px) translateX(0px); width: 190px;">
+							<div class="mousearea"></div>
+						</div>
+					</div>-->
+					<div class="controls center" style="visibility:hidden;opacity:0;">
+						<button id="prevUploadHidden" class="btn prev"><i class="icon-chevron-left"></i> prev</button>
+					</div>
+					<div class="frame" id="centered">
+						<ul class="clearfix" style="transform: translateZ(0px); width: 6840px;">
+							<li class="active">0</li><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li>
+							<li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li>
+							<li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li>
+							<li>28</li><li>29</li>
+						</ul>
+					</div>
+					<div class="controls center" style="visibility:hidden;opacity:0;">
+						<button id="nextUploadHidden" class="btn next">next <i class="icon-chevron-right"></i></button>
+					</div>
+				</div>
+				<div id="nextUpload" ng-click="nextUpload()" class="col-md-1 side-chevron">
+					<i class="fa fa-chevron-right fa-3x grey-icon next"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="uploadNotes" tabindex="-1" role="dialog" aria-labelledby="uploadNotesModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="modal-title panel-form-title" id="uploadNotesModalLabel">Fill in details to share your Notes</h3>
+			</div>
+			<div class="modal-body">
+				<div class="panel panel-form-body">
+					<div class="panel-body">
+						<br>
+						<div class="row">
+							<div class="col-md-2 vert-center-note"><small>File name</small></div>
+							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Filename"></div>
+						</div><br>
+
+						<div class="row">
+							<div class="col-md-2 vert-center-note"><small>Semester</small></div>
+							<div class="col-md-3"><input type="text" class="border-bottom-text col-lg-11" ng-model="semester" placeholder="Semester"></div>
+							<div class="col-md-1 vert-center-note"><small>Year</small></div>
+							<div class="col-md-4"><input type="text" class="border-bottom-text col-lg-10" ng-model="year" placeholder="Year"></div>
+						</div><br>
+
+						<div class="row">
+							<div class="col-md-2 vert-center-note"><small>Department</small></div>
+							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="department" placeholder="Department"></div>
+						</div><br>
+
+						<div class="row">
+							<div class="col-md-2 vert-center-note"><small>Source</small></div>
+							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="source" placeholder="Source"></div>
+						</div><br>
+
+						<div class="row">
+							<div class="col-md-2 vert-center-note"><small>Description</small></div>
+							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="description" placeholder="Description"></div>
+						</div><br>
+
+						<div class="row">
+							<div class="col-md-2 vert-center-note"><small>Tags</small></div>
+							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="tags" placeholder="Tags separated with a space (max. 5)"></div>
+						</div><br><br><br>
+
+						<div class="row">
+							<center>
+								<button type="button" class="btn btn-default btn-flat-note" data-dismiss="modal" ng-click="uploadNotesDetails()"><big>&nbsp&nbspShare&nbsp&nbsp</big></button>
+							</center>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</html>
