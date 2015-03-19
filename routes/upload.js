@@ -18,13 +18,13 @@
 router.get('/',isAuth,function(req, res){
     res.render('upload');
 });
-/*router.get('/get/all', isAuth, function(req, res) {
+router.get('/get', isAuth, function(req, res) {
     var querystring = "SELECT * FROM noteshare.uploads WHERE userid=" + mysql.escape(req.user.id);
     db.querydb(querystring,function(result){
         console.log(querystring);
         res.end(JSON.stringify(result));
     });
-});*/
+});
 router.post('/',isAuth,function(req,res){
     console.log(req.files);
     console.log(req.headers.x);
