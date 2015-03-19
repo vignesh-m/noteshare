@@ -51,6 +51,7 @@ app.get('/get', isAuth, function(req, res) {
 	db.querydb(querystring,function(result){
 		console.log(querystring);
 		for(var i=0;i<result.length;i++) {
+			console.log(i);
 			var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(result[i].uploadid);
 			db.querydb(querystring1,function(uploadArr){
 				console.log(querystring1);
@@ -58,7 +59,8 @@ app.get('/get', isAuth, function(req, res) {
 				db.querydb(querystring2,function(uploadedUser){
 					myDownloads.push({user:uploadedUser[0], file:uploadArr[0]});
 					console.log(querystring2);
-					if(i==result.length-1) {
+					if(myDownloads.length == result.length) {
+						console.log('result-length');
 						res.end(JSON.stringify({result:true, downloads:myDownloads}));
 					}
 				});
