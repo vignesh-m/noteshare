@@ -1,4 +1,4 @@
-function myProfile($scope) {
+function myProfile($scope,$http) {
 	// TODO get info from backend and populate user class object
     $scope.user2={user:'Admin'};
 	$scope.notificationCount = 7;
@@ -6,7 +6,12 @@ function myProfile($scope) {
     $scope.visDashboard = true;
     $scope.visMyUploads = false;
 	$scope.user = {
-		"userName":"Aravind Shankar",
+		"username":"Aravind_Shankar",
+        "firstname":"Aravind",
+        "lastname":"Shankar",
+        "id":10,
+        "credits":20,
+        "college":"IIT Madras",
 		"uploadsCount":"50",
 		"downloadsCount":"60",
 		"creditsCount":"10",
@@ -16,11 +21,16 @@ function myProfile($scope) {
 	$scope.notifications=[];
 	$scope.visUploadProgress = false;
 	$scope.files = [];
-
-	for(var i=1;i<=$scope.notificationCount;i++) {
-		$scope.user.notifications.push({"textHeading":"New notification","textDescription":"Description about the notification"});
-	}
-
+	//for(var i=1;i<=$scope.notificationCount;i++) {
+	//	$scope.notifications.push({"textHeading":"New notification","textDescription":"Description about the notification"});
+	//}
+    $http.get('/notifications/get').
+        success(function(data, status, headers, config) {
+            console.log(data);
+        }).
+        error(function(data, status, headers, config) {
+            $scope.notifications.push({"textDescription":"Could not load notifications"});
+        });
 	$scope.fileInputClick = function() {
 		$('#fileToUpload').click();
 	}
@@ -49,9 +59,6 @@ function myProfile($scope) {
 	}
 	$scope.browseFiles = function() {
 		console.log('Browsing files');
-	}
-	$scope.logout = function() {
-		console.log('logged out');
 	}
 	$scope.updateNotificationCounter = function() {
 		console.log('called update function');
