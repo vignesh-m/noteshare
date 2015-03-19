@@ -68,9 +68,4 @@ app.get('/get', isAuth, function(req, res) {
 
 });
 
-<<<<<<< HEAD
-=======
-});
-
->>>>>>> d86d3ebbe6cc34bb03753bfc2e0616b85282c927
 module.exports = app;
