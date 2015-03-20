@@ -5,6 +5,7 @@ function myProfile($scope,$http) {
     console.log('started');
     $scope.visDashboard = true;
     $scope.visMyUploads = false;
+    $scope.visMyDownloads = false;
     $scope.user = {
       "username":"Aravind_Shankar",
       "firstname":"Aravind",
@@ -33,6 +34,23 @@ function myProfile($scope,$http) {
     error(function(data, status, headers, config) {
         $scope.notifications.push({"textDescription":"Could not load notifications"});
     });
+}
+
+$scope.getArrGrid = function (list, rowElementCount, type) {
+    var gridArray = [], i, k;
+
+    for (i = 0, k = -1; i < list.length; i++) {
+        if (i % rowElementCount === 0) {
+            k++;
+            gridArray[k] = [];
+        }
+
+        gridArray[k].push(list[i]);
+    }
+    if(type == 1)
+      $scope.gridMyUploads = gridArray;
+    else 
+      $scope.gridMyDownloads = gridArray;
 }
 
 $scope.getMyUploads = function() {
