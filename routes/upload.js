@@ -28,6 +28,7 @@ router.get('/get', isAuth, function(req, res) {
 router.post('/',isAuth,function(req,res){
     console.log(req.files);
     console.log(req.headers.x);
+    console.log(req.body);
     var files = req.files.uploadedFile;
     if(!files){
         res.end('error no files sent');

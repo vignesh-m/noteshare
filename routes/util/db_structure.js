@@ -2,29 +2,35 @@ var mysql=require('mysql');
 var pool=mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: ''
+    password: 'root'
 });
 function querydb(querystring,callback){
     pool.getConnection(function(err, connection) {
+        if(err) {
+            console.log(err);
+            return;
+        }
         // Use the connection
-        connection.query(querystring, function(err, rows,fields) {
-            callback(rows);
-            connection.release();
-        });
+        //connection.query(querystring, function(err, rows,fields) {
+          //  callback(rows);
+            //connection.release();
+        //});
     });
 }
 var connection = mysql.createConnection({
     'host': 'localhost',
     'user': 'root',
-    'password': ''
+    'password': 'root'
 })
 module.exports={
     pool:pool,
     querydb:querydb,
     'connection': {
         'host': 'localhost',
-        'user': 'root',
-        'password': ''
+        'user': 'vignesh',
+        'password': 'pass',
+        'database' : 'noteshare',
+        'port' : 3306
     },
     'database': 'noteshare',
     'users_table': 'user'
