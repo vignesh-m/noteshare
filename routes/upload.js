@@ -19,11 +19,21 @@ router.get('/',isAuth,function(req, res){
     res.render('upload');
 });
 router.get('/get', isAuth, function(req, res) {
-    var querystring = "SELECT * FROM noteshare.uploads WHERE userid=" + mysql.escape(req.user.id);
-    db.querydb(querystring,function(result){
-        console.log(querystring);
-        res.end(JSON.stringify(result));
-    });
+    console.log('got id '+req.query.id);
+    if(req.query.id){
+        console.log('got id '+req.query.id);
+        var querystring = "SELECT * FROM noteshare.uploads WHERE userid=" + mysql.escape(req.query.id);
+        db.querydb(querystring, function (result) {
+            console.log(querystring);
+            res.end(JSON.stringify(result));
+        });
+    } else {
+        var querystring = "SELECT * FROM noteshare.uploads WHERE userid=" + mysql.escape(req.user.id);
+        db.querydb(querystring, function (result) {
+            console.log(querystring);
+            res.end(JSON.stringify(result));
+        });
+    }
 });
 router.post('/',isAuth,function(req,res){
     console.log(req.files);

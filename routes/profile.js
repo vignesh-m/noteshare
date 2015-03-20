@@ -25,7 +25,7 @@ router.get('/view',isAuth,function(req,res){
         var qs = "SELECT * FROM noteshare.user WHERE user.id=" + mysql.escape(req.query.id);
         db.querydb(qs,function(user){
             console.log(user);
-            res.render('profile-view.ejs',{user:user[0]});
+            res.render('profile-view.ejs',{user:user[0],root_user:req.user});
         })
     }
 })

@@ -27,12 +27,22 @@ app.get('/add', isAuth,function(req, res) {
 	res.end(JSON.stringify({'result':true,'user_id':user_id,'follows':follows}));
 });
 app.get('/get',isAuth,function(req,res){
-	var querystring="SELECT * from noteshare.followers WHERE followers.userid="+mysql.escape(req.user.id)+";";
-	db.querydb(querystring,function(arrFollowing){
-		var querystring2="SELECT * from noteshare.followers WHERE followers.follows="+mysql.escape(req.user.id)+";";
-		db.querydb(querystring2,function(arrFollowers){
-			res.end(JSON.stringify({result:true,arrFollowing:arrFollowing,arrFollowers:arrFollowers}));
-		});
-	});
+    if(req.query.id){
+        var querystring="SELECT * from noteshare.followers WHERE followers.userid="+mysql.escape(req.query.id)+";";
+        db.querydb(querystring,function(arrFollowing){
+            var querystring2="SELECT * from noteshare.followers WHERE followers.follows="+mysql.escape(req.query.id)+";";
+            db.querydb(querystring2,function(arrFollowers){
+                res.end(JSON.stringify({result:true,arrFollowing:arrFollowing,arrFollowers:arrFollowers}));
+            });
+        });
+    } else {
+        var querystring="SELECT * from noteshare.followers WHERE followers.userid="+mysql.escape(req.user.id)+";";
+        db.querydb(querystring,function(arrFollowing){
+            var querystring2="SELECT * from noteshare.followers WHERE followers.follows="+mysql.escape(req.user.id)+";";
+            db.querydb(querystring2,function(arrFollowers){
+                res.end(JSON.stringify({result:true,arrFollowing:arrFollowing,arrFollowers:arrFollowers}));
+            });
+        });
+    }
 })
 module.exports = app;

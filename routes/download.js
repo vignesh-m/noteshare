@@ -47,31 +47,59 @@ app.get('/create', isAuth, function (req, res) {
 });
 
 app.get('/get', isAuth, function(req, res) {
-	var user_id = req.user.id;
-	var myDownloads = [];
-	var querystring = "SELECT * FROM noteshare.downloads WHERE userid=" + mysql.escape(user_id);
-	db.querydb(querystring,function(result){
-		console.log(querystring);
-		for(var i=0;i<result.length;i++) {
-			console.log(i);
-			var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(result[i].uploadid);
-			db.querydb(querystring1,function(uploadArr){
-				console.log(querystring1);
-				if(uploadArr.length!=0) {
-					var querystring2 = "SELECT * FROM noteshare.user WHERE id=" + mysql.escape(uploadArr[0].userid);
-					db.querydb(querystring2,function(uploadedUser){
-						myDownloads.push({user:uploadedUser[0], file:uploadArr[0]});
-						console.log(querystring2);
-						if(myDownloads.length == result.length) {
-							console.log('result-length');
-							res.end(JSON.stringify({result:true, downloads:myDownloads}));
-						}
-					});
-				}
-				else res.end(JSON.stringify({result:true, downloads:myDownloads}));
-			});			
-		}
-	});
+    if(req.query.id){
+        var user_id = req.query.id;
+        var myDownloads = [];
+        var querystring = "SELECT * FROM noteshare.downloads WHERE userid=" + mysql.escape(user_id);
+        db.querydb(querystring,function(result){
+            console.log(querystring);
+            for(var i=0;i<result.length;i++) {
+                console.log(i);
+                var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(result[i].uploadid);
+                db.querydb(querystring1,function(uploadArr){
+                    console.log(querystring1);
+                    if(uploadArr.length!=0) {
+                        var querystring2 = "SELECT * FROM noteshare.user WHERE id=" + mysql.escape(uploadArr[0].userid);
+                        db.querydb(querystring2,function(uploadedUser){
+                            myDownloads.push({user:uploadedUser[0], file:uploadArr[0]});
+                            console.log(querystring2);
+                            if(myDownloads.length == result.length) {
+                                console.log('result-length');
+                                res.end(JSON.stringify({result:true, downloads:myDownloads}));
+                            }
+                        });
+                    }
+                    else res.end(JSON.stringify({result:true, downloads:myDownloads}));
+                });
+            }
+        });
+    } else {
+        var user_id = req.user.id;
+        var myDownloads = [];
+        var querystring = "SELECT * FROM noteshare.downloads WHERE userid=" + mysql.escape(user_id);
+        db.querydb(querystring, function (result) {
+            console.log(querystring);
+            for (var i = 0; i < result.length; i++) {
+                console.log(i);
+                var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(result[i].uploadid);
+                db.querydb(querystring1, function (uploadArr) {
+                    console.log(querystring1);
+                    if (uploadArr.length != 0) {
+                        var querystring2 = "SELECT * FROM noteshare.user WHERE id=" + mysql.escape(uploadArr[0].userid);
+                        db.querydb(querystring2, function (uploadedUser) {
+                            myDownloads.push({user: uploadedUser[0], file: uploadArr[0]});
+                            console.log(querystring2);
+                            if (myDownloads.length == result.length) {
+                                console.log('result-length');
+                                res.end(JSON.stringify({result: true, downloads: myDownloads}));
+                            }
+                        });
+                    }
+                    else res.end(JSON.stringify({result: true, downloads: myDownloads}));
+                });
+            }
+        });
+    }
 });
 
 module.exports = app;

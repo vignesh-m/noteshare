@@ -1,38 +1,38 @@
-<link href="css/bootstrap-switch.css" rel="stylesheet">
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="/css/bootstrap-switch.css" rel="stylesheet">
+<link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-<link rel="stylesheet" href="css/normalize.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="css/ospb.css">
-<link rel="stylesheet" href="css/horizontal.css">
-<script src="js/vendor/modernizr.js"></script>
-<script src="js/plugins/plugins.js"></script>
-<script src="js/sly.min.js"></script>
-<script src="js/horizontal.js"></script>
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/ospb.css">
+<link rel="stylesheet" href="/css/horizontal.css">
+<script src="/js/vendor/modernizr.js"></script>
+<script src="/js/plugins/plugins.js"></script>
+<script src="/js/sly.min.js"></script>
+<script src="/js/horizontal.js"></script>
 
-<script src="js/sly.min.js"></script>
-<script src="js/jasny-bootstrap.js"></script>
-<link href="css/card-2.css" rel="stylesheet">
+<script src="/js/sly.min.js"></script>
+<script src="/js/jasny-bootstrap.js"></script>
+<link href="/css/card-2.css" rel="stylesheet">
 <!-- Custom CSS -->
-<link href="css/sb-admin.css" rel="stylesheet">
+<link href="/css/sb-admin.css" rel="stylesheet">
 <!-- Morris Charts CSS -->
-<link href="css/plugins/morris.css" rel="stylesheet">
-<link href="css/timeline.css" rel="stylesheet">
-<link href="css/sb-admin-2.css" rel="stylesheet">
-<link href="css/bootstrap-switch.css" rel="stylesheet">
-<link href="css/timeline.css" rel="stylesheet">
-<link href="css/plugins/morris.css" rel="stylesheet">
-<link href="css/notification-counter.css" rel="stylesheet">
-<link href="css/jasny-bootstrap.css" rel="stylesheet">
+<link href="/css/plugins/morris.css" rel="stylesheet">
+<link href="/css/timeline.css" rel="stylesheet">
+<link href="/css/sb-admin-2.css" rel="stylesheet">
+<link href="/css/bootstrap-switch.css" rel="stylesheet">
+<link href="/css/timeline.css" rel="stylesheet">
+<link href="/css/plugins/morris.css" rel="stylesheet">
+<link href="/css/notification-counter.css" rel="stylesheet">
+<link href="/css/jasny-bootstrap.css" rel="stylesheet">
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-<script src="uploadNotes.js"></script>
-<script src="myProfile.js"></script>
+<script src="/uploadNotes.js"></script>
+<script src="/myProfile.js"></script>
 
 <style>
     .vert-center-note {
@@ -366,17 +366,17 @@
 <html ng-app="">
 <div  ng-controller="myProfile" ng-init="user = <%= JSON.stringify(user) %>">
     <head>
-        <link rel="stylesheet" href="css/my-profile.css">
+        <link rel="stylesheet" href="/css/my-profile.css">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
-            {{ user.userName + " | Noteshare" }}
+            {{ user.firstname + " | Noteshare" }}
         </title>
     </head>
 
     <nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
         <div class="container-fluid">
-            <a href="#"><img class="navbar-logo" src="logo.png"></img></a>
+            <a href="#"><img class="navbar-logo" src="/logo.png"></img></a>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav row">
                     <div class="col-lg-2"></div>
@@ -440,7 +440,7 @@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-lg-10 nopadding">
-                    <img src="default-profile-pic.jpg" class="profile-pic"></img>
+                    <img src="\default-profile-pic.jpg" class="profile-pic"></img>
                 </div>
             </div>
             <div class="row">
@@ -499,7 +499,7 @@
                 <div class="row">
                     <center>
                         <div class="col-lg-2">
-                            <img class="book-preview" src="prev-0.jpg" width="120" height="140"></img>
+                            <img class="book-preview" src="\prev-0.jpg" width="120" height="140"></img>
                             <div class="row">
                                 <big>Harry Potter 6</big>
                                 <br>
@@ -513,14 +513,8 @@
 
         </div>
         <div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-show="visDashboard">
-            <span style="font:italic bold 20px Arial,Helvetica,sans-serif;color:#555555">Welcome {{ user.firstname +" "+user.lastname }},</span>
-            <div class="container-fluid card-container" ng-show="!visUploadProgress">
-                <h3>Upload Notes & Earn Credits</h3>
-                <br>
-                <a href="javascript:void(0)" data-toggle="modal" ng-click="loadImage()" data-target="#uploadNotes">
-                    <button type="button" class="btn btn-default btn-flat-note">Upload Notes</button>
-                </a>
-            </div>
+            <span style="font:italic bold 20px Arial,Helvetica,sans-serif;color:#555555">{{ user.firstname +" "+user.lastname }}</span>
+
             <!-- TODO replace above container with below container when uploading -->
             <div class="container-fluid card-container" ng-show="visUploadProgress">
                 <div class="pull-right">
