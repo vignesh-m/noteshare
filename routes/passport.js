@@ -6,10 +6,16 @@ var LocalStrategy   = require('passport-local').Strategy;
 // load up the user model
 var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
-var dbconfig = require('./db_structure');
+var dbconfig = require('./../public/db_structure');
+var db=require('/routes/util/db_structure');
 var connection = mysql.createConnection(dbconfig.connection);
-
-connection.query('USE ' + dbconfig.database);
+console.log(dbconfig.connection);
+connection.connect(function(err,con){
+    if(err) console.log(err);
+});
+//db.querydb('USE ' + dbconfig.database,function(res){
+//    console.log(res);
+//});
 // expose this function to our app using module.exports
 module.exports = function(passport) {
 
