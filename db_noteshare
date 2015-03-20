@@ -58,3 +58,17 @@ CREATE TABLE notifications(
 	text VARCHAR(255),
 	PRIMARY KEY(id)
 );
+
+
+alter table followers add dateStarted Date;
+
+alter table user add dateLastLoggedIn Date;
+alter table user add dateCreated Date;
+alter table user add dateLastLoggedOut Date;
+alter table user add views int;
+
+alter table notifications add dateCreated Date;
+
+alter table uploads add dateUploaded Date;
+
+alter table downloads add dateDownloaded Date;

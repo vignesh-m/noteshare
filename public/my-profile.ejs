@@ -361,6 +361,13 @@ table { border-collapse: collapse; }
 	margin-bottom: 10px;
 	cursor: pointer;
 }
+.nodivider-table
+{
+	font-family:calibri;
+	border-collapse:collapse;
+	border-color:transparent;
+	border: 0px solid transparent;
+}
 </style>
 
 <html ng-app="">
@@ -408,7 +415,7 @@ table { border-collapse: collapse; }
 							<li ng-repeat="notification in notifications">
 								<div class="notification-item">
 									<div class="notification-item-text-body">
-                                        {{notification.textDescription}}
+                                        {{notification.text}}
 									</div>
 									<div style="background:#aaaaaa">
 										<div class="row separator-very-small">
@@ -445,11 +452,11 @@ table { border-collapse: collapse; }
 			</div>
 			<div class="row">
 				<div class="col-lg-2 detail nopadding">
-					<div class="detail detail-large">{{user.uploadsCount}}</div>
+					<div class="detail detail-large">{{myUploadsCount}}</div>
 					<div class="detail detail-small">Uploads</div>
 				</div>
 				<div class="col-lg-2 detail nopadding">
-					<div class="detail detail-large">{{user.downloadsCount}}</div>
+					<div class="detail detail-large">{{myDownloadsCount}}</div>
 					<div class="detail detail-small">Downloads</div>
 				</div>
 				<div class="col-lg-2 detail nopadding">
@@ -457,19 +464,19 @@ table { border-collapse: collapse; }
 					<div class="detail detail-small">Credits</div>
 				</div>
 				<div class="col-lg-2 detail nopadding">
-					<div class="detail detail-large">{{user.followersCount}}</div>
+					<div class="detail detail-large">{{followersCount}}</div>
 					<div class="detail detail-small">Followers</div>
 				</div>
 				<div class="col-lg-2 detail nopadding">
 					<center>
-						<div class="detail detail-large">{{user.followingCount}}</div>
+						<div class="detail detail-large">{{followingCount}}</div>
 						<div class="detail detail-small">Following</div>
 					</center>
 				</div>
 			</div>
 			<div class="row separator-small"></div>
 			<div class="row">
-				<div class="col-lg-10 nopadding">
+				<div class="col-lg-10 nopadding" ng-click="visDashboard=true;visMyUploads=false;visMyDownloads=false;">
 					<div class="nav-link">
 						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspDashboard
 					</div>
@@ -477,7 +484,7 @@ table { border-collapse: collapse; }
 			</div>
 			<div class="row separator-small"></div>
 			<div class="row">
-				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=true;">
+				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=true;visMyDownloads=false;getMyUploads();getArrGrid(myUploads,4,1)">
 					<div class="nav-link">
 						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Uploads
 
@@ -486,32 +493,62 @@ table { border-collapse: collapse; }
 			</div>
 			<div class="row separator-small"></div>
 			<div class="row">
-				<div class="col-lg-10 nopadding">
+				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=false;visMyDownloads=true;getMyDownloads();getArrGrid(myDownloads.downloads,4,2)">
 					<div class="nav-link">
 						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Downloads
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-show="visMyUploads">
 
+		<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyUploads;">
 			<div class="container-fluid card-container" >
-				<div class="row">
-					<center>
-						<div class="col-lg-2">
-							<img class="book-preview" src="prev-0.jpg" width="120" height="140"></img>
-							<div class="row">
-								<big>Harry Potter 6</big>
-								<br>
-								<b>4.7/5.0</b>
-							</div>
+				<h3>My uploads</h3>
+				<table class="table nodivider-table">
+      			<tbody>
+        		<tr ng-repeat="rowUploadElements in gridMyUploads track by $index">
+          			<td ng-repeat="uploadElement in rowUploadElements track by $index">
+          				<center>
+          				<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+						</img>
+						<div class="row">
+							<big>{{uploadElement.name}}</big>
+							<br>
+							{{uploadElement.rating + "/5.0"}}
 						</div>
-					</center>
-				</div>
+						</center>
+          			</td>
+        		</tr>
+      			</tbody>
+    			</table>
+    
 			</div>
-
-
 		</div>
+
+		<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyDownloads;">
+			<div class="container-fluid card-container" >
+				<h3>My downloads</h3>
+				<table class="table nodivider-table">
+      			<tbody>
+        		<tr ng-repeat="rowDownloadElements in gridMyDownloads track by $index">
+          			<td ng-repeat="downloadElement in rowDownloadElements track by $index">
+          				<center>
+          				<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+						</img>
+						<div class="row">
+							<big>{{downloadElement.file.name}}</big>
+							<br>
+							{{downloadElement.file.rating + "/5.0"}}
+						</div>
+						</center>
+          			</td>
+        		</tr>
+      			</tbody>
+    			</table>    
+			</div>
+		</div>
+
+
 		<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-show="visDashboard">
 			<span style="font:italic bold 20px Arial,Helvetica,sans-serif;color:#555555">Welcome {{ user.firstname +" "+user.lastname }},</span>
 			<div class="container-fluid card-container" ng-show="!visUploadProgress">
