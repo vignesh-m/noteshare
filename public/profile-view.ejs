@@ -374,7 +374,7 @@
         </title>
     </head>
 
-    <nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
+   <nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
         <div class="container-fluid">
             <a href="#"><img class="navbar-logo" src="../logo.png"></img></a>
             <div class="collapse navbar-collapse">
@@ -385,10 +385,10 @@
                             <div class="nav-center">
                                 <div class="input-group">
                                     <input placeholder="Search for notes.." id="filter-by" class="form-control input" style="line-height:2;"/>
-									<span class="input-group-btn">
-										<button class="btn btn-default" ng-click="updateNotificationCounter()" type="button">Go!
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" ng-click="updateNotificationCounter()" type="button">Go!
                                         </button>
-									</span>
+                                    </span>
                                 </div>
                             </div>
                         </li>
@@ -396,7 +396,7 @@
                     <div class="col-lg-1 nopadding"></div>
                     <li id="notification-li" class="nav-button notification-container dropdown">
                         <a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
-                        <ul id="notification-li-dropdown" class="dropdown-menu">
+                        <ul id="notification-li-dropdown" class="dropdown-menu"> 
                             <li class="notifications-panel-head">
                                 Notifications
 
@@ -408,7 +408,7 @@
                             <li ng-repeat="notification in notifications">
                                 <div class="notification-item">
                                     <div class="notification-item-text-body">
-                                        {{notification.textDescription}}
+                                        {{notification.text}}
                                     </div>
                                     <div style="background:#aaaaaa">
                                         <div class="row separator-very-small">
@@ -420,10 +420,10 @@
                     </li>
                     <li class="nav-button dropdown">
                         <a href="#" class="dropdown-toggle " id="dropdown" data-toggle="dropdown"><div class="navbar-profile-pic-img-circular"></div></a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu"> 
                             <li>
                                 <a href="javascript:void(0)" ng-click="settings()"><i class="fa fa-fw fa-cog"></i> Settings</a>
-                            </li>
+                            </li>         
                             <li>
                                 <a href="/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                             </li>
