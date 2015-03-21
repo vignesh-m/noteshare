@@ -1,4 +1,4 @@
-function myProfile($scope,$http) {
+function myProfile($scope,$http,$rootScope) {
 	// TODO get info from backend and populate user class object
     $scope.user2={user:'Admin'};
     
@@ -23,6 +23,7 @@ function myProfile($scope,$http) {
   $scope.visUploadProgress = false;
   $scope.files = [];
 
+  $rootScope.searchingUserId = 4;
 
   $scope.updateNotifications = function() {
     $http.get('/notifications/get').
@@ -70,6 +71,7 @@ $scope.getMyDownloads = function() {
   success(function(data, status, headers, config) {
     console.log(data);
     $scope.myDownloads = data;
+    console.log('getting downloads');
     $scope.myDownloadsCount = data.downloads.length;
 }).
   error(function(data, status, headers, config) {

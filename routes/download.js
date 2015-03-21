@@ -5,6 +5,7 @@ var mysql = require('mysql');
 var db = require('../public/db_structure');
 var _ = require('underscore');
 var notification = require('./util/notification');
+var util = require('./util/util');
 
 var isAuth = function(req, res, next) {
 	console.log('Authenticating');
@@ -33,7 +34,7 @@ app.get('/create', isAuth, function (req, res) {
 		db.querydb(querystring2,function(result){
 			console.log(querystring2);
 
-			var querystring3 = "INSERT INTO noteshare.downloads(userid, uploadid) VALUES (" + mysql.escape(req.user.id) + "," + mysql.escape(upload_id) + ")";
+			var querystring3 = "INSERT INTO noteshare.downloads(userid, uploadid, dateDownloaded) VALUES (" + mysql.escape(req.user.id) + "," + mysql.escape(upload_id) + "," + mysql.escape(util.dateToMysqlFormat(new Date())) + ");";
 			db.querydb(querystring3,function(result){
 				console.log(querystring3);
 				console.log(result);
@@ -68,8 +69,14 @@ app.get('/get', isAuth, function(req, res) {
 						}
 					});
 				}
-				else res.end(JSON.stringify({result:true, downloads:myDownloads}));
+				else {
+					console.log('length-0');
+					res.end(JSON.stringify({result:true, downloads:myDownloads}));
+				}
 			});			
+		}
+		if(result.length == 0) {
+			res.end(JSON.stringify({result:true, downloads:myDownloads}));
 		}
 	});
 });

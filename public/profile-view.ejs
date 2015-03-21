@@ -1,38 +1,38 @@
-<link href="css/bootstrap-switch.css" rel="stylesheet">
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="../css/bootstrap-switch.css" rel="stylesheet">
+<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-<link rel="stylesheet" href="css/normalize.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="css/ospb.css">
-<link rel="stylesheet" href="css/horizontal.css">
-<script src="js/vendor/modernizr.js"></script>
-<script src="js/plugins/plugins.js"></script>
-<script src="js/sly.min.js"></script>
-<script src="js/horizontal.js"></script>
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/ospb.css">
+<link rel="stylesheet" href="../css/horizontal.css">
+<script src="../js/vendor/modernizr.js"></script>
+<script src="../js/plugins/plugins.js"></script>
+<script src="../js/sly.min.js"></script>
+<script src="../js/horizontal.js"></script>
 
-<script src="js/sly.min.js"></script>
-<script src="js/jasny-bootstrap.js"></script>
-<link href="css/card-2.css" rel="stylesheet">
+<script src="../js/sly.min.js"></script>
+<script src="../js/jasny-bootstrap.js"></script>
+<link href="../css/card-2.css" rel="stylesheet">
 <!-- Custom CSS -->
-<link href="css/sb-admin.css" rel="stylesheet">
+<link href="../css/sb-admin.css" rel="stylesheet">
 <!-- Morris Charts CSS -->
-<link href="css/plugins/morris.css" rel="stylesheet">
-<link href="css/timeline.css" rel="stylesheet">
-<link href="css/sb-admin-2.css" rel="stylesheet">
-<link href="css/bootstrap-switch.css" rel="stylesheet">
-<link href="css/timeline.css" rel="stylesheet">
-<link href="css/plugins/morris.css" rel="stylesheet">
-<link href="css/notification-counter.css" rel="stylesheet">
-<link href="css/jasny-bootstrap.css" rel="stylesheet">
+<link href="../css/plugins/morris.css" rel="stylesheet">
+<link href="../css/timeline.css" rel="stylesheet">
+<link href="../css/sb-admin-2.css" rel="stylesheet">
+<link href="../css/bootstrap-switch.css" rel="stylesheet">
+<link href="../css/timeline.css" rel="stylesheet">
+<link href="../css/plugins/morris.css" rel="stylesheet">
+<link href="../css/notification-counter.css" rel="stylesheet">
+<link href="../css/jasny-bootstrap.css" rel="stylesheet">
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-<script src="uploadNotes.js"></script>
-<script src="myProfile.js"></script>
+<script src="../uploadNotes.js"></script>
+<script src="../profileView.js"></script>
 
 <style>
     .vert-center-note {
@@ -250,7 +250,7 @@
     .navbar-profile-pic-img-circular{
         width: 28px;
         height: 28px;
-        background-image: url('default-profile-pic.jpg');
+        background-image: url('../default-profile-pic.jpg');
         background-size: cover;
         display: block;
         border-radius: 50%;
@@ -364,7 +364,7 @@
 </style>
 
 <html ng-app="">
-<div  ng-controller="myProfile" ng-init="user = <%= JSON.stringify(user) %>">
+<div ng-controller="profileView" ng-init="user = <%= JSON.stringify(user) %>;otherUser = <%= JSON.stringify(otherUser) %>;">
     <head>
         <link rel="stylesheet" href="css/my-profile.css">
         <meta charset="utf-8">
@@ -376,7 +376,7 @@
 
     <nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
         <div class="container-fluid">
-            <a href="#"><img class="navbar-logo" src="logo.png"></img></a>
+            <a href="#"><img class="navbar-logo" src="../logo.png"></img></a>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav row">
                     <div class="col-lg-2"></div>
@@ -440,36 +440,49 @@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-lg-10 nopadding">
-                    <img src="default-profile-pic.jpg" class="profile-pic"></img>
+                    <img src="../default-profile-pic.jpg" class="profile-pic"></img>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-2 detail nopadding">
-                    <div class="detail detail-large">{{user.uploadsCount}}</div>
+                    <div class="detail detail-large">{{otherUploadsCount}}</div>
                     <div class="detail detail-small">Uploads</div>
                 </div>
                 <div class="col-lg-2 detail nopadding">
-                    <div class="detail detail-large">{{user.downloadsCount}}</div>
-                    <div class="detail detail-small">Downloads</div>
-                </div>
-                <div class="col-lg-2 detail nopadding">
-                    <div class="detail detail-large">{{user.credits}}</div>
+                    <div class="detail detail-large">{{otherUser.credits}}</div>
                     <div class="detail detail-small">Credits</div>
-                </div>
+                </div>     
                 <div class="col-lg-2 detail nopadding">
-                    <div class="detail detail-large">{{user.followersCount}}</div>
+                    <div class="detail detail-large">{{otherUser.views}}</div>
+                    <div class="detail detail-small">Views</div>
+                </div> 
+                <div class="col-lg-2 detail nopadding">
+                    <div class="detail detail-large">{{followersCountOther}}</div>
                     <div class="detail detail-small">Followers</div>
-                </div>
+                </div> 
                 <div class="col-lg-2 detail nopadding">
                     <center>
-                        <div class="detail detail-large">{{user.followingCount}}</div>
+                        <div class="detail detail-large">{{followingCountOther}}</div>
                         <div class="detail detail-small">Following</div>
                     </center>
+                </div> 
+            </div>
+            <div class="row separator-small"></div>
+            <div class="row" style="cursor:pointer" ng-click="followOtherUser()" ng-show="!isFollowingOtherUser">
+                <div class="col-lg-10 nopadding">
+                    <div class="detail detail-large">f</div>
+                    <big><div class="detail detail-small">Follow</div></big>
+                </div>
+            </div>
+            <div class="row" style="cursor:pointer" ng-click="dontFollowOtherUser()" ng-show="isFollowingOtherUser">
+                <div class="col-lg-10 nopadding">
+                    <div class="detail detail-large" >f</div>
+                    <big><div class="detail detail-small">Following</div></big>
                 </div>
             </div>
             <div class="row separator-small"></div>
             <div class="row">
-                <div class="col-lg-10 nopadding">
+                <div class="col-lg-10 nopadding" ng-click="redirectToDashboard()">
                     <div class="nav-link">
                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbspDashboard
                     </div>
@@ -477,239 +490,38 @@
             </div>
             <div class="row separator-small"></div>
             <div class="row">
-                <div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=true;">
+                <div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=true;getArrGrid(otherUploads,4,1)">
                     <div class="nav-link">
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Uploads
-
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbspUploads
                     </div>
                 </div>
             </div>
             <div class="row separator-small"></div>
-            <div class="row">
-                <div class="col-lg-10 nopadding">
-                    <div class="nav-link">
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Downloads
-                    </div>
-                </div>
-            </div>
         </div>
-        <div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-show="visMyUploads">
-
+       
+        <div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyUploads;">
             <div class="container-fluid card-container" >
-                <div class="row">
-                    <center>
-                        <div class="col-lg-2">
-                            <img class="book-preview" src="prev-0.jpg" width="120" height="140"></img>
-                            <div class="row">
-                                <big>Harry Potter 6</big>
-                                <br>
-                                <b>4.7/5.0</b>
-                            </div>
-                        </div>
-                    </center>
-                </div>
-            </div>
-
-
-        </div>
-        <div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-show="visDashboard">
-            <span style="font:italic bold 20px Arial,Helvetica,sans-serif;color:#555555">Welcome {{ user.firstname +" "+user.lastname }},</span>
-            <div class="container-fluid card-container" ng-show="!visUploadProgress">
-                <h3>Upload Notes & Earn Credits</h3>
-                <br>
-                <a href="javascript:void(0)" data-toggle="modal" ng-click="loadImage()" data-target="#uploadNotes">
-                    <button type="button" class="btn btn-default btn-flat-note">Upload Notes</button>
-                </a>
-            </div>
-            <!-- TODO replace above container with below container when uploading -->
-            <div class="container-fluid card-container" ng-show="visUploadProgress">
-                <div class="pull-right">
-                    <a href="javascript:void(0)" class="close" ng-click="visUploadProgress=!visUploadProgress" style="float: none">
-                        &times;
-                    </a>
-                </div>
-                <h3>Uploading your file...</h3><br>
-                <!-- <div class="container-fluid">
-                    <div ng-repeat="file in files track by $index">
+                <h3>Uploads</h3>
+                <table class="table nodivider-table">
+                <tbody>
+                <tr ng-repeat="rowUploadElements in gridMyUploads track by $index">
+                    <td ng-repeat="uploadElement in rowUploadElements track by $index">
+                        <center>
+                        <img class="book-preview" src="../prev-0.jpg" width="120" height="140" style="margin-top:15px">
+                        </img>
                         <div class="row">
-                            <div class="col-md-3">
-                                <img src="default-profile-pic.jpg" alt="File" style="width:25px;height:25px;margin-right:30px"></img>
-                                {{file.fileName}}
-                            </div>
-                            <div class="col-md-6 progress">
-                                <div class="row progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="100"
-                                aria-valuemin="0" aria-valuemax="100">
-                                70%
-                            </div>
-                            <div class="col-md-3"></div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- <center>
-                    <h3>Drag and Drop Files</h3>
-                    <h3 style="color:grey"><b>or</b></h3>
-                    <div class="fileinput fileinput-new" id="browseFileInput" data-provides="fileinput">
-                        <span class="btn btn-default btn-flat-note btn-file cursor-pointer">
-                            <span class="fileinput-new">
-                                <span class="glyphicon glyphicon-search">
-                                </span>
-                                &nbsp Browse
-                            </span>
-                            <span class="fileinput-exists">
-                                Change
-                            </span>
-                            <input type="file" name="...">
-                        </span>&nbsp&nbsp&nbsp
-                        <span class="fileinput-filename"></span>&nbsp&nbsp&nbsp
-                        <a href="javascript:void(0)" id="removeSelectedFile" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">&times;</a>&nbsp&nbsp&nbsp
-                        <a href="javascript:void(0)" style="color:black;" class="fileinput-exists" ng-click="startUpload()"><i class="fa fa-upload fa-1x"></i></a>
-                    </div>
-                </center> -->
-                <div>
-
-
-                    <div id="dropbox" class="dropbox" ng-class="dropClass">
-                        <br><br>
-						<span>
-							{{dropText}}
-						</span>
-                        <br><br>
-                        <center>
-                            <a href="javascript:void(0)" ng-click="fileInputClick()">
-                                <button type="button" class="btn btn-default btn-flat-note"><span class="glyphicon glyphicon-search">
-								</span>
-                                    &nbsp Browse</button>
-                            </a>
-                            <input type="file" style="visibility:hidden" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" />
-                        </center>
-                    </div>
-                    <br>
-                    <div>
-                        <center>
-                            <div ng-show="files.length">
-                                <div ng-repeat="file in files.slice(0)">
-                                    <span>{{file.webkitRelativePath || file.name}}</span>
-                                    (<span ng-switch="file.size > 1024*1024">
-									<span ng-switch-when="true">{{file.size / 1024 / 1024 | number:2}} MB</span>
-									<span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
-								</span>)
-                                </div>
-                                <br>
-                                <button type="button" class="btn btn-default btn-flat-note" ng-click="uploadFile()">Upload</button>
-                                <div ng-show="progressVisible">
-                                    <div class="percent">{{progress}}%</div>
-                                    <div class="progress-bar">
-                                        <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </center>
-                    </div>
-                </div>
-                <p>
-                <h3 class="disclaimer"><b>Disclaimer</b></h3>
-
-                <big class="disclaimer">The file you are uploading is now of complete rights for NoteShare Ltd.,
-                    and you are accepting that your file will be downloaded for free by any user.</big>
-                </p>
-            </div>
-            <div class="container-fluid card-container">
-                <!--<p style="font-size:25px;color:#339999">Recent Downloads</p>-->
-                <div class="col-md-4" style="font-size:25px;color:#339999;padding-left:0px">Recent Downloads</div>
-                <div class="col-md-8" style="font-size:20px;text-align:right">Sort:	Oldest - Newest</div>
-
-            </div>
-            <div class="container-fluid card-container">
-                <!--<p style="font-size:25px;color:#339999">Recent Uploads</p>-->
-                <div class="col-md-4" style="font-size:25px;color:#339999;padding-left:0px">Recent Uploads</div>
-                <div class="col-md-8" style="font-size:20px;text-align:right">Sort:	Oldest - Newest</div>
-                <div class="col-md-12 wrap files-list-container">
-                    <div id="prevUpload" ng-click="prevUpload()" class="col-md-1 side-chevron">
-                        <i class="fa fa-chevron-left fa-3x grey-icon prev"></i>
-                    </div>
-                    <div class="col-md-10 list-view">
-                        <!--<h2>Centered <small>- activated or middle item is centered when possible</small></h2>-->
-                        <!--<div class="scrollbar">
-                            <div class="handle" style="transform: translateZ(0px) translateX(0px); width: 190px;">
-                                <div class="mousearea"></div>
-                            </div>
-                        </div>-->
-                        <div class="controls center" style="visibility:hidden;opacity:0;">
-                            <button id="prevUploadHidden" class="btn prev"><i class="icon-chevron-left"></i> prev</button>
-                        </div>
-                        <div class="frame" id="centered">
-                            <ul class="clearfix" style="transform: translateZ(0px); width: 6840px;">
-                                <li class="active">0</li><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li>
-                                <li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li>
-                                <li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li>
-                                <li>28</li><li>29</li>
-                            </ul>
-                        </div>
-                        <div class="controls center" style="visibility:hidden;opacity:0;">
-                            <button id="nextUploadHidden" class="btn next">next <i class="icon-chevron-right"></i></button>
-                        </div>
-                    </div>
-                    <div id="nextUpload" ng-click="nextUpload()" class="col-md-1 side-chevron">
-                        <i class="fa fa-chevron-right fa-3x grey-icon next"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="uploadNotes" tabindex="-1" role="dialog" aria-labelledby="uploadNotesModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title panel-form-title" id="uploadNotesModalLabel">Fill in details to share your Notes</h3>
-                </div>
-                <div class="modal-body">
-                    <div class="panel panel-form-body">
-                        <div class="panel-body">
+                            <big>{{uploadElement.name}}</big>
                             <br>
-                            <div class="row">
-                                <div class="col-md-2 vert-center-note"><small>File name</small></div>
-                                <div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Filename"></div>
-                            </div><br>
-
-                            <div class="row">
-                                <div class="col-md-2 vert-center-note"><small>Semester</small></div>
-                                <div class="col-md-3"><input type="text" class="border-bottom-text col-lg-11" ng-model="semester" placeholder="Semester"></div>
-                                <div class="col-md-1 vert-center-note"><small>Year</small></div>
-                                <div class="col-md-4"><input type="text" class="border-bottom-text col-lg-10" ng-model="year" placeholder="Year"></div>
-                            </div><br>
-
-                            <div class="row">
-                                <div class="col-md-2 vert-center-note"><small>Department</small></div>
-                                <div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="department" placeholder="Department"></div>
-                            </div><br>
-
-                            <div class="row">
-                                <div class="col-md-2 vert-center-note"><small>Source</small></div>
-                                <div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="source" placeholder="Source"></div>
-                            </div><br>
-
-                            <div class="row">
-                                <div class="col-md-2 vert-center-note"><small>Description</small></div>
-                                <div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="description" placeholder="Description"></div>
-                            </div><br>
-
-                            <div class="row">
-                                <div class="col-md-2 vert-center-note"><small>Tags</small></div>
-                                <div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="tags" placeholder="Tags separated with a space (max. 5)"></div>
-                            </div><br><br><br>
-
-                            <div class="row">
-                                <center>
-                                    <button type="button" class="btn btn-default btn-flat-note" data-dismiss="modal" ng-click="uploadNotesDetails()"><big>&nbsp&nbspShare&nbsp&nbsp</big></button>
-                                </center>
-                            </div>
-
+                            {{uploadElement.rating + "/5.0"}}
                         </div>
-                    </div>
-                </div>
+                        </center>
+                    </td>
+                </tr>
+                </tbody>
+                </table>    
             </div>
         </div>
     </div>
+</div>
 </div>
 </html>

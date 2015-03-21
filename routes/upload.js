@@ -6,6 +6,8 @@
  var mysql=require('mysql');
  var db = require('../public/db_structure');
  var notification = require('./util/notification');
+ var util = require('./util/util');
+
  var isAuth = function(req, res, next) {
     console.log('Authenticating');
     if (req.isAuthenticated())
@@ -19,7 +21,12 @@ router.get('/',isAuth,function(req, res){
     res.render('upload');
 });
 router.get('/get', isAuth, function(req, res) {
-    var querystring = "SELECT * FROM noteshare.uploads WHERE userid=" + mysql.escape(req.user.id);
+
+    if(req.query.id) {
+        var id = req.query.id;
+    }
+    else id=req.user.id;
+    var querystring = "SELECT * FROM noteshare.uploads WHERE userid=" + mysql.escape(id);
     db.querydb(querystring,function(result){
         console.log(querystring);
         res.end(JSON.stringify(result));
@@ -33,7 +40,7 @@ router.post('/',isAuth,function(req,res){
     if(!files){
         res.end('error no files sent');
     } else {
-        var querystring="INSERT INTO noteshare.uploads(userid,name,filename,views,rating) VALUES(";
+        var querystring="INSERT INTO noteshare.uploads(userid,name,filename,views,rating,dateUploaded) VALUES(";
             if(req.user && req.user.id){
                 querystring+=mysql.escape(req.user.id)+',';
             } else {
@@ -46,7 +53,8 @@ router.post('/',isAuth,function(req,res){
             querystring+=mysql.escape(files.originalname)+',';
         }
         querystring+=mysql.escape(files.name)+',';
-        querystring+='0,3);';
+        querystring+='0,3,';
+        querystring+=mysql.escape(util.dateToMysqlFormat(new Date()))+");";
 db.querydb(querystring,function(result){
     console.log(querystring);
     notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname);

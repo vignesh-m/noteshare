@@ -23,14 +23,33 @@ app.get('/add', isAuth,function(req, res) {
 	var user_id = req.user.id;
 	var follows = req.query.follows;
 
-	notification.setFollower(user_id, follows);
-	res.end(JSON.stringify({'result':true,'user_id':user_id,'follows':follows}));
+	notification.setFollower(user_id, follows,res);
 });
+app.get('/remove', isAuth,function(req, res) {
+	var errobj = error.err_insuff_params(res, req, ['follows']);
+	var querystring = "";
+	if(!errobj) {
+		return;
+	}
+
+	var user_id = req.user.id;
+	var follows = req.query.follows;
+
+	notification.removeFollower(user_id, follows, res);
+	
+});
+
 app.get('/get',isAuth,function(req,res){
-	var querystring="SELECT * from noteshare.followers WHERE followers.userid="+mysql.escape(req.user.id)+";";
+	if(req.query.id) {
+		id = req.query.id;
+	}
+	else id = req.user.id;
+	var querystring="SELECT * from noteshare.followers WHERE followers.userid="+mysql.escape(id)+";";
 	db.querydb(querystring,function(arrFollowing){
-		var querystring2="SELECT * from noteshare.followers WHERE followers.follows="+mysql.escape(req.user.id)+";";
+		var querystring2="SELECT * from noteshare.followers WHERE followers.follows="+mysql.escape(id)+";";
 		db.querydb(querystring2,function(arrFollowers){
+			console.log(arrFollowers);
+			console.log(arrFollowing);
 			res.end(JSON.stringify({result:true,arrFollowing:arrFollowing,arrFollowers:arrFollowers}));
 		});
 	});
