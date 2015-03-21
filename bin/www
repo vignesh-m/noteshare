@@ -88,3 +88,9 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+var io = require('socket.io').listen(server);
+io.on('connection', function(socket){
+  console.log("New connection.");
+});
+global.io = io;

@@ -8,6 +8,7 @@ var notify = function (userid, type, text) {
 	var querystring = "INSERT INTO noteshare.notifications(userid,type,text,dateCreated) VALUES (" + mysql.escape(userid) +',' + mysql.escape(type) +','+ mysql.escape(text) + ',' + mysql.escape(util.dateToMysqlFormat(new Date())) + ")";
 	db.querydb(querystring,function(result){
 		console.log(querystring);
+		global.io.emit('update', JSON.stringify({user_id:userid}) );
 	});
 }
 
@@ -38,12 +39,12 @@ var setFollower = function(userid, follows, res) {
 
 var removeFollower = function(userid, follows, res) {
 	var querystring = "DELETE FROM noteshare.followers WHERE userid=" + mysql.escape(userid) +' && follows=' + follows +  ";";
-console.log(querystring);
-db.querydb(querystring,function(result){
 	console.log(querystring);
-	console.log(result);
-	res.end(JSON.stringify({'result':true,'user_id':userid,'notFollowing':follows}));
-});
+	db.querydb(querystring,function(result){
+		console.log(querystring);
+		console.log(result);
+		res.end(JSON.stringify({'result':true,'user_id':userid,'notFollowing':follows}));
+	});
 }
 
 module.exports = {notify:notify, notifyAllFollowers:notifyAllFollowers, setFollower:setFollower, removeFollower:removeFollower};

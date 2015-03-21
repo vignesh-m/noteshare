@@ -17,7 +17,8 @@ function myProfile($scope,$http,$rootScope) {
     $http.get('/notifications/get').
     success(function(data, status, headers, config) {
       console.log(data);
-      $scope.notifications = data.notificationsRead;
+      $scope.notifications = data.notificationsUnread;
+      $scope.updateNotificationCounter();
       $scope.notificationCount = $scope.notifications.length;
     }).
     error(function(data, status, headers, config) {
@@ -41,6 +42,19 @@ function myProfile($scope,$http,$rootScope) {
     else 
       $scope.gridMyDownloads = gridArray;
   }
+
+  $scope.reg_socket = function() {
+    var socket = io();
+    socket.on('update',function(signal) {
+      console.log( "Signal received: " + signal );
+      if( JSON.parse(signal).user_id == $scope.user.id ) {
+        console.log('user matched');
+        $scope.getDetails();
+      }
+    });
+  }
+
+  $scope.reg_socket();
 
   $scope.getMyUploads = function() {
     $http.get('/upload/get').
@@ -138,7 +152,6 @@ function myProfile($scope,$http,$rootScope) {
 		$('#notificationCount').css({opacity:0});
 
 		//TODO : update notifications - user object from backend
-		$scope.notificationCount = $scope.notificationCount;	
 		$('#notificationCount').css({top: '-30px'});
 		$('#notificationCount').animate({top: '12px', opacity: 1});
 	}
