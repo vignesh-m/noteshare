@@ -1,6 +1,12 @@
 function myProfile($scope,$http,$rootScope,$window) {
 	// TODO get info from backend and populate user class object
+
   $scope.user2={user:'Admin'};
+  $scope.hoverSearchResult = false;
+  $scope.searchResultSpinner = false;
+  $scope.semester = "1";
+  $scope.year = (new Date()).getFullYear();
+  $scope.source = "Internet";
 
   $rootScope.truncateString = function(str,length){
     var trunc = str.split('.')[0]; 
@@ -13,9 +19,6 @@ function myProfile($scope,$http,$rootScope,$window) {
     console.log(user_id);
     $window.location.href = '/profile/view?id=' + user_id;
   }
-
-  $scope.hoverSearchResult = false;
-  $scope.searchResultSpinner = false;
 
   $scope.hideSearchResultsDropdown = function() {
     console.log('in hideDropdown');
