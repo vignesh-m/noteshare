@@ -729,43 +729,53 @@ table { border-collapse: collapse; }
 				<div class="panel panel-form-body">
 					<div class="panel-body">
 						<br>
+
+						<form name="uploadDetailsForm" novalidate>
+
 						<div class="row">
 							<div class="col-md-2 vert-center-note"><small>File name</small></div>
-							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Filename"></div>
+							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Filename" name="filename" required></div>
+							<small><span style="color:red" ng-show="uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$error.required">Filename is required.</span></small>
 						</div><br>
 
 						<div class="row">
 							<div class="col-md-2 vert-center-note"><small>Semester</small></div>
-							<div class="col-md-3"><input type="text" class="border-bottom-text col-lg-11" ng-model="semester" placeholder="Semester"></div>
-							<div class="col-md-1 vert-center-note"><small>Year</small></div>
-							<div class="col-md-4"><input type="text" class="border-bottom-text col-lg-10" ng-model="year" placeholder="Year"></div>
+							<div class="col-md-3"><input type="text" class="border-bottom-text col-lg-11" ng-model="semester" placeholder="Semester" name="semester"></div>
+							<div class="col-md-1 vert-center-note" ><small>Year</small></div>
+							<div class="col-md-4"><input type="text" class="border-bottom-text col-lg-10" ng-model="year" placeholder="Year" name="year"></div>
 						</div><br>
 
 						<div class="row">
-							<div class="col-md-2 vert-center-note"><small>Department</small></div>
-							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="department" placeholder="Department"></div>
+							<div class="col-md-2 vert-center-note" ><small>Department</small></div>
+							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="department" placeholder="Department" name="department" required></div>
+							<small><span style="color:red" ng-show="uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$error.required">Department is required.</span></small>
 						</div><br>
 
 						<div class="row">
-							<div class="col-md-2 vert-center-note"><small>Source</small></div>
-							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="source" placeholder="Source"></div>
+							<div class="col-md-2 vert-center-note" ><small>Source</small></div>
+							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="source" placeholder="Source" name="source"></div>
 						</div><br>
 
 						<div class="row">
-							<div class="col-md-2 vert-center-note"><small>Description</small></div>
-							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="description" placeholder="Description"></div>
+							<div class="col-md-2 vert-center-note" ><small>Description</small></div>
+							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="description" placeholder="Description" name="description"></div>
 						</div><br>
 
 						<div class="row">
-							<div class="col-md-2 vert-center-note"><small>Tags</small></div>
-							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="tags" placeholder="Tags separated with a space (max. 5)"></div>
+							<div class="col-md-2 vert-center-note" ><small>Tags</small></div>
+							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="tags" placeholder="Tags separated with a space (max. 5)" name="tags" required></div>
+							<small><span style="color:red" ng-show="uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$error.required">Tags are required.</span></small>
 						</div><br><br><br>
 
-						<div class="row">
+						<div class="row" ng-show="uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$valid &&  
+uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$valid &&
+uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$valid">
 							<center>
 								<button type="button" class="btn btn-default btn-flat-note" data-dismiss="modal" ng-click="uploadNotesDetails()"><big>&nbsp&nbspShare&nbsp&nbsp</big></button>
 							</center>
 						</div>
+
+						</form>
 
 					</div>
 				</div>
