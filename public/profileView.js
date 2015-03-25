@@ -2,6 +2,13 @@ function profileView($scope,$http,$rootScope,$window) {
 	// TODO get info from backend and populate user class object
   $scope.user2={user:'Admin'};
 
+  $rootScope.truncateString = function(str,length){
+    var trunc = str.split('.')[0]; 
+    if(str.length > length) 
+      trunc = str.substring(0,length) +'..';
+    return trunc;
+  }
+
   console.log('started');
   $scope.visDashboard = true;
   $scope.visMyUploads = true;

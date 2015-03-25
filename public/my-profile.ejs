@@ -394,7 +394,24 @@ table { border-collapse: collapse; }
 						<li>
 							<div class="nav-center">
 								<div class="input-group">
-									<input placeholder="Search for notes.." id="filter-by" class="form-control input" style="line-height:2;"/>
+									<input ng-blur="hideSearchResultsDropdown()" ng-focus="getSearchResults(searchInput)" ng-change="getSearchResults(searchInput)" placeholder="Search for notes.." id="filter-by" class="form-control input dropdown" style="line-height:2;" ng-model="searchInput">
+										<ul id="search-li-dropdown" class="dropdown-menu" style="width:100%" ng-mouseover="hoverSearchResult=true" ng-mouseleave="hoverSearchResult=false"> 
+							
+							<li ng-repeat="searchResult in searchResults" ng-click="viewUserProfile(searchResult.user_id)">
+							<div>
+								<div class="notification-item">
+									<div class="notification-item-text-body">
+                                        {{searchResult.text}}
+									</div>
+									<div style="background:#aaaaaa">
+										<div class="row separator-very-small">
+										</div>
+									</div>
+								</div>
+							</div>
+							</li>
+						</ul>
+									</input>
 									<span class="input-group-btn">
 										<button class="btn btn-default" ng-click="updateNotificationCounter()" type="button">Go!
 										</button>
@@ -515,7 +532,7 @@ table { border-collapse: collapse; }
           				<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
 						</img>
 						<div class="row">
-							<big>{{uploadElement.name}}</big>
+							<big>{{truncateString(uploadElement.name,10)}}</big>
 							<br>
 							{{uploadElement.rating + "/5.0"}}
 						</div>
@@ -539,7 +556,7 @@ table { border-collapse: collapse; }
           				<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
 						</img>
 						<div class="row">
-							<big>{{downloadElement.file.name}}</big>
+							<big>{{truncateString(downloadElement.file.name,10)}}</big>
 							<br>
 							{{downloadElement.file.rating + "/5.0"}}
 						</div>

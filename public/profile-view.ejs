@@ -510,7 +510,7 @@
                         <img class="book-preview" src="../prev-0.jpg" width="120" height="140" style="margin-top:15px">
                         </img>
                         <div class="row">
-                            <big>{{uploadElement.name}}</big>
+                            <big>{{truncateString(uploadElement.name, 10)}}</big>
                             <br>
                             {{uploadElement.rating + "/5.0"}}
                         </div>

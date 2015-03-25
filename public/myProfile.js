@@ -1,6 +1,51 @@
-function myProfile($scope,$http,$rootScope) {
+function myProfile($scope,$http,$rootScope,$window) {
 	// TODO get info from backend and populate user class object
   $scope.user2={user:'Admin'};
+
+  $rootScope.truncateString = function(str,length){
+    var trunc = str.split('.')[0]; 
+    if(str.length > length) 
+      trunc = str.substring(0,length) +'..';
+    return trunc;
+  }
+
+  $scope.viewUserProfile = function(user_id) {
+    console.log(user_id);
+    $window.location.href = '/profile/view?id=' + user_id;
+  }
+
+  $scope.hoverSearchResult = false;
+
+  $scope.hideSearchResultsDropdown = function() {
+    console.log('in hideDropdown');
+    if(!$scope.hoverSearchResult) {
+      $('#search-li-dropdown').hide();
+    }
+  }
+
+  $rootScope.getSearchResults = function(searchInput) {
+    console.log('changed');
+    if(searchInput!="" && searchInput) {
+      $http.get('/search?user=' + searchInput).
+      success(function(data, status, headers, config) {
+        var searchResults = data;
+        var ModifiedSearchResults;
+        $scope.searchResults = [];
+        searchResults.forEach(function(element, index, array) {
+          $scope.searchResults.push({text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].userid});
+        });
+        $('#search-li-dropdown').show();
+        $('#search-li-dropdown').dropdown('toggle');
+      }).
+      error(function(data, status, headers, config) {
+        console.log('error');
+      }); 
+    }
+    else {
+      $('#search-li-dropdown').hide();
+      console.log('hide');
+    }
+  }
 
   console.log('started');
   $scope.visDashboard = true;
@@ -237,23 +282,24 @@ function myProfile($scope,$http,$rootScope) {
     $scope.progressVisible = true
     xhr.send(fd)
   }
+}
 
-  function uploadProgress(evt) {
-    $scope.$apply(function(){
-      if (evt.lengthComputable) {
-        $scope.progress = Math.round(evt.loaded * 100 / evt.total)
-      } else {
-        $scope.progress = 'unable to compute'
-      }
-    })
-  }
+function uploadProgress(evt) {
+  $scope.$apply(function(){
+    if (evt.lengthComputable) {
+      $scope.progress = Math.round(evt.loaded * 100 / evt.total)
+    } else {
+      $scope.progress = 'unable to compute'
+    }
+  })
+}
 
-  function uploadComplete(evt) {
-   /* This event is raised when the server send back a response */
-   alert(evt.target.responseText)
- }
+function uploadComplete(evt) {
+ /* This event is raised when the server send back a response */
+ alert(evt.target.responseText)
+}
 
- function uploadFailed(evt) {
+function uploadFailed(evt) {
   alert("There was an error attempting to upload the file.")
 }
 
@@ -262,5 +308,4 @@ function uploadCanceled(evt) {
     $scope.progressVisible = false
   })
   alert("The upload has been canceled by the user or the browser dropped the connection.")
-}
 }
