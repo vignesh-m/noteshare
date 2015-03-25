@@ -9,6 +9,29 @@ function profileView($scope,$http,$rootScope,$window) {
     return trunc;
   }
 
+  $rootScope.getSearchResults = function(searchInput) {
+    console.log('changed');
+    if(searchInput!="" && searchInput) {
+      $http.get('/search?user=' + searchInput).
+      success(function(data, status, headers, config) {
+        var searchResults = data;
+        $scope.searchResults = [];
+        searchResults.forEach(function(element, index, array) {
+          $scope.searchResults.push({text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].userid});
+        });
+        $('#search-li-dropdown').show();
+        $('#search-li-dropdown').dropdown('toggle');
+      }).
+      error(function(data, status, headers, config) {
+        console.log('error');
+      }); 
+    }
+    else {
+      $('#search-li-dropdown').hide();
+      console.log('hide');
+    }
+  }
+
   console.log('started');
   $scope.visDashboard = true;
   $scope.visMyUploads = true;

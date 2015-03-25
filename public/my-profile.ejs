@@ -396,7 +396,12 @@ table { border-collapse: collapse; }
 								<div class="input-group">
 									<input ng-blur="hideSearchResultsDropdown()" ng-focus="getSearchResults(searchInput)" ng-change="getSearchResults(searchInput)" placeholder="Search for notes.." id="filter-by" class="form-control input dropdown" style="line-height:2;" ng-model="searchInput">
 										<ul id="search-li-dropdown" class="dropdown-menu" style="width:100%" ng-mouseover="hoverSearchResult=true" ng-mouseleave="hoverSearchResult=false"> 
-							
+							<div ng-show="searchResultSpinner">
+								<center>
+									<img src="/spinner.gif" style="margin:10px">
+									</img>
+								</center>
+							</div>
 							<li ng-repeat="searchResult in searchResults" ng-click="viewUserProfile(searchResult.user_id)">
 							<div>
 								<div class="notification-item">

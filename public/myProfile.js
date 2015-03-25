@@ -15,6 +15,7 @@ function myProfile($scope,$http,$rootScope,$window) {
   }
 
   $scope.hoverSearchResult = false;
+  $scope.searchResultSpinner = false;
 
   $scope.hideSearchResultsDropdown = function() {
     console.log('in hideDropdown');
@@ -25,15 +26,17 @@ function myProfile($scope,$http,$rootScope,$window) {
 
   $rootScope.getSearchResults = function(searchInput) {
     console.log('changed');
+    $scope.searchResultSpinner = true;
     if(searchInput!="" && searchInput) {
       $http.get('/search?user=' + searchInput).
       success(function(data, status, headers, config) {
         var searchResults = data;
-        var ModifiedSearchResults;
         $scope.searchResults = [];
         searchResults.forEach(function(element, index, array) {
           $scope.searchResults.push({text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].userid});
         });
+        if($scope.searchResults.length)
+          $scope.searchResultSpinner = false;
         $('#search-li-dropdown').show();
         $('#search-li-dropdown').dropdown('toggle');
       }).
