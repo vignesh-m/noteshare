@@ -91,7 +91,7 @@
 .profile-pic {
 	border: 1px solid;
 	border-color: black;
-	width: 263px;
+	width: 100%;
 }
 .fixed-top-nav {
 	position: fixed !important;
@@ -236,8 +236,8 @@ input[type="text"] {
 	font-size: 0.9em;
 	font-weight: bolder;
 	background: transparent;
-	margin-left: 10px !important;
-	margin-right: 10px !important;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
 }
 .notification-item-text-body {
 	padding-top: 0px;
@@ -278,8 +278,10 @@ input[type="text"] {
 	background: #eeeeee;
 }
 #notification-li-dropdown.dropdown-menu {
-	width: 400px !important;
-	height: 100px !important;
+	width: 420px !important;
+	max-height: 500px !important;
+	overflow-y:scroll;
+	overflow-x:hidden;
 }
 .notifications-panel-head {
 	text-align: center;
@@ -371,6 +373,19 @@ table { border-collapse: collapse; }
 	border-color:transparent;
 	border: 0px solid transparent;
 }
+::-webkit-scrollbar {  
+	width: 12px;  
+}  
+::-webkit-scrollbar-track {  
+	background-color: #eaeaea;  
+	border-left: 1px solid #ccc;  
+}  
+::-webkit-scrollbar-thumb {  
+	background-color: #ccc;  
+}  
+::-webkit-scrollbar-thumb:hover {  
+	background-color: #aaa;  
+}  
 </style>
 
 <html ng-app="">
@@ -380,7 +395,7 @@ table { border-collapse: collapse; }
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">		
 		<title>
-			{{ user.userName + " | Noteshare" }}
+			Noteshare
 		</title>
 	</head>
 
@@ -395,52 +410,92 @@ table { border-collapse: collapse; }
 							<div class="nav-center">
 								<div class="input-group">
 									<input ng-blur="hideSearchResultsDropdown()" ng-focus="getSearchResults(searchInput)" ng-change="getSearchResults(searchInput)" placeholder="Search for notes.." id="filter-by" class="form-control input dropdown" style="line-height:2;" ng-model="searchInput">
-										<ul id="search-li-dropdown" class="dropdown-menu" style="width:100%" ng-mouseover="hoverSearchResult=true" ng-mouseleave="hoverSearchResult=false"> 
-							<div ng-show="searchResultSpinner">
-								<center>
-									<img src="/spinner.gif" style="margin:10px">
-									</img>
-								</center>
+									<ul id="search-li-dropdown" class="dropdown-menu" style="width:100%" ng-mouseover="hoverSearchResult=true" ng-mouseleave="hoverSearchResult=false"> 
+										<div ng-show="searchResultSpinner">
+											<center>
+												<img src="/spinner.gif" style="margin:10px">
+											</img>
+										</center>
+									</div>
+									<li ng-repeat="searchResult in searchResults" ng-click="viewUserProfile(searchResult.user_id)">
+										<div>
+											<div class="notification-item">
+												<div class="notification-item-text-body">
+													{{searchResult.text}}
+												</div>
+												<div style="background:#aaaaaa">
+													<div class="row separator-very-small">
+													</div>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</input>
+							<span class="input-group-btn">
+								<button class="btn btn-default" ng-click="updateNotificationCounter()" type="button">Go!
+								</button>
+							</span>
+						</div>
+					</div>
+				</li>
+			</div>
+			<div class="col-lg-1 nopadding"></div>
+			<li id="notification-li" class="nav-button notification-container dropdown">
+				<a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
+				<ul id="notification-li-dropdown" class="dropdown-menu" style="border: 1px solid #000"> 
+					<li class="notifications-panel-head">
+						Downloads
+					</li>
+					<div style="background:#aaaaaa">
+						<div class="row separator-very-small">
+						</div>
+					</div>
+					<div style="color:black;margin-top:10px" ng-show="notificationsDownloads.length==0">
+						<center>No new Downloads</center>
+					</div>
+					<li ng-repeat="notification in notificationsDownloads">
+						<div class="notification-item">
+							<div class="notification-item-text-body"  style="height:54px;">
+								<div class="row" style="margin:2px">
+									<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
+								</img>
+								<big>{{truncateString(notification.text,45)}}</big>
 							</div>
-							<li ng-repeat="searchResult in searchResults" ng-click="viewUserProfile(searchResult.user_id)">
-							<div>
-								<div class="notification-item">
-									<div class="notification-item-text-body">
-                                        {{searchResult.text}}
+                                        <!--<div class="row pull-right">
+											<button type="button" ng-click="notificationMarkAsRead(1,$index)" class="btn btn-default"><i class="fa fa-check fa-1x">Mark as Read</i></button>
+											<button type="button" class="btn btn-default"><i class="fa fa-external-link fa-1x"></i></button>
+										</div>-->
 									</div>
 									<div style="background:#aaaaaa">
 										<div class="row separator-very-small">
 										</div>
 									</div>
 								</div>
-							</div>
 							</li>
-						</ul>
-									</input>
-									<span class="input-group-btn">
-										<button class="btn btn-default" ng-click="updateNotificationCounter()" type="button">Go!
-										</button>
-									</span>
-								</div>
-							</div>
-						</li>
-					</div>
-					<div class="col-lg-1 nopadding"></div>
-					<li id="notification-li" class="nav-button notification-container dropdown">
-						<a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
-						<ul id="notification-li-dropdown" class="dropdown-menu"> 
-							<li class="notifications-panel-head">
-								Notifications
 
+							<li class="notifications-panel-head">
+								Uploads
 							</li>
 							<div style="background:#aaaaaa">
 								<div class="row separator-very-small">
 								</div>
 							</div>
-							<li ng-repeat="notification in notifications">
+							<div style="color:black;margin-top:10px" ng-show="notificationsUploads.length==0">
+								<center>No new Uploads</center>
+							</div>
+							<li ng-repeat="notification in notificationsUploads">
 								<div class="notification-item">
-									<div class="notification-item-text-body">
-                                        {{notification.text}}
+									<div class="notification-item-text-body"  style="height:54px;">
+										<div class="row" style="margin:3px">
+											<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
+										</img>
+										<big>{{truncateString(notification.text,45)}}</big>
+									</div>
+                                        <!--<div class="row pull-right">
+											<button type="button" ng-click="notificationMarkAsRead(1,$index)" class="btn btn-default"><i class="fa fa-check fa-1x">Mark as Read</i></button>
+											<button type="button" class="btn btn-default"><i class="fa fa-external-link fa-1x"></i></button>
+										</div>-->
 									</div>
 									<div style="background:#aaaaaa">
 										<div class="row separator-very-small">
@@ -448,6 +503,7 @@ table { border-collapse: collapse; }
 									</div>
 								</div>
 							</li>
+
 						</ul>
 					</li>
 					<li class="nav-button dropdown">
@@ -530,67 +586,67 @@ table { border-collapse: collapse; }
 			<div class="container-fluid card-container" >
 				<h3>My uploads</h3>
 				<table class="table nodivider-table">
-      			<tbody>
-        		<tr ng-repeat="rowUploadElements in gridMyUploads track by $index">
-          			<td ng-repeat="uploadElement in rowUploadElements track by $index">
-          				<center>
-          				<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
-						</img>
-						<div class="row">
-							<big>{{truncateString(uploadElement.name,10)}}</big>
-							<br>
-							{{uploadElement.rating + "/5.0"}}
-						</div>
-						</center>
-          			</td>
-        		</tr>
-      			</tbody>
-    			</table>
-    
-			</div>
+					<tbody>
+						<tr ng-repeat="rowUploadElements in gridMyUploads track by $index">
+							<td ng-repeat="uploadElement in rowUploadElements track by $index">
+								<center>
+									<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+								</img>
+								<div class="row">
+									<big>{{truncateString(uploadElement.name,10)}}</big>
+									<br>
+									{{uploadElement.rating + "/5.0"}}
+								</div>
+							</center>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
 		</div>
+	</div>
 
-		<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyDownloads;">
-			<div class="container-fluid card-container" >
-				<h3>My downloads</h3>
-				<table class="table nodivider-table">
-      			<tbody>
-        		<tr ng-repeat="rowDownloadElements in gridMyDownloads track by $index">
-          			<td ng-repeat="downloadElement in rowDownloadElements track by $index">
-          				<center>
-          				<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
-						</img>
-						<div class="row">
-							<big>{{truncateString(downloadElement.file.name,10)}}</big>
-							<br>
-							{{downloadElement.file.rating + "/5.0"}}
-						</div>
+	<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyDownloads;">
+		<div class="container-fluid card-container" >
+			<h3>My downloads</h3>
+			<table class="table nodivider-table">
+				<tbody>
+					<tr ng-repeat="rowDownloadElements in gridMyDownloads track by $index">
+						<td ng-repeat="downloadElement in rowDownloadElements track by $index">
+							<center>
+								<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+							</img>
+							<div class="row">
+								<big>{{truncateString(downloadElement.file.name,10)}}</big>
+								<br>
+								{{downloadElement.file.rating + "/5.0"}}
+							</div>
 						</center>
-          			</td>
-        		</tr>
-      			</tbody>
-    			</table>    
-			</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>    
+	</div>
+</div>
+
+
+<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-show="visDashboard">
+	<span style="font:italic bold 20px Arial,Helvetica,sans-serif;color:#555555">Welcome {{ user.firstname +" "+user.lastname }},</span>
+	<div class="container-fluid card-container" ng-show="!visUploadProgress">
+		<h3>Upload Notes & Earn Credits</h3>
+		<br>
+		<a href="javascript:void(0)" data-toggle="modal" ng-click="loadImage()" data-target="#uploadNotes">
+			<button type="button" class="btn btn-default btn-flat-note">Upload Notes</button>
+		</a>
+	</div>
+	<!-- TODO replace above container with below container when uploading -->
+	<div class="container-fluid card-container" ng-show="visUploadProgress">
+		<div class="pull-right">
+			<a href="javascript:void(0)" class="close" ng-click="visUploadProgress=!visUploadProgress" style="float: none">
+				&times;
+			</a>
 		</div>
-
-
-		<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-show="visDashboard">
-			<span style="font:italic bold 20px Arial,Helvetica,sans-serif;color:#555555">Welcome {{ user.firstname +" "+user.lastname }},</span>
-			<div class="container-fluid card-container" ng-show="!visUploadProgress">
-				<h3>Upload Notes & Earn Credits</h3>
-				<br>
-				<a href="javascript:void(0)" data-toggle="modal" ng-click="loadImage()" data-target="#uploadNotes">
-					<button type="button" class="btn btn-default btn-flat-note">Upload Notes</button>
-				</a>
-			</div>
-			<!-- TODO replace above container with below container when uploading -->
-			<div class="container-fluid card-container" ng-show="visUploadProgress">
-				<div class="pull-right">
-					<a href="javascript:void(0)" class="close" ng-click="visUploadProgress=!visUploadProgress" style="float: none">
-						&times;
-					</a>
-				</div>
-				<h3>Uploading your file...</h3><br>
+		<h3>Uploading your file...</h3><br>
 				<!-- <div class="container-fluid">
 					<div ng-repeat="file in files track by $index">
 						<div class="row">
@@ -732,56 +788,56 @@ table { border-collapse: collapse; }
 
 						<form name="uploadDetailsForm" novalidate>
 
-						<div class="row">
-							<div class="col-md-2 vert-center-note"><small>File name</small></div>
-							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Filename" name="filename" required></div>
-							<small><span style="color:red" ng-show="uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$error.required">Filename is required.</span></small>
-						</div><br>
+							<div class="row">
+								<div class="col-md-2 vert-center-note"><small>File name</small></div>
+								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Filename" name="filename" required></div>
+								<small><span style="color:red" ng-show="uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$error.required">Filename is required.</span></small>
+							</div><br>
 
-						<div class="row">
-							<div class="col-md-2 vert-center-note"><small>Semester</small></div>
-							<div class="col-md-3"><input type="text" class="border-bottom-text col-lg-11" ng-model="semester" placeholder="Semester" name="semester"></div>
-							<div class="col-md-1 vert-center-note" ><small>Year</small></div>
-							<div class="col-md-4"><input type="text" class="border-bottom-text col-lg-10" ng-model="year" placeholder="Year" name="year"></div>
-						</div><br>
+							<div class="row">
+								<div class="col-md-2 vert-center-note"><small>Semester</small></div>
+								<div class="col-md-3"><input type="text" class="border-bottom-text col-lg-11" ng-model="semester" placeholder="Semester" name="semester"></div>
+								<div class="col-md-1 vert-center-note" ><small>Year</small></div>
+								<div class="col-md-4"><input type="text" class="border-bottom-text col-lg-10" ng-model="year" placeholder="Year" name="year"></div>
+							</div><br>
 
-						<div class="row">
-							<div class="col-md-2 vert-center-note" ><small>Department</small></div>
-							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="department" placeholder="Department" name="department" required></div>
-							<small><span style="color:red" ng-show="uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$error.required">Department is required.</span></small>
-						</div><br>
+							<div class="row">
+								<div class="col-md-2 vert-center-note" ><small>Department</small></div>
+								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="department" placeholder="Department" name="department" required></div>
+								<small><span style="color:red" ng-show="uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$error.required">Department is required.</span></small>
+							</div><br>
 
-						<div class="row">
-							<div class="col-md-2 vert-center-note" ><small>Source</small></div>
-							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="source" placeholder="Source" name="source"></div>
-						</div><br>
+							<div class="row">
+								<div class="col-md-2 vert-center-note" ><small>Source</small></div>
+								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="source" placeholder="Source" name="source"></div>
+							</div><br>
 
-						<div class="row">
-							<div class="col-md-2 vert-center-note" ><small>Description</small></div>
-							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="description" placeholder="Description" name="description"></div>
-						</div><br>
+							<div class="row">
+								<div class="col-md-2 vert-center-note" ><small>Description</small></div>
+								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="description" placeholder="Description" name="description"></div>
+							</div><br>
 
-						<div class="row">
-							<div class="col-md-2 vert-center-note" ><small>Tags</small></div>
-							<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="tags" placeholder="Tags separated with a space (max. 5)" name="tags" required></div>
-							<small><span style="color:red" ng-show="uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$error.required">Tags are required.</span></small>
-						</div><br><br><br>
+							<div class="row">
+								<div class="col-md-2 vert-center-note" ><small>Tags</small></div>
+								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="tags" placeholder="Tags separated with a space (max. 5)" name="tags" required></div>
+								<small><span style="color:red" ng-show="uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$error.required">Tags are required.</span></small>
+							</div><br><br><br>
 
-						<div class="row" ng-show="uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$valid &&  
-uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$valid &&
-uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$valid">
+							<div class="row" ng-show="uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$valid &&  
+							uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$valid &&
+							uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$valid">
 							<center>
 								<button type="button" class="btn btn-default btn-flat-note" data-dismiss="modal" ng-click="uploadNotesDetails()"><big>&nbsp&nbspShare&nbsp&nbsp</big></button>
 							</center>
 						</div>
 
-						</form>
+					</form>
 
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 </div>
 </html>

@@ -57,7 +57,7 @@ router.post('/',isAuth,function(req,res){
         querystring+=mysql.escape(util.dateToMysqlFormat(new Date()))+");";
 db.querydb(querystring,function(result){
     console.log(querystring);
-    notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname);
+    notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload");
     res.end(JSON.stringify(result));
 })
 }

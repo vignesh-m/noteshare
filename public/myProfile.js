@@ -8,6 +8,50 @@ function myProfile($scope,$http,$rootScope,$window) {
   $scope.year = (new Date()).getFullYear();
   $scope.source = "Internet";
 
+  $('#notification-li-dropdown.dropdown-menu').click(function(eve) {
+    eve.stopPropagation();
+  });
+
+  $scope.notificationMarkAsRead = function(purpose, index) {
+    var notification_id;
+    if(purpose == 0) {
+      notification_id = $scope.notificationsDownloads[index].id;
+      console.log(notification_id);
+    }
+    else if(purpose == 1) {
+      notification_id = $scope.notificationsUploads[index].id;      
+      console.log(notification_id);
+    }
+    $http.get('/notifications/set/read?notification_id=' + notification_id).
+    success(function(data, status, headers, config) {
+      console.log(data);
+      if(data.result) {
+        $http.get('/notifications/get').
+        success(function(data, status, headers, config) {
+          console.log(data);
+          $scope.notifications = data.notificationsUnread;
+          $scope.notificationsUploads = [];
+          $scope.notificationsDownloads = [];
+          $scope.notifications.forEach(function(element, index, array) {
+            if(element.purpose == "Upload") {
+              $scope.notificationsUploads.push(element);
+            }
+            else if(element.purpose == "Download") {
+              $scope.notificationsDownloads.push(element);
+            }
+          });
+          $scope.notificationCount = $scope.notifications.length;
+        }).
+        error(function(data, status, headers, config) {
+          console.log('error');
+        });
+      }
+    }).
+    error(function(data, status, headers, config) {
+      console.log('error');
+    });
+  }
+
   $rootScope.truncateString = function(str,length){
     var trunc = str.split('.')[0]; 
     if(str.length > length) 
@@ -59,6 +103,8 @@ function myProfile($scope,$http,$rootScope,$window) {
   $scope.visMyDownloads = false;
 
   $scope.notifications=[];
+  $scope.notificationsUploads = [];
+  $scope.notificationsDownloads = [];
   $scope.visUploadProgress = false;
   $scope.files = [];
 
@@ -69,6 +115,16 @@ function myProfile($scope,$http,$rootScope,$window) {
     success(function(data, status, headers, config) {
       console.log(data);
       $scope.notifications = data.notificationsUnread;
+      $scope.notificationsUploads = [];
+      $scope.notificationsDownloads = [];
+      $scope.notifications.forEach(function(element, index, array) {
+        if(element.purpose == "Upload") {
+          $scope.notificationsUploads.push(element);
+        }
+        else if(element.purpose == "Download") {
+          $scope.notificationsDownloads.push(element);
+        }
+      });
       $scope.updateNotificationCounter();
       $scope.notificationCount = $scope.notifications.length;
     }).

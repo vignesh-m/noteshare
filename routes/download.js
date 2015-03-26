@@ -38,7 +38,7 @@ app.get('/create', isAuth, function (req, res) {
 			db.querydb(querystring3,function(result){
 				console.log(querystring3);
 				console.log(result);
-				notification.notify(upload[0].userid, "Unread", req.user.name + "has downloaded your file : " + upload[0].name);
+				notification.notify(upload[0].userid, "Unread", req.user.name + "has downloaded your file : " + upload[0].name, "Download");
 				res.end(JSON.stringify(result));
 			});
 		});
