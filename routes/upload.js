@@ -57,6 +57,10 @@ router.post('/',isAuth,function(req,res){
         querystring+=mysql.escape(util.dateToMysqlFormat(new Date()))+");";
 db.querydb(querystring,function(result){
     console.log(querystring);
+
+    //TODO : extend it for an array
+
+    util.savePDFToSWF("uploads/" + files.name, "public/views/" + "test1.swf");
     notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload");
     res.end(JSON.stringify(result));
 })

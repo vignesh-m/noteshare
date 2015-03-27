@@ -17,6 +17,24 @@ var isAuth = function(req, res, next) {
 	}
 };
 
+app.get('/view', function (req, res) {
+	var errobj = error.err_insuff_params(res, req, ['upload_id']);
+
+	if(!errobj) {
+		return;
+	}
+
+	var upload_id = req.query.upload_id;
+	var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(upload_id);
+	db.querydb(querystring1,function(upload){
+		console.log(querystring1);
+		console.log(upload);
+
+		res.render('pdftest.ejs',{"SWFFileName":"../views/test1.swf"});		
+	});
+
+});
+
 app.get('/create', isAuth, function (req, res) {
 	var errobj = error.err_insuff_params(res, req, ['upload_id']);
 
