@@ -59,9 +59,9 @@ function myProfile($scope,$http,$rootScope,$window) {
     return trunc;
   }
 
-  $scope.viewUserProfile = function(user_id) {
-    console.log(user_id);
-    $window.location.href = '/profile/view?id=' + user_id;
+  $scope.redirect = function(link) {
+    console.log(link);
+    $window.location.href = link;
   }
 
   $scope.hideSearchResultsDropdown = function() {
@@ -71,154 +71,240 @@ function myProfile($scope,$http,$rootScope,$window) {
     }
   }
 
-  $rootScope.getSearchResults = function(searchInput) {
+  /*$rootScope.getSearchResults = function(searchInput) {
+    console.log('changed');
+    $scope.searchResultSpinner = true;
+    if(searchInput!="" && searchInput) {
+
+      $http.get('/search?name=' + searchInput).
+      success(function(data, status, headers, config) {
+        var searchResults = data;
+        $scope.searchResults = [];
+        console.log(searchResults);
+        $('#search-li-dropdown').show();
+        $('#search-li-dropdown').dropdown('toggle');
+        searchResults.forEach(function(element, index, array) {
+          $scope.searchResults.push({imglink:'/prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./download/view?upload_id=' + searchResults[index].id});
+        });
+
+        if($scope.searchResults.length)
+          $scope.searchResultSpinner = false;
+      }).
+      error(function(data, status, headers, config) {
+        console.log('error');
+      }); 
+
+    }
+
+else {
+  $('#search-li-dropdown').hide();
+  console.log('hide');
+}
+}*/
+
+$rootScope.getSmartSearchResults = function(searchInput, type) {
     console.log('changed');
     $scope.searchResultSpinner = true;
     if(searchInput!="" && searchInput) {
       $http.get('/search?user=' + searchInput).
       success(function(data, status, headers, config) {
-        var searchResults = data;
         $scope.searchResults = [];
+        var searchResults = data;
         searchResults.forEach(function(element, index, array) {
-          $scope.searchResults.push({text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].userid});
+          $scope.searchResults.push({type:'user',text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].userid, link:'./profile/view?id=' + searchResults[index].userid});
         });
-        if($scope.searchResults.length)
-          $scope.searchResultSpinner = false;
-        $('#search-li-dropdown').show();
-        $('#search-li-dropdown').dropdown('toggle');
+        $http.get('/search?name=' + searchInput).
+        success(function(data, status, headers, config) {
+          var searchResults = data;
+          console.log(searchResults);
+          $('#search-li-dropdown').show();
+          $('#search-li-dropdown').dropdown('toggle');
+          searchResults.forEach(function(element, index, array) {
+            $scope.searchResults.push({type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./download/view?upload_id=' + searchResults[index].id});
+          });
+
+          if($scope.searchResults.length)
+            $scope.searchResultSpinner = false;
+        }).
+        error(function(data, status, headers, config) {
+          console.log('error');
+        }); 
+        
       }).
-      error(function(data, status, headers, config) {
-        console.log('error');
-      }); 
-    }
-    else {
-      $('#search-li-dropdown').hide();
-      console.log('hide');
-    }
-  }
+error(function(data, status, headers, config) {
+  console.log('error');
+}); 
 
-  console.log('started');
-  $scope.visDashboard = true;
-  $scope.visMyUploads = false;
-  $scope.visMyDownloads = false;
+}
+else {
+  $('#search-li-dropdown').hide();
+  console.log('hide');
+}
+}
 
-  $scope.notifications=[];
-  $scope.notificationsUploads = [];
-  $scope.notificationsDownloads = [];
-  $scope.visUploadProgress = false;
-  $scope.files = [];
 
-  $rootScope.searchingUserId = 4;
+$rootScope.getSearchResults = function(searchInput) {
+    console.log('changed');
+    $scope.searchResultSpinner = true;
+    if(searchInput!="" && searchInput) {
+      $http.get('/search?user=' + searchInput).
+      success(function(data, status, headers, config) {
+        $scope.searchResults = [];
+        var searchResults = data;
+        searchResults.forEach(function(element, index, array) {
+          $scope.searchResults.push({imglink:'/avatar.jpg',type:'user',text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].userid, link:'./profile/view?id=' + searchResults[index].userid});
+        });
+        $http.get('/search?name=' + searchInput).
+        success(function(data, status, headers, config) {
+          var searchResults = data;
+          console.log(searchResults);
+          $('#search-li-dropdown').show();
+          $('#search-li-dropdown').dropdown('toggle');
+          searchResults.forEach(function(element, index, array) {
+            $scope.searchResults.push({imglink:'/prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./download/view?upload_id=' + searchResults[index].id});
+          });
 
-  $scope.updateNotifications = function() {
-    $http.get('/notifications/get').
-    success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.notifications = data.notificationsUnread;
-      $scope.notificationsUploads = [];
-      $scope.notificationsDownloads = [];
-      $scope.notifications.forEach(function(element, index, array) {
-        if(element.purpose == "Upload") {
-          $scope.notificationsUploads.push(element);
-        }
-        else if(element.purpose == "Download") {
-          $scope.notificationsDownloads.push(element);
-        }
-      });
-      $scope.updateNotificationCounter();
-      $scope.notificationCount = $scope.notifications.length;
-    }).
-    error(function(data, status, headers, config) {
-      $scope.notifications.push({"textDescription":"Could not load notifications"});
-    });
-  }
+          if($scope.searchResults.length)
+            $scope.searchResultSpinner = false;
+        }).
+        error(function(data, status, headers, config) {
+          console.log('error');
+        }); 
+        
+      }).
+error(function(data, status, headers, config) {
+  console.log('error');
+}); 
 
-  $scope.getArrGrid = function (list, rowElementCount, type) {
-    var gridArray = [], i, k;
+}
+else {
+  $('#search-li-dropdown').hide();
+  console.log('hide');
+}
+}
 
-    for (i = 0, k = -1; i < list.length; i++) {
-      if (i % rowElementCount === 0) {
-        k++;
-        gridArray[k] = [];
+console.log('started');
+$scope.visDashboard = true;
+$scope.visMyUploads = false;
+$scope.visMyDownloads = false;
+
+$scope.notifications=[];
+$scope.notificationsUploads = [];
+$scope.notificationsDownloads = [];
+$scope.visUploadProgress = false;
+$scope.files = [];
+
+$rootScope.searchingUserId = 4;
+
+$scope.updateNotifications = function() {
+  $http.get('/notifications/get').
+  success(function(data, status, headers, config) {
+    console.log(data);
+    $scope.notifications = data.notificationsUnread;
+    $scope.notificationsUploads = [];
+    $scope.notificationsDownloads = [];
+    $scope.notifications.forEach(function(element, index, array) {
+      if(element.purpose == "Upload") {
+        $scope.notificationsUploads.push(element);
       }
-
-      gridArray[k].push(list[i]);
-    }
-    if(type == 1)
-      $scope.gridMyUploads = gridArray;
-    else 
-      $scope.gridMyDownloads = gridArray;
-  }
-
-  $scope.reg_socket = function() {
-    var socket = io();
-    socket.on('update',function(signal) {
-      console.log( "Signal received: " + signal );
-      if( JSON.parse(signal).user_id == $scope.user.id ) {
-        console.log('user matched');
-        $scope.getDetails();
+      else if(element.purpose == "Download") {
+        $scope.notificationsDownloads.push(element);
       }
     });
+    $scope.updateNotificationCounter();
+    $scope.notificationCount = $scope.notifications.length;
+  }).
+  error(function(data, status, headers, config) {
+    $scope.notifications.push({"textDescription":"Could not load notifications"});
+  });
+}
+
+$scope.getArrGrid = function (list, rowElementCount, type) {
+  var gridArray = [], i, k;
+
+  for (i = 0, k = -1; i < list.length; i++) {
+    if (i % rowElementCount === 0) {
+      k++;
+      gridArray[k] = [];
+    }
+
+    gridArray[k].push(list[i]);
   }
+  if(type == 1)
+    $scope.gridMyUploads = gridArray;
+  else 
+    $scope.gridMyDownloads = gridArray;
+}
 
-  $scope.reg_socket();
+$scope.reg_socket = function() {
+  var socket = io();
+  socket.on('update',function(signal) {
+    console.log( "Signal received: " + signal );
+    if( JSON.parse(signal).user_id == $scope.user.id ) {
+      console.log('user matched');
+      $scope.getDetails();
+    }
+  });
+}
 
-  $scope.getMyUploads = function() {
-    $http.get('/upload/get').
-    success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.myUploads = data;
-      $scope.myUploadsCount = data.length;
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
-    });  
-  }
+$scope.reg_socket();
 
-  $scope.getMyDownloads = function() {
-    $http.get('/download/get').
-    success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.myDownloads = data;
-      console.log('getting downloads');
-      $scope.myDownloadsCount = data.downloads.length;
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
-    });  
-  }
+$scope.getMyUploads = function() {
+  $http.get('/upload/get').
+  success(function(data, status, headers, config) {
+    console.log(data);
+    $scope.myUploads = data;
+    $scope.myUploadsCount = data.length;
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  });  
+}
 
-  $scope.getFollowStats = function() {
-    $http.get('/follow/get').
-    success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.following = data.arrFollowing;
-      $scope.followers = data.arrFollowers;
-      $scope.followingCount=($scope.following).length;
-      $scope.followersCount=($scope.followers).length;
+$scope.getMyDownloads = function() {
+  $http.get('/download/get').
+  success(function(data, status, headers, config) {
+    console.log(data);
+    $scope.myDownloads = data;
+    console.log('getting downloads');
+    $scope.myDownloadsCount = data.downloads.length;
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  });  
+}
 
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
-    });  
-  }
+$scope.getFollowStats = function() {
+  $http.get('/follow/get').
+  success(function(data, status, headers, config) {
+    console.log(data);
+    $scope.following = data.arrFollowing;
+    $scope.followers = data.arrFollowers;
+    $scope.followingCount=($scope.following).length;
+    $scope.followersCount=($scope.followers).length;
 
-  $scope.getDetails = function() {
-    $http.get('/profile/get').
-    success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.user = data.data;
-      $scope.getMyUploads();
-      $scope.getMyDownloads();
-      $scope.updateNotifications();
-      $scope.getFollowStats();
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
-    }); 
-  }
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  });  
+}
 
-  $scope.getDetails();
+$scope.getDetails = function() {
+  $http.get('/profile/get').
+  success(function(data, status, headers, config) {
+    console.log(data);
+    $scope.user = data.data;
+    $scope.getMyUploads();
+    $scope.getMyDownloads();
+    $scope.updateNotifications();
+    $scope.getFollowStats();
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  }); 
+}
+
+$scope.getDetails();
 
 
 	//for(var i=1;i<=$scope.notificationCount;i++) {

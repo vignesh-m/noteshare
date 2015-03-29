@@ -94,6 +94,7 @@ router.get('/', function(req, res, next) {
     querystring+=';';
     db.querydb(querystring,function(result){
         console.log(querystring);
+        console.log(result);
         res.end(JSON.stringify(result));
     });
 });

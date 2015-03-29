@@ -30,7 +30,12 @@ app.get('/view', function (req, res) {
 		console.log(querystring1);
 		console.log(upload);
 
-		res.render('pdftest.ejs',{"SWFFileName":"../views/test1.swf"});		
+		//res.render('pdftest.ejs',{"SWFFileName":"../views/test1.swf?random=884873648269"});		
+		res.download('./uploads/' + upload[0].filename, function(err) {
+			if(err) {
+				console.log(err);
+			}
+		});
 	});
 
 });

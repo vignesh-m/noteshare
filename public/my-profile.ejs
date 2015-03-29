@@ -386,6 +386,25 @@ table { border-collapse: collapse; }
 ::-webkit-scrollbar-thumb:hover {  
 	background-color: #aaa;  
 }  
+
+.book-preview-a {
+	text-decoration:none !important;
+	color:#333 !important;
+}
+
+.book-preview-a:hover {
+	text-decoration:none !important;
+	color:#000 !important;
+}
+.book-preview-a:active {
+	text-decoration:none !important;
+	color:#000 !important;
+}
+#search-li-dropdown.dropdown-menu {
+	max-height: 500px !important;
+	overflow-y:scroll;
+	overflow-x:hidden;
+}
 </style>
 
 <html ng-app="">
@@ -413,47 +432,48 @@ table { border-collapse: collapse; }
 									<ul id="search-li-dropdown" class="dropdown-menu" style="width:100%" ng-mouseover="hoverSearchResult=true" ng-mouseleave="hoverSearchResult=false"> 
 										<div ng-show="searchResultSpinner">
 											<center>
-												<img src="/spinner.gif" style="margin:10px">
-											</img>
-										</center>
-									</div>
-									<li ng-repeat="searchResult in searchResults" ng-click="viewUserProfile(searchResult.user_id)">
-										<div>
-											<div class="notification-item">
-												<div class="notification-item-text-body">
-													{{searchResult.text}}
+												<img src="/spinner.gif" style="margin:10px"></img>
+											</center>
+										</div>
+										<li ng-repeat="searchResult in searchResults">
+											<div class="notification-item" ng-click="redirect(searchResult.link)">
+												<div class="notification-item-text-body"  style="height:54px;">
+													<div class="row" style="margin:3px">
+														<img ng-src="{{searchResult.imglink}}" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
+													</img>
+													<big>{{truncateString(searchResult.text,45)}}</big>
 												</div>
-												<div style="background:#aaaaaa">
-													<div class="row separator-very-small">
-													</div>
+											</div>
+											<div style="background:#aaaaaa">
+												<div class="row separator-very-small">
 												</div>
 											</div>
 										</div>
 									</li>
-								</ul>
-							</input>
-							<span class="input-group-btn">
-								<button class="btn btn-default" ng-click="updateNotificationCounter()" type="button">Go!
-								</button>
-							</span>
+								</ul></input>
+								<span class="input-group-btn">
+									<button class="btn btn-default" ng-click="updateNotificationCounter()" type="button">Go!
+									</button>
+								</span>
+							</div>
 						</div>
-					</div>
-				</li>
-			</div>
-			<div class="col-lg-1 nopadding"></div>
-			<li id="notification-li" class="nav-button notification-container dropdown">
-				<a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
-				<ul id="notification-li-dropdown" class="dropdown-menu" style="border: 1px solid #000"> 
-					<li class="notifications-panel-head">
-						Downloads
 					</li>
-					<div style="background:#aaaaaa">
-						<div class="row separator-very-small">
-						</div>
-					</div>
+				</div>
+				<div class="col-lg-1 nopadding"></div>
+				<li id="notification-li" class="nav-button notification-container dropdown">
+					<a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
+					<ul id="notification-li-dropdown" class="dropdown-menu" style="border: 1px solid #000"> 
+						<li class="notifications-panel-head" ng-show="notificationsDownloads.length!=0">
+							Downloads
+
+							<div style="background:#aaaaaa">
+								<div class="row separator-very-small">
+								</div>
+							</div>
+					</li><!-- 
 					<div style="color:black;margin-top:10px" ng-show="notificationsDownloads.length==0">
 						<center>No new Downloads</center>
-					</div>
+					</div> -->
 					<li ng-repeat="notification in notificationsDownloads">
 						<div class="notification-item">
 							<div class="notification-item-text-body"  style="height:54px;">
@@ -474,16 +494,16 @@ table { border-collapse: collapse; }
 								</div>
 							</li>
 
-							<li class="notifications-panel-head">
+							<li class="notifications-panel-head" ng-show="notificationsUploads.length!=0">
 								Uploads
-							</li>
-							<div style="background:#aaaaaa">
-								<div class="row separator-very-small">
+								<div style="background:#aaaaaa">
+									<div class="row separator-very-small">
+									</div>
 								</div>
-							</div>
+							</li><!-- 
 							<div style="color:black;margin-top:10px" ng-show="notificationsUploads.length==0">
 								<center>No new Uploads</center>
-							</div>
+							</div> -->
 							<li ng-repeat="notification in notificationsUploads">
 								<div class="notification-item">
 									<div class="notification-item-text-body"  style="height:54px;">
@@ -557,7 +577,7 @@ table { border-collapse: collapse; }
 			</div>
 			<div class="row separator-small"></div>
 			<div class="row">
-				<div class="col-lg-10 nopadding" ng-click="visDashboard=true;visMyUploads=false;visMyDownloads=false;">
+				<div class="col-lg-10 nopadding" ng-click="visDashboard=true;visMyUploads=false;visSmartSearch=false;visMyDownloads=false;">
 					<div class="nav-link">
 						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspDashboard
 					</div>
@@ -565,7 +585,7 @@ table { border-collapse: collapse; }
 			</div>
 			<div class="row separator-small"></div>
 			<div class="row">
-				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=true;visMyDownloads=false;getMyUploads();getArrGrid(myUploads,4,1)">
+				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=true;visSmartSearch=false;visMyDownloads=false;getMyUploads();getArrGrid(myUploads,4,1)">
 					<div class="nav-link">
 						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Uploads
 
@@ -574,9 +594,17 @@ table { border-collapse: collapse; }
 			</div>
 			<div class="row separator-small"></div>
 			<div class="row">
-				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=false;visMyDownloads=true;getMyDownloads();getArrGrid(myDownloads.downloads,4,2)">
+				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=false;visMyDownloads=true;visSmartSearch=false;getMyDownloads();getArrGrid(myDownloads.downloads,4,2)">
 					<div class="nav-link">
 						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Downloads
+					</div>
+				</div>
+			</div>
+			<div class="row separator-small"></div>
+			<div class="row">
+				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=false;visMyDownloads=false;visSmartSearch=true;">
+					<div class="nav-link">
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSmart search
 					</div>
 				</div>
 			</div>
@@ -589,30 +617,40 @@ table { border-collapse: collapse; }
 					<tbody>
 						<tr ng-repeat="rowUploadElements in gridMyUploads track by $index">
 							<td ng-repeat="uploadElement in rowUploadElements track by $index">
-								<center>
-									<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
-								</img>
-								<div class="row">
-									<big>{{truncateString(uploadElement.name,10)}}</big>
-									<br>
-									{{uploadElement.rating + "/5.0"}}
-								</div>
-							</center>
+								<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + uploadElement.id}}">
+									<center>
+										<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+									</img>
+									<div class="row">
+										<big>{{truncateString(uploadElement.name,10)}}</big>
+										<br>
+										{{uploadElement.rating + "/5.0"}}
+									</div>
+								</center>
+							</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-
 		</div>
 	</div>
 
-	<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyDownloads;">
+	<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visSmartSearch;">
 		<div class="container-fluid card-container" >
-			<h3>My downloads</h3>
-			<table class="table nodivider-table">
-				<tbody>
-					<tr ng-repeat="rowDownloadElements in gridMyDownloads track by $index">
-						<td ng-repeat="downloadElement in rowDownloadElements track by $index">
+			<h3>Smart search</h3>
+			<input ng-blur="hideSearchResultsDropdown()" ng-focus="getSearchResults(searchInput)" ng-change="getSearchResults(searchInput)" placeholder="Search Noteshare" id="filter-by" class="form-control input dropdown" style="line-height:2;" ng-model="smartSearchInput">
+		</input>
+	</div>
+</div>
+
+<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyDownloads;">
+	<div class="container-fluid card-container" >
+		<h3>My downloads</h3>
+		<table class="table nodivider-table">
+			<tbody>
+				<tr ng-repeat="rowDownloadElements in gridMyDownloads track by $index">
+					<td ng-repeat="downloadElement in rowDownloadElements track by $index">
+						<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + downloadElement.file.id}}">
 							<center>
 								<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
 							</img>
@@ -622,11 +660,12 @@ table { border-collapse: collapse; }
 								{{downloadElement.file.rating + "/5.0"}}
 							</div>
 						</center>
-					</td>
-				</tr>
-			</tbody>
-		</table>    
-	</div>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>    
+</div>
 </div>
 
 
