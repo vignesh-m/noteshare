@@ -81,18 +81,6 @@ app.get('/auth/google/callback',
 // LOGOUT ==============================
 // =====================================
 app.get('/logout', function(req, res) {
-    var pwd =req.user.password;
-    debugger;
-    if(bcrypt.compareSync("nothing",pwd)){
-        var deleteQuery = "DELETE FROM user WHERE username='"+req.user.username+"';";
-        debugger;
-        connection.query(deleteQuery,function(err,rows,fields){
-            debugger;
-            if(err)
-                return;
-        });
-    }
-    debugger;
     req.logout();
     user=null;
     res.redirect('/');

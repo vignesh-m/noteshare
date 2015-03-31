@@ -5,13 +5,13 @@ var express = require('express');
 var router = express.Router();
 var mysql= require('mysql');
 var db=require('../public/db_structure');
-function match_name(search_str,fieldname){
+function match_name(search_str,fieldname,col){
     var search_words=search_str.split(" ");
     var s1="";
     for(var i=0;i<search_words.length;i++){
         s1+="*"+search_words[i]+"* ";
     }
-    return "match("+fieldname+") against(\""+s1+"\" IN BOOLEAN MODE) as score";
+    return "match("+fieldname+") against(\""+s1+"\" IN BOOLEAN MODE) as "+col;
 }
 function query_upload(req,callback){
     var querystring='';
@@ -31,12 +31,13 @@ function query_upload(req,callback){
     tables.push('uploads');
     columns.push('uploads.*');
     if(req.name){
-        columns.push(match_name(req.name,"uploads.name"));
-        sort.push("score DESC");
+        columns.push(match_name(req.name,"uploads.name","score1"));
+        sort.push("score1");
         //conditions.push('uploads.name LIKE '+mysql.escape('%'+req.name+'%'));
     }
     if(req.user){
-        conditions.push('user.username = '+mysql.escape(req.user));
+        columns.push(match_name(req.user,"user.username,user.firstname,user.lastname","score2"));
+        sort.push("score2");
     }
     if(req.userid){
         conditions.push('user.userid = '+mysql.escape(req.userid));
@@ -86,9 +87,9 @@ function query_upload(req,callback){
     }
     if(sort.length>0)
         querystring+=' ORDER BY ';
-    for(var i=0;i<sort.length;i++){
-        if(i<sort.length-1) querystring+=mysql.escapeId(sort[i])+" , ";
-        else querystring+=sort[i];
+    for(var i=0;i<sort.length;i++){//todo manage desc and asc
+        if(i<sort.length-1) querystring+=mysql.escapeId(sort[i])+" DESC, ";
+        else querystring+=mysql.escapeId(sort[i])+" DESC";
     }
     querystring+=';';
     db.querydb(querystring,function(result){
@@ -104,7 +105,7 @@ router.get('/', function(req, res) {
 router.get('/user',function(req,res){
     var querystring="";
     if(req.query.name){
-        querystring="SELECT user.*,"+match_name(req.query.name,"user.username,user.firstname,user.lastname")+" FROM " +
+        querystring="SELECT user.*,"+match_name(req.query.name,"user.username,user.firstname,user.lastname","score")+" FROM " +
         "noteshare.user ORDER BY score DESC";
         db.querydb(querystring,function(result){
             console.log(querystring);
