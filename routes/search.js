@@ -22,12 +22,13 @@ function query_upload(req,callback){
     /**
      * search parameters :
      *      name - by uploads.name
-     *      user - by user.username
+     *      user - by user.username,firstname,lastname
      *      userid - by user.userid
      *      rating - by uploads.rating >= ..
      *      tag - by tag.tagid
      *      college - by user.college
      */
+    //todo department,sem,year,
     tables.push('uploads');
     columns.push('uploads.*');
     if(req.name){
@@ -98,7 +99,9 @@ function query_upload(req,callback){
     });
 }
 router.get('/', function(req, res) {
-    query_upload(req.query,function(result){
+    var query=req.query;
+
+    query_upload(query,function(result){
         res.end(JSON.stringify(result));
     })
 });

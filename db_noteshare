@@ -75,3 +75,4 @@ alter table downloads add dateDownloaded Date;
 
 
 alter table uploads add fulltext index (name);
+alter table user add fulltext index (username,firstname,lastname);
