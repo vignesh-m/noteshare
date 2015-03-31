@@ -5,16 +5,15 @@ var express = require('express');
 var router = express.Router();
 var mysql= require('mysql');
 var db=require('../public/db_structure');
-function match_name(search_str){
+function match_name(search_str,fieldname,col){
     var search_words=search_str.split(" ");
     var s1="";
     for(var i=0;i<search_words.length;i++){
         s1+="*"+search_words[i]+"* ";
     }
-    var s="match(uploads.name) against(\""+s1+"\" IN BOOLEAN MODE) as score";
-    return s;
+    return "match("+fieldname+") against(\""+s1+"\" IN BOOLEAN MODE) as "+col;
 }
-router.get('/', function(req, res, next) {
+function query_upload(req,callback){
     var querystring='';
     var tables=[];
     var columns=[];
@@ -23,47 +22,67 @@ router.get('/', function(req, res, next) {
     /**
      * search parameters :
      *      name - by uploads.name
-     *      user - by user.username
+     *      user - by user.username,firstname,lastname
      *      userid - by user.userid
      *      rating - by uploads.rating >= ..
      *      tag - by tag.tagid
+     *      tagname - bt tag.name
      *      college - by user.college
+     *      department - by uploads.department
+     *      semester - by uploads.semester
+     *      year - by uploads.year
      */
     tables.push('uploads');
     columns.push('uploads.*');
-    if(req.query.name){
-        columns.push(match_name(req.query.name));
-        sort.push("score DESC");
-       //conditions.push('uploads.name LIKE '+mysql.escape('%'+req.query.name+'%'));
+    if(req.name){
+        columns.push(match_name(req.name,"uploads.name","score1"));
+        sort.push("score1");
+        //conditions.push('uploads.name LIKE '+mysql.escape('%'+req.name+'%'));
     }
-    if(req.query.user){
-        conditions.push('user.username = '+mysql.escape(req.query.user));
+    if(req.user){
+        columns.push(match_name(req.user,"user.username,user.firstname,user.lastname","score2"));
+        sort.push("score2");
     }
-    if(req.query.userid){
-        conditions.push('user.userid = '+mysql.escape(req.query.userid));
+    if(req.userid){
+        conditions.push('user.userid = '+mysql.escape(req.userid));
     }
-    if(req.query.rating){
-        conditions.push('uploads.rating >= '+mysql.escape(req.query.rating));
+    if(req.rating){
+        conditions.push('uploads.rating >= '+mysql.escape(req.rating));
     }
-    if(req.query.sort){
-        if(req.query.sort.length)
-            sort.push(mysql.escapeId(req.query.sort));
+    if(req.department){
+        conditions.push('uploads.department = '+mysql.escape(req.department));
+    }
+    if(req.semester){
+        conditions.push('uploads.semester = '+mysql.escape(req.semester));
+    }
+    if(req.year){
+        conditions.push('uploads.year = '+mysql.escape(req.year));
+    }
+    if(req.sort){
+        if(req.sort.length)
+            sort.push(mysql.escapeId(req.sort));
         else {
-            sort=req.query.sort;
+            sort=req.sort;
         }
     }
-    if(req.query.tag){
+    if(req.tag || req.tagmap){
         tables.push('tagmap');
         tables.push('tag');
         conditions.push('tagmap.uploadid = uploads.id');
         conditions.push('tagmap.tagid=tag.id');
-        conditions.push('tag.id='+mysql.escape(req.query.tag));
+
         columns.push('tag.name');
     }
-    if(req.query.college){
-        conditions.push('user.college = '+mysql.escape(req.query.college));
+    if(req.tag){
+        conditions.push('tag.id='+mysql.escape(req.tag));
     }
-    if(req.query.user || req.query.userid || req.query.college){
+    if(req.tagname){
+        conditions.push('tag.tagname='+mysql.escape(req.tagname));
+    }
+    if(req.college){
+        conditions.push('user.college = '+mysql.escape(req.college));
+    }
+    if(req.user || req.userid || req.college){
         tables.push('user');
         conditions.push('uploads.userid=user.id');
         columns.push('user.*');
@@ -87,16 +106,34 @@ router.get('/', function(req, res, next) {
     }
     if(sort.length>0)
         querystring+=' ORDER BY ';
-    for(var i=0;i<sort.length;i++){
-        if(i<sort.length-1) querystring+=mysql.escapeId(sort[i])+" , ";
-        else querystring+=sort[i];
+    for(var i=0;i<sort.length;i++){//todo manage desc and asc
+        if(i<sort.length-1) querystring+=mysql.escapeId(sort[i])+" DESC, ";
+        else querystring+=mysql.escapeId(sort[i])+" DESC";
     }
     querystring+=';';
     db.querydb(querystring,function(result){
         console.log(querystring);
-        console.log(result);
-        res.end(JSON.stringify(result));
+        callback(result);
     });
-});
+}
+router.get('/', function(req, res) {
+    var query=req.query;
 
+    query_upload(query,function(result){
+        res.end(JSON.stringify(result));
+    })
+});
+router.get('/user',function(req,res){
+    var querystring="";
+    if(req.query.name){
+        querystring="SELECT user.*,"+match_name(req.query.name,"user.username,user.firstname,user.lastname","score")+" FROM " +
+        "noteshare.user ORDER BY score DESC";
+        db.querydb(querystring,function(result){
+            console.log(querystring);
+            res.end(JSON.stringify(result));
+        });
+    } else {
+        res.end("error");
+    }
+});
 module.exports = router;

@@ -22,7 +22,6 @@ router.get('/',isAuth,function(req, res){
     res.render('upload');
 });
 router.get('/get', isAuth, function(req, res) {
-
     if(req.query.id) {
         var id = req.query.id;
     }
