@@ -16,19 +16,20 @@ function myProfile($scope,$http,$rootScope,$window) {
     var notification_id;
     if(purpose == 0) {
       notification_id = $scope.notificationsDownloads[index].id;
-      console.log(notification_id);
+      //console.log(notification_id);
     }
     else if(purpose == 1) {
       notification_id = $scope.notificationsUploads[index].id;      
-      console.log(notification_id);
+      //console.log(notification_id);
     }
     $http.get('/notifications/set/read?notification_id=' + notification_id).
     success(function(data, status, headers, config) {
-      console.log(data);
+      //
+      // console.log(data);
       if(data.result) {
         $http.get('/notifications/get').
         success(function(data, status, headers, config) {
-          console.log(data);
+          //console.log(data);
           $scope.notifications = data.notificationsUnread;
           $scope.notificationsUploads = [];
           $scope.notificationsDownloads = [];
@@ -60,12 +61,12 @@ function myProfile($scope,$http,$rootScope,$window) {
   }
 
   $scope.redirect = function(link) {
-    console.log(link);
+    //console.log(link);
     $window.location.href = link;
   }
 
   $scope.hideSearchResultsDropdown = function() {
-    console.log('in hideDropdown');
+    //console.log('in hideDropdown');
     if(!$scope.hoverSearchResult) {
       $('#search-li-dropdown').hide();
     }
@@ -103,7 +104,7 @@ else {
 }*/
 
 $rootScope.getSmartSearchResults = function(searchInput, type) {
-    console.log('changed');
+    //console.log('changed');
     $scope.searchResultSpinner = true;
     if(searchInput!="" && searchInput) {
       $http.get('/search?user=' + searchInput).
@@ -116,7 +117,7 @@ $rootScope.getSmartSearchResults = function(searchInput, type) {
         $http.get('/search?name=' + searchInput).
         success(function(data, status, headers, config) {
           var searchResults = data;
-          console.log(searchResults);
+          //console.log(searchResults);
           $('#search-li-dropdown').show();
           $('#search-li-dropdown').dropdown('toggle');
           searchResults.forEach(function(element, index, array) {
@@ -144,24 +145,24 @@ else {
 
 
 $rootScope.getSearchResults = function(searchInput) {
-    console.log('changed');
+    //console.log('changed');
     $scope.searchResultSpinner = true;
     if(searchInput!="" && searchInput) {
-      $http.get('/search?user=' + searchInput).
+      $http.get('/search?name=' + searchInput).//todo try to give better search
       success(function(data, status, headers, config) {
         $scope.searchResults = [];
-        var searchResults = data;
+        var searchResults = data.slice(10);
         searchResults.forEach(function(element, index, array) {
-          $scope.searchResults.push({imglink:'/avatar.jpg',type:'user',text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].userid, link:'./profile/view?id=' + searchResults[index].userid});
-        });
-        $http.get('/search?name=' + searchInput).
+            $scope.searchResults.push({imglink:'/prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./download/view?upload_id=' + searchResults[index].id});
+            });
+        $http.get('/search/user?name=' + searchInput).
         success(function(data, status, headers, config) {
-          var searchResults = data;
-          console.log(searchResults);
+          var searchResults = data.slice(10);
+          //console.log(searchResults);
           $('#search-li-dropdown').show();
           $('#search-li-dropdown').dropdown('toggle');
           searchResults.forEach(function(element, index, array) {
-            $scope.searchResults.push({imglink:'/prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./download/view?upload_id=' + searchResults[index].id});
+              $scope.searchResults.push({imglink:'/avatar.jpg',type:'user',text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].userid, link:'./profile/view?id=' + searchResults[index].userid});
           });
 
           if($scope.searchResults.length)
@@ -183,7 +184,7 @@ else {
 }
 }
 
-console.log('started');
+//console.log('started');
 $scope.visDashboard = true;
 $scope.visMyUploads = false;
 $scope.visMyDownloads = false;
@@ -199,7 +200,7 @@ $rootScope.searchingUserId = 4;
 $scope.updateNotifications = function() {
   $http.get('/notifications/get').
   success(function(data, status, headers, config) {
-    console.log(data);
+    //console.log(data);
     $scope.notifications = data.notificationsUnread;
     $scope.notificationsUploads = [];
     $scope.notificationsDownloads = [];
@@ -252,7 +253,7 @@ $scope.reg_socket();
 $scope.getMyUploads = function() {
   $http.get('/upload/get').
   success(function(data, status, headers, config) {
-    console.log(data);
+    //console.log(data);
     $scope.myUploads = data;
     $scope.myUploadsCount = data.length;
   }).
@@ -264,9 +265,9 @@ $scope.getMyUploads = function() {
 $scope.getMyDownloads = function() {
   $http.get('/download/get').
   success(function(data, status, headers, config) {
-    console.log(data);
+    //console.log(data);
     $scope.myDownloads = data;
-    console.log('getting downloads');
+    //console.log('getting downloads');
     $scope.myDownloadsCount = data.downloads.length;
   }).
   error(function(data, status, headers, config) {
@@ -277,7 +278,7 @@ $scope.getMyDownloads = function() {
 $scope.getFollowStats = function() {
   $http.get('/follow/get').
   success(function(data, status, headers, config) {
-    console.log(data);
+    //console.log(data);
     $scope.following = data.arrFollowing;
     $scope.followers = data.arrFollowers;
     $scope.followingCount=($scope.following).length;
@@ -292,7 +293,7 @@ $scope.getFollowStats = function() {
 $scope.getDetails = function() {
   $http.get('/profile/get').
   success(function(data, status, headers, config) {
-    console.log(data);
+    //console.log(data);
     $scope.user = data.data;
     $scope.getMyUploads();
     $scope.getMyDownloads();
@@ -377,7 +378,7 @@ $scope.getDetails();
       })
     }, false)
     dropbox.addEventListener("drop", function(evt) {
-      console.log('drop evt:', JSON.parse(JSON.stringify(evt.dataTransfer)))
+      //console.log('drop evt:', JSON.parse(JSON.stringify(evt.dataTransfer)))
       evt.stopPropagation()
       evt.preventDefault()
       $scope.$apply(function(){
@@ -397,7 +398,7 @@ $scope.getDetails();
 
     $scope.setFiles = function(element) {
       $scope.$apply(function($scope) {
-        console.log('files:', element.files);
+        //console.log('files:', element.files);
       // Turn the FileList object into an Array
       $scope.files = []
       for (var i = 0; i < element.files.length; i++) {
