@@ -8,6 +8,7 @@ var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
 var dbconfig = require('../public/db_structure');
 var db=require('./util/db_structure');
+var util = require('./util/util');
 var connection = mysql.createConnection(dbconfig.connection);
 connection.query('USE '+dbconfig.database);
 // expose this function to our app using module.exports
@@ -65,9 +66,9 @@ module.exports = function(passport) {
                         password: bcrypt.hashSync("nothing", null, null)  // use the generateHash function in our user model
                     };
 
-                    var insertQuery = "INSERT INTO user ( username, password ) values (?,?)";
+                    var insertQuery = "INSERT INTO user ( username, password, dateCreated) values (?,?,?)";
 
-                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password],function(err, rows) {
+                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password, util.dateToMysqlFormat(new Date())],function(err, rows) {
                         debugger;
                         newUserMysql.id = rows.insertId;
 
@@ -118,9 +119,9 @@ passport.use('google',new GoogleStrategy({
                         password: bcrypt.hashSync(password,null,null)  // use the generateHash function in our user model
                     };
                     debugger;
-                    var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,credits) values (?,?,?,?,?,0)";
+                    var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,credits,views, dateCreated) values (?,?,?,?,?,0,0,?)";
 
-                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password,req.body.college,req.body.firstname,req.body.lastname],function(err, rows) {
+                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password,req.body.college,req.body.firstname,req.body.lastname,util.dateToMysqlFormat(new Date())],function(err, rows) {
                         newUserMysql.id = rows.insertId;
 
                         return done(null, newUserMysql);

@@ -5,6 +5,7 @@ var mysql = require('mysql');
 var db = require('../public/db_structure');
 var _ = require('underscore');
 var notification = require('./util/notification');
+var util = require('./util/util');
 
 var isAuth = function(req, res, next) {
 	console.log('Authenticating');
@@ -15,6 +16,29 @@ var isAuth = function(req, res, next) {
 		res.redirect('/login')
 	}
 };
+
+app.get('/view', function (req, res) {
+	var errobj = error.err_insuff_params(res, req, ['upload_id']);
+
+	if(!errobj) {
+		return;
+	}
+
+	var upload_id = req.query.upload_id;
+	var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(upload_id);
+	db.querydb(querystring1,function(upload){
+		console.log(querystring1);
+		console.log(upload);
+
+		//res.render('pdftest.ejs',{"SWFFileName":"../views/test1.swf?random=884873648269"});		
+		res.download('./uploads/' + upload[0].filename, function(err) {
+			if(err) {
+				console.log(err);
+			}
+		});
+	});
+
+});
 
 app.get('/create', isAuth, function (req, res) {
 	var errobj = error.err_insuff_params(res, req, ['upload_id']);
@@ -33,11 +57,11 @@ app.get('/create', isAuth, function (req, res) {
 		db.querydb(querystring2,function(result){
 			console.log(querystring2);
 
-			var querystring3 = "INSERT INTO noteshare.downloads(userid, uploadid) VALUES (" + mysql.escape(req.user.id) + "," + mysql.escape(upload_id) + ")";
+			var querystring3 = "INSERT INTO noteshare.downloads(userid, uploadid, dateDownloaded) VALUES (" + mysql.escape(req.user.id) + "," + mysql.escape(upload_id) + "," + mysql.escape(util.dateToMysqlFormat(new Date())) + ");";
 			db.querydb(querystring3,function(result){
 				console.log(querystring3);
 				console.log(result);
-				notification.notify(upload[0].userid, "Unread", req.user.name + "has downloaded your file : " + upload[0].name);
+				notification.notify(upload[0].userid, "Unread", req.user.name + "has downloaded your file : " + upload[0].name, "Download");
 				res.end(JSON.stringify(result));
 			});
 		});
@@ -47,59 +71,37 @@ app.get('/create', isAuth, function (req, res) {
 });
 
 app.get('/get', isAuth, function(req, res) {
-    if(req.query.id){
-        var user_id = req.query.id;
-        var myDownloads = [];
-        var querystring = "SELECT * FROM noteshare.downloads WHERE userid=" + mysql.escape(user_id);
-        db.querydb(querystring,function(result){
-            console.log(querystring);
-            for(var i=0;i<result.length;i++) {
-                console.log(i);
-                var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(result[i].uploadid);
-                db.querydb(querystring1,function(uploadArr){
-                    console.log(querystring1);
-                    if(uploadArr.length!=0) {
-                        var querystring2 = "SELECT * FROM noteshare.user WHERE id=" + mysql.escape(uploadArr[0].userid);
-                        db.querydb(querystring2,function(uploadedUser){
-                            myDownloads.push({user:uploadedUser[0], file:uploadArr[0]});
-                            console.log(querystring2);
-                            if(myDownloads.length == result.length) {
-                                console.log('result-length');
-                                res.end(JSON.stringify({result:true, downloads:myDownloads}));
-                            }
-                        });
-                    }
-                    else res.end(JSON.stringify({result:true, downloads:myDownloads}));
-                });
-            }
-        });
-    } else {
-        var user_id = req.user.id;
-        var myDownloads = [];
-        var querystring = "SELECT * FROM noteshare.downloads WHERE userid=" + mysql.escape(user_id);
-        db.querydb(querystring, function (result) {
-            console.log(querystring);
-            for (var i = 0; i < result.length; i++) {
-                console.log(i);
-                var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(result[i].uploadid);
-                db.querydb(querystring1, function (uploadArr) {
-                    console.log(querystring1);
-                    if (uploadArr.length != 0) {
-                        var querystring2 = "SELECT * FROM noteshare.user WHERE id=" + mysql.escape(uploadArr[0].userid);
-                        db.querydb(querystring2, function (uploadedUser) {
-                            myDownloads.push({user: uploadedUser[0], file: uploadArr[0]});
-                            console.log(querystring2);
-                            if (myDownloads.length == result.length) {
-                                console.log('result-length');
-                                res.end(JSON.stringify({result: true, downloads: myDownloads}));
-                            }
-                        });
-                    }
-                    else res.end(JSON.stringify({result: true, downloads: myDownloads}));
-                });
-            }
-        });
-    }
+	var user_id = req.user.id;
+	var myDownloads = [];
+	var querystring = "SELECT * FROM noteshare.downloads WHERE userid=" + mysql.escape(user_id)  + " ORDER BY downloads.dateDownloaded";
+	db.querydb(querystring,function(result){
+		console.log(querystring);
+		for(var i=0;i<result.length;i++) {
+			console.log(i);
+			var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(result[i].uploadid);
+			db.querydb(querystring1,function(uploadArr){
+				console.log(querystring1);
+				if(uploadArr.length!=0) {
+					var querystring2 = "SELECT * FROM noteshare.user WHERE id=" + mysql.escape(uploadArr[0].userid);
+					db.querydb(querystring2,function(uploadedUser){
+						myDownloads.push({user:uploadedUser[0], file:uploadArr[0]});
+						console.log(querystring2);
+						if(myDownloads.length == result.length) {
+							console.log('result-length');
+							res.end(JSON.stringify({result:true, downloads:myDownloads}));
+						}
+					});
+				}
+				else {
+					console.log('length-0');
+					res.end(JSON.stringify({result:true, downloads:myDownloads}));
+				}
+			});			
+		}
+		if(result.length == 0) {
+			res.end(JSON.stringify({result:true, downloads:myDownloads}));
+		}
+	});
 });
 
 module.exports = app;

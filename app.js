@@ -39,7 +39,7 @@ app.use(multer({
     onFileUploadComplete: function (file) {
         console.log(file.fieldname + ' uploaded to  ' + file.path)
     }
-}))
+}));
 
 app.use('/', routes);
 app.use('/search', search);

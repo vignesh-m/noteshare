@@ -40,4 +40,23 @@ app.get('/get', isAuth,function(req, res) {
 
 });
 
+app.get('/set/read', isAuth, function(req, res) {
+	
+	var errobj = error.err_insuff_params(res, req, ['notification_id']);
+	var querystring = "";
+	if(!errobj) {
+		return;
+	}
+
+	var user_id = req.user.id;
+	var notification_id = req.query.notification_id;
+
+	querystring = "UPDATE noteshare.notifications SET type=" + mysql.escape("Read") + " WHERE notifications.id=" + mysql.escape(notification_id) + " AND notifications.userid=" + mysql.escape(user_id);
+	db.querydb(querystring, function(result) {
+		console.log(result);
+		res.end(JSON.stringify({result:true}));
+	});
+
+});
+
 module.exports = app;
