@@ -27,6 +27,9 @@ function query_upload(req,callback){
      *      rating - by uploads.rating >= ..
      *      tag - by tag.tagid
      *      college - by user.college
+     *      department - by uploads.department
+     *      semester - by uploads.semester
+     *      year - by uploads.year
      */
     //todo department,sem,year,
     tables.push('uploads');
@@ -45,6 +48,15 @@ function query_upload(req,callback){
     }
     if(req.rating){
         conditions.push('uploads.rating >= '+mysql.escape(req.rating));
+    }
+    if(req.department){
+        conditions.push('uploads.department = '+mysql.escape(req.department));
+    }
+    if(req.semester){
+        conditions.push('uploads.semester = '+mysql.escape(req.semester));
+    }
+    if(req.year){
+        conditions.push('uploads.year = '+mysql.escape(req.year));
     }
     if(req.sort){
         if(req.sort.length)

@@ -77,3 +77,7 @@ alter table downloads add dateDownloaded Date;
 alter table uploads add fulltext index (name);
 alter table user add fulltext index (username,firstname,lastname);
 alter table tagmap add primary key(tagid,uploadid);
+
+alter table uploads add department VARCHAR(100);
+alter table uploads add semester INTEGER;
+alter table uploads add year INTEGER;
