@@ -26,12 +26,12 @@ function query_upload(req,callback){
      *      userid - by user.userid
      *      rating - by uploads.rating >= ..
      *      tag - by tag.tagid
+     *      tagname - bt tag.name
      *      college - by user.college
      *      department - by uploads.department
      *      semester - by uploads.semester
      *      year - by uploads.year
      */
-    //todo department,sem,year,
     tables.push('uploads');
     columns.push('uploads.*');
     if(req.name){
@@ -65,13 +65,19 @@ function query_upload(req,callback){
             sort=req.sort;
         }
     }
-    if(req.tag){
+    if(req.tag || req.tagmap){
         tables.push('tagmap');
         tables.push('tag');
         conditions.push('tagmap.uploadid = uploads.id');
         conditions.push('tagmap.tagid=tag.id');
-        conditions.push('tag.id='+mysql.escape(req.tag));
+
         columns.push('tag.name');
+    }
+    if(req.tag){
+        conditions.push('tag.id='+mysql.escape(req.tag));
+    }
+    if(req.tagname){
+        conditions.push('tag.tagname='+mysql.escape(req.tagname));
     }
     if(req.college){
         conditions.push('user.college = '+mysql.escape(req.college));
