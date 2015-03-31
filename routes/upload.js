@@ -7,6 +7,7 @@
  var db = require('../public/db_structure');
  var notification = require('./util/notification');
  var util = require('./util/util');
+ var _ = require('underscore');
 
  var isAuth = function(req, res, next) {
     console.log('Authenticating');
@@ -29,6 +30,7 @@ router.get('/get', isAuth, function(req, res) {
     var querystring = "SELECT * FROM noteshare.uploads WHERE userid=" + mysql.escape(id);
     db.querydb(querystring,function(result){
         console.log(querystring);
+        
         res.end(JSON.stringify(result));
     });
 });
