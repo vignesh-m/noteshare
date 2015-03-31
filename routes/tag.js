@@ -20,13 +20,15 @@ router.get('/add',function(req,res){
                 db.querydb("INSERT INTO noteshare.tag(name) VALUES("+mysql.escape(req.query.tagname)+");",function(result){
                     //ret.inserted=true;
                     var tagid=result.insertId;
-                    db.querydb("INSERT INTO noteshare.tagmap(tagid,uploadid) VALUES("+mysql.escape(req.query.tagname)+");",function(result){
-                        ret.inserted=true;
+                    db.querydb("INSERT INTO noteshare.tagmap(tagid,uploadid) VALUES("+mysql.escape(tagid)+","+mysql.escape(req.query.uploadid)+");",function(result){
+                        res.end(JSON.stringify(result));
                     })
                 })
             } else {
                tagid=result[0].id;
-               res.end(JSON.stringify(result));
+               db.querydb("INSERT INTO noteshare.tagmap(tagid,uploadid) VALUES("+mysql.escape(tagid)+","+mysql.escape(req.query.uploadid)+");",function(result){
+                   res.end(JSON.stringify(result));
+               })
             }
        })
    }
