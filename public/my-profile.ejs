@@ -405,6 +405,15 @@ table { border-collapse: collapse; }
 	overflow-y:scroll;
 	overflow-x:hidden;
 }
+input[type='checkbox'] {
+	width:17px;
+	height:17px;
+	background:white;
+	border-radius:5px;
+	border:2px solid #555;
+}
+input[type='checkbox']:checked {
+}
 </style>
 
 <html ng-app="">
@@ -464,16 +473,15 @@ table { border-collapse: collapse; }
 					<a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
 					<ul id="notification-li-dropdown" class="dropdown-menu" style="border: 1px solid #000"> 
 						<li class="notifications-panel-head" ng-show="notificationsDownloads.length!=0">
-							Downloads
-
-							<div style="background:#aaaaaa">
-								<div class="row separator-very-small">
-								</div>
-							</div>
+							Downloads							
 					</li><!-- 
 					<div style="color:black;margin-top:10px" ng-show="notificationsDownloads.length==0">
 						<center>No new Downloads</center>
 					</div> -->
+					<div style="background:#aaaaaa" ng-show="notificationsDownloads.length!=0">
+						<div class="row separator-very-small">
+						</div>
+					</div>
 					<li ng-repeat="notification in notificationsDownloads">
 						<div class="notification-item">
 							<div class="notification-item-text-body"  style="height:54px;">
@@ -496,14 +504,15 @@ table { border-collapse: collapse; }
 
 							<li class="notifications-panel-head" ng-show="notificationsUploads.length!=0">
 								Uploads
-								<div style="background:#aaaaaa">
-									<div class="row separator-very-small">
-									</div>
-								</div>
 							</li><!-- 
 							<div style="color:black;margin-top:10px" ng-show="notificationsUploads.length==0">
 								<center>No new Uploads</center>
 							</div> -->
+
+							<div style="background:#aaaaaa" ng-show="notificationsUploads.length!=0">
+								<div class="row separator-very-small">
+								</div>
+							</div>
 							<li ng-repeat="notification in notificationsUploads">
 								<div class="notification-item">
 									<div class="notification-item-text-body"  style="height:54px;">
@@ -638,34 +647,151 @@ table { border-collapse: collapse; }
 	<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visSmartSearch;">
 		<div class="container-fluid card-container" >
 			<h3>Smart search</h3>
-			<input ng-blur="hideSearchResultsDropdown()" ng-focus="getSearchResults(searchInput)" ng-change="getSearchResults(searchInput)" placeholder="Search Noteshare" class="form-control input" style="line-height:2;" ng-model="smartSearchInput">
-		</input>
-	</div>
-</div>
+			<br>
+			
+			<!-- department, college, semester, year-->
+			<div class="row" style="margin-top:2%;">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-2" style="margin-top:0.8%;">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="boolSmartSearchByCollege"> <p><small><small>&nbsp&nbspCollege</small></small></p>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-8" ng-show="boolSmartSearchByCollege" style="margin-top:1.42%;">
+					<input type="text" placeholder="College" class="form-control input"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:2%;">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-2" style="margin-top:0.8%;">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="boolSmartSearchByDepartment"> <p><small><small>&nbsp&nbspDepartment</small></small></p>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-8" ng-show="boolSmartSearchByDepartment" style="margin-top:1.42%;">
+					<input type="text" placeholder="Department" class="form-control input"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:2%;">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-2" style="margin-top:0.8%;">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="boolSmartSearchByYear"> <p><small><small>&nbsp&nbspYear</small></small></p>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-8" ng-show="boolSmartSearchByYear" style="margin-top:1.42%;">
+					<input type="text" placeholder="Year" class="form-control input"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:2%;">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-2" style="margin-top:0.8%;">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="boolSmartSearchBySemester"> <p><small><small>&nbsp&nbspSemester</small></small></p>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-8" ng-show="boolSmartSearchBySemester" style="margin-top:1.42%;">
+					<input type="text" placeholder="Semester" class="form-control input"/>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-10">
+				</div>
+				<div class="col-md-1">
+					<button class="btn btn-default btn-flat-note" ng-click="updateNotificationCounter()" type="button">Search
+					</button>
+				</div>
+			</div>
 
-<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyDownloads;">
-	<div class="container-fluid card-container" >
-		<h3>My downloads</h3>
-		<table class="table nodivider-table">
-			<tbody>
-				<tr ng-repeat="rowDownloadElements in gridMyDownloads track by $index">
-					<td ng-repeat="downloadElement in rowDownloadElements track by $index">
-						<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + downloadElement.file.id}}">
-							<center>
-								<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
-							</img>
-							<div class="row">
-								<big>{{truncateString(downloadElement.file.name,10)}}</big>
-								<br>
-								{{downloadElement.file.rating + "/5.0"}}
-							</div>
-						</center>
-					</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>    
-</div>
+				<!-- <div class="col-md-2">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="boolSmartSearchByDepartment"> <p><small><small>&nbsp&nbspDepartment</small></small></p>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="boolSmartSearchByYear"> <p><small><small>&nbsp&nbspYear</small></small></p>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="boolSmartSearchBySemester"> <p><small><small>&nbsp&nbspSemester</small></small></p>
+						</label>
+					</div>
+				</div>
+			</div> -->
+			<!-- <div class="row">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-2" ng-show="boolSmartSearchByCollege">
+					<input type="text" placeholder="College" class="form-control input"/>
+				</div>
+				<div class="col-md-2">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="boolSmartSearchByDepartment"> <p><small><small>&nbsp&nbspDepartment</small></small></p>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="boolSmartSearchByYear"> <p><small><small>&nbsp&nbspYear</small></small></p>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="boolSmartSearchBySemester"> <p><small><small>&nbsp&nbspSemester</small></small></p>
+						</label>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+
+	<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyDownloads;">
+		<div class="container-fluid card-container" >
+			<h3>My downloads</h3>
+			<table class="table nodivider-table">
+				<tbody>
+					<tr ng-repeat="rowDownloadElements in gridMyDownloads track by $index">
+						<td ng-repeat="downloadElement in rowDownloadElements track by $index">
+							<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + downloadElement.file.id}}">
+								<center>
+									<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+								</img>
+								<div class="row">
+									<big>{{truncateString(downloadElement.file.name,10)}}</big>
+									<br>
+									{{downloadElement.file.rating + "/5.0"}}
+								</div>
+							</center>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>    
+	</div>
 </div>
 
 
@@ -773,119 +899,138 @@ table { border-collapse: collapse; }
 			<div class="container-fluid card-container">
 				<!--<p style="font-size:25px;color:#339999">Recent Downloads</p>-->
 				<div class="col-md-4" style="font-size:25px;color:#339999;padding-left:0px">Recent Downloads</div>
-				<div class="col-md-8" style="font-size:20px;text-align:right">Sort:	Oldest - Newest</div>
+				<div class="col-md-12">
+					<div style="overflow-x:scroll;overflow-y:hidden;">
+						<table class="table nodivider-table">
+							<tbody>
+								<td ng-repeat="downloadElement in myRecentDownloads track by $index">
+									<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + downloadElement.file.id}}">
+										<center>
+											<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px"></img>
+											<div class="row">
+												<big>{{truncateString(downloadElement.file.name,10)}}</big>
+												<br>
+												{{downloadElement.file.rating + "/5.0"}}
+											</div>
+										</center>
+									</a>
+								</td>
+							</tbody>
+						</table>
+					</div>
+				</div>
 
 			</div>
 			<div class="container-fluid card-container">
 				<!--<p style="font-size:25px;color:#339999">Recent Uploads</p>-->
 				<div class="col-md-4" style="font-size:25px;color:#339999;padding-left:0px">Recent Uploads</div>
-				<div class="col-md-8" style="font-size:20px;text-align:right">Sort:	Oldest - Newest</div>
-				<div class="col-md-12 wrap files-list-container">
-					<div id="prevUpload" ng-click="prevUpload()" class="col-md-1 side-chevron">
+				<div class="col-md-12">
+					<!-- <div id="prevUpload" ng-click="prevUpload()" class="col-md-1 side-chevron">
 						<i class="fa fa-chevron-left fa-3x grey-icon prev"></i>
-					</div>
-					<div class="col-md-10 list-view">
-						<!--<h2>Centered <small>- activated or middle item is centered when possible</small></h2>-->
+					</div> -->
+					<!--<h2>Centered <small>- activated or middle item is centered when possible</small></h2>-->
 					<!--<div class="scrollbar">
 						<div class="handle" style="transform: translateZ(0px) translateX(0px); width: 190px;">
 							<div class="mousearea"></div>
 						</div>
 					</div>-->
-					<div class="controls center" style="visibility:hidden;opacity:0;">
+					<!-- <div class="controls center" style="visibility:hidden;opacity:0;">
 						<button id="prevUploadHidden" class="btn prev"><i class="icon-chevron-left"></i> prev</button>
-					</div>
-					<div class="frame" id="centered">
-						<ul class="clearfix" style="transform: translateZ(0px); width: 6840px;">
-							<li ng-repeat="uploadElement in myUploads track by $index">
-								<!-- <a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + uploadElement.id}}">
-									<center>
-										<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px"></img>
+					</div> -->
+					<div style="overflow-x:scroll;overflow-y:hidden;">
+						<table class="table nodivider-table">
+							<tbody>
+								<td ng-repeat="uploadElement in myRecentUploads track by $index">
+									<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + uploadElement.id}}">
+										<center>
+											<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+										</img>
 										<div class="row">
 											<big>{{truncateString(uploadElement.name,10)}}</big>
 											<br>
 											{{uploadElement.rating + "/5.0"}}
 										</div>
 									</center>
-								</a> -->
-								{{$index}}
-							</li>
-						</ul>
-					</div>
+								</a>
+							</td>
+						</tbody>
+					</table>
+				</div>
+					<!-- 
 					<div class="controls center" style="visibility:hidden;opacity:0;">
 						<button id="nextUploadHidden" class="btn next">next <i class="icon-chevron-right"></i></button>
+					</div> -->
+				</div>
+				<!-- <div id="nextUpload" ng-click="nextUpload()" class="col-md-1 side-chevron">
+					<i class="fa fa-chevron-right fa-3x grey-icon next"></i>
+				</div> -->
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="uploadNotes" tabindex="-1" role="dialog" aria-labelledby="uploadNotesModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h3 class="modal-title panel-form-title" id="uploadNotesModalLabel">Fill in details to share your Notes</h3>
+				</div>
+				<div class="modal-body">
+					<div class="panel panel-form-body">
+						<div class="panel-body">
+							<br>
+
+							<form name="uploadDetailsForm" novalidate>
+
+								<div class="row">
+									<div class="col-md-2 vert-center-note"><small>File name</small></div>
+									<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Filename" name="filename" required></div>
+									<small><span style="color:red" ng-show="uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$error.required">Filename is required.</span></small>
+								</div><br>
+
+								<div class="row">
+									<div class="col-md-2 vert-center-note"><small>Semester</small></div>
+									<div class="col-md-3"><input type="text" class="border-bottom-text col-lg-11" ng-model="semester" placeholder="Semester" name="semester"></div>
+									<div class="col-md-1 vert-center-note" ><small>Year</small></div>
+									<div class="col-md-4"><input type="text" class="border-bottom-text col-lg-10" ng-model="year" placeholder="Year" name="year"></div>
+								</div><br>
+
+								<div class="row">
+									<div class="col-md-2 vert-center-note" ><small>Department</small></div>
+									<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="department" placeholder="Department" name="department" required></div>
+									<small><span style="color:red" ng-show="uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$error.required">Department is required.</span></small>
+								</div><br>
+
+								<div class="row">
+									<div class="col-md-2 vert-center-note" ><small>Source</small></div>
+									<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="source" placeholder="Source" name="source"></div>
+								</div><br>
+
+								<div class="row">
+									<div class="col-md-2 vert-center-note" ><small>Description</small></div>
+									<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="description" placeholder="Description" name="description"></div>
+								</div><br>
+
+								<div class="row">
+									<div class="col-md-2 vert-center-note" ><small>Tags</small></div>
+									<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="tags" placeholder="Tags separated with a space (max. 5)" name="tags" required></div>
+									<small><span style="color:red" ng-show="uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$error.required">Tags are required.</span></small>
+								</div><br><br><br>
+
+								<div class="row" ng-show="uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$valid &&  
+								uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$valid &&
+								uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$valid">
+								<center>
+									<button type="button" class="btn btn-default btn-flat-note" data-dismiss="modal" ng-click="uploadNotesDetails()"><big>&nbsp&nbspShare&nbsp&nbsp</big></button>
+								</center>
+							</div>
+
+						</form>
+
 					</div>
 				</div>
-				<div id="nextUpload" ng-click="nextUpload()" class="col-md-1 side-chevron">
-					<i class="fa fa-chevron-right fa-3x grey-icon next"></i>
-				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<div class="modal fade" id="uploadNotes" tabindex="-1" role="dialog" aria-labelledby="uploadNotesModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h3 class="modal-title panel-form-title" id="uploadNotesModalLabel">Fill in details to share your Notes</h3>
-			</div>
-			<div class="modal-body">
-				<div class="panel panel-form-body">
-					<div class="panel-body">
-						<br>
-
-						<form name="uploadDetailsForm" novalidate>
-
-							<div class="row">
-								<div class="col-md-2 vert-center-note"><small>File name</small></div>
-								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="filename" placeholder="Filename" name="filename" required></div>
-								<small><span style="color:red" ng-show="uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$error.required">Filename is required.</span></small>
-							</div><br>
-
-							<div class="row">
-								<div class="col-md-2 vert-center-note"><small>Semester</small></div>
-								<div class="col-md-3"><input type="text" class="border-bottom-text col-lg-11" ng-model="semester" placeholder="Semester" name="semester"></div>
-								<div class="col-md-1 vert-center-note" ><small>Year</small></div>
-								<div class="col-md-4"><input type="text" class="border-bottom-text col-lg-10" ng-model="year" placeholder="Year" name="year"></div>
-							</div><br>
-
-							<div class="row">
-								<div class="col-md-2 vert-center-note" ><small>Department</small></div>
-								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="department" placeholder="Department" name="department" required></div>
-								<small><span style="color:red" ng-show="uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$error.required">Department is required.</span></small>
-							</div><br>
-
-							<div class="row">
-								<div class="col-md-2 vert-center-note" ><small>Source</small></div>
-								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="source" placeholder="Source" name="source"></div>
-							</div><br>
-
-							<div class="row">
-								<div class="col-md-2 vert-center-note" ><small>Description</small></div>
-								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="description" placeholder="Description" name="description"></div>
-							</div><br>
-
-							<div class="row">
-								<div class="col-md-2 vert-center-note" ><small>Tags</small></div>
-								<div class="col-md-8"><input type="text" class="border-bottom-text col-lg-11" ng-model="tags" placeholder="Tags separated with a space (max. 5)" name="tags" required></div>
-								<small><span style="color:red" ng-show="uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$error.required">Tags are required.</span></small>
-							</div><br><br><br>
-
-							<div class="row" ng-show="uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$valid &&  
-							uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$valid &&
-							uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$valid">
-							<center>
-								<button type="button" class="btn btn-default btn-flat-note" data-dismiss="modal" ng-click="uploadNotesDetails()"><big>&nbsp&nbspShare&nbsp&nbsp</big></button>
-							</center>
-						</div>
-
-					</form>
-
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 </div>
 </div>
 </html>

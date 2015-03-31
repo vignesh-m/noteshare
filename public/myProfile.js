@@ -254,6 +254,7 @@ $scope.getMyUploads = function() {
   success(function(data, status, headers, config) {
     console.log(data);
     $scope.myUploads = data;
+    $scope.myRecentUploads = $scope.myUploads.slice(0,10);
     $scope.myUploadsCount = data.length;
   }).
   error(function(data, status, headers, config) {
@@ -266,6 +267,7 @@ $scope.getMyDownloads = function() {
   success(function(data, status, headers, config) {
     console.log(data);
     $scope.myDownloads = data;
+    $scope.myRecentDownloads = $scope.myDownloads.downloads.slice(0,10);
     console.log('getting downloads');
     $scope.myDownloadsCount = data.downloads.length;
   }).
