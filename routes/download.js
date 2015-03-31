@@ -73,7 +73,7 @@ app.get('/create', isAuth, function (req, res) {
 app.get('/get', isAuth, function(req, res) {
 	var user_id = req.user.id;
 	var myDownloads = [];
-	var querystring = "SELECT * FROM noteshare.downloads WHERE userid=" + mysql.escape(user_id);
+	var querystring = "SELECT * FROM noteshare.downloads WHERE userid=" + mysql.escape(user_id)  + " ORDER BY downloads.dateDownloaded";
 	db.querydb(querystring,function(result){
 		console.log(querystring);
 		for(var i=0;i<result.length;i++) {

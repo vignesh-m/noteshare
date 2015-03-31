@@ -27,10 +27,10 @@ router.get('/get', isAuth, function(req, res) {
         var id = req.query.id;
     }
     else id=req.user.id;
-    var querystring = "SELECT * FROM noteshare.uploads WHERE userid=" + mysql.escape(id);
+    var querystring = "SELECT * FROM noteshare.uploads WHERE userid=" + mysql.escape(id) + " ORDER BY uploads.dateUploaded";
     db.querydb(querystring,function(result){
         console.log(querystring);
-        
+        console.log(result);
         res.end(JSON.stringify(result));
     });
 });
