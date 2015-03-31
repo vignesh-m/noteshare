@@ -14,7 +14,7 @@ function match_name(search_str){
     var s="match(uploads.name) against(\""+s1+"\" IN BOOLEAN MODE) as score";
     return s;
 }
-router.get('/', function(req, res, next) {
+function query_upload(req,callback){
     var querystring='';
     var tables=[];
     var columns=[];
@@ -34,7 +34,7 @@ router.get('/', function(req, res, next) {
     if(req.query.name){
         columns.push(match_name(req.query.name));
         sort.push("score DESC");
-       //conditions.push('uploads.name LIKE '+mysql.escape('%'+req.query.name+'%'));
+        //conditions.push('uploads.name LIKE '+mysql.escape('%'+req.query.name+'%'));
     }
     if(req.query.user){
         conditions.push('user.username = '+mysql.escape(req.query.user));
@@ -94,8 +94,17 @@ router.get('/', function(req, res, next) {
     querystring+=';';
     db.querydb(querystring,function(result){
         console.log(querystring);
-        res.end(JSON.stringify(result));
+        callback(result);
     });
+}
+router.get('/', function(req, res) {
+    query_upload(req,function(result){
+        console.log(result);
+        res.end(JSON.stringify(result));
+    })
 });
-
+router.get('/user',function(req,res){
+    var querystring="";
+    querystring="SELECT * FROM noteshare.user"
+})
 module.exports = router;
