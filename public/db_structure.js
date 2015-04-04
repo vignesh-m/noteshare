@@ -3,7 +3,7 @@ var password='root';
 var pool=mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: password
+    password: 'password'
 });
 function querydb(querystring,callback){
     pool.getConnection(function(err, connection) {
@@ -17,7 +17,7 @@ function querydb(querystring,callback){
 var connection = mysql.createConnection({
     'host': 'localhost',
     'user': 'root',
-    'password': password
+    'password': 'password'
 });
 module.exports={
     pool:pool,
@@ -25,7 +25,7 @@ module.exports={
     'connection': {
         'host': 'localhost',
         'user': 'root',
-        'password': password
+        'password': 'password'
     },
     'database': 'noteshare',
     'users_table': 'user'

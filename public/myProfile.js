@@ -8,6 +8,17 @@ function myProfile($scope,$http,$rootScope,$window) {
   $scope.year = (new Date()).getFullYear();
   $scope.source = "Internet";
 
+  $scope.smartCollege = "";
+  $scope.smartDepartment = "";
+  $scope.smartYear = "";
+  $scope.smartSemester = "";
+
+  $scope.smartSearchLimit = 12;
+  $scope.smartSearchOffset = 0;
+  $scope.smartSearchPage = 1;
+  $scope.smartSearchResults = [];
+  $scope.noMoreSmartSearchResults = false;
+
   $('#notification-li-dropdown.dropdown-menu').click(function(eve) {
     eve.stopPropagation();
   });
@@ -16,20 +27,19 @@ function myProfile($scope,$http,$rootScope,$window) {
     var notification_id;
     if(purpose == 0) {
       notification_id = $scope.notificationsDownloads[index].id;
-      //console.log(notification_id);
+      console.log(notification_id);
     }
     else if(purpose == 1) {
       notification_id = $scope.notificationsUploads[index].id;      
-      //console.log(notification_id);
+      console.log(notification_id);
     }
     $http.get('/notifications/set/read?notification_id=' + notification_id).
     success(function(data, status, headers, config) {
-      //
-      // console.log(data);
+      console.log(data);
       if(data.result) {
         $http.get('/notifications/get').
         success(function(data, status, headers, config) {
-          //console.log(data);
+          console.log(data);
           $scope.notifications = data.notificationsUnread;
           $scope.notificationsUploads = [];
           $scope.notificationsDownloads = [];
@@ -61,12 +71,12 @@ function myProfile($scope,$http,$rootScope,$window) {
   }
 
   $scope.redirect = function(link) {
-    //console.log(link);
+    console.log(link);
     $window.location.href = link;
   }
 
   $scope.hideSearchResultsDropdown = function() {
-    //console.log('in hideDropdown');
+    console.log('in hideDropdown');
     if(!$scope.hoverSearchResult) {
       $('#search-li-dropdown').hide();
     }
@@ -103,76 +113,68 @@ else {
 }
 }*/
 
-$rootScope.getSmartSearchResults = function(searchInput, type) {
-    //console.log('changed');
-    $scope.searchResultSpinner = true;
-    if(searchInput!="" && searchInput) {
-      $http.get('/search?user=' + searchInput).
-      success(function(data, status, headers, config) {
-        $scope.searchResults = [];
-        var searchResults = data;
-        searchResults.forEach(function(element, index, array) {
-          $scope.searchResults.push({type:'user',text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].userid, link:'./profile/view?id=' + searchResults[index].userid});
-        });
-        $http.get('/search?name=' + searchInput).
-        success(function(data, status, headers, config) {
-          var searchResults = data;
-          //console.log(searchResults);
-          $('#search-li-dropdown').show();
-          $('#search-li-dropdown').dropdown('toggle');
-          searchResults.forEach(function(element, index, array) {
-            $scope.searchResults.push({type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./download/view?upload_id=' + searchResults[index].id});
-          });
+$rootScope.getSmartSearchResults = function(college, department, year, semester, limit, offset, reset) {
+  $scope.smartSearchLimit = limit;
+  $scope.smartSearchOffset = offset;
+  $scope.smartSearchPage = (offset/limit) + 1;
+  $scope.smartSearchResultSpinner = true;
 
-          if($scope.searchResults.length)
-            $scope.searchResultSpinner = false;
-        }).
-        error(function(data, status, headers, config) {
-          console.log('error');
-        }); 
-        
-      }).
-error(function(data, status, headers, config) {
-  console.log('error');
-}); 
+  if(reset) {    
+    $scope.smartSearchResults = [];
+    $scope.smartSearchLimit = 12;
+    $scope.smartSearchOffset = 0;
+    $scope.smartSearchPage = 1;
+    $scope.noMoreSmartSearchResults = false;
+  }
+
+  $http.get('/search?college=' + college + '&department=' + department + '&year=' + year + '&semester=' + semester + '&limit=' + limit + '&offset=' + offset).
+  success(function(data, status, headers, config) {
+    if(data.length != 0) {
+      $scope.noMoreSmartSearchResults = true;
+    }
+    else {
+      $scope.noMoreSmartSearchResults = false;
+    }
+    $scope.smartSearchResults = $scope.smartSearchResults.concat(data);
+    console.log($scope.smartSearchResults);
+    $scope.getArrGrid($scope.smartSearchResults,4,3);
+    $scope.smartSearchResultSpinner = false;
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  }); 
 
 }
-else {
-  $('#search-li-dropdown').hide();
-  console.log('hide');
-}
-}
-
 
 $rootScope.getSearchResults = function(searchInput) {
-    //console.log('changed');
-    $scope.searchResultSpinner = true;
-    if(searchInput!="" && searchInput) {
-      $http.get('/search?name=' + searchInput).//todo try to give better search
+  console.log('changed');
+  $scope.searchResultSpinner = true;
+  if(searchInput!="" && searchInput) {
+    $http.get('/search/user?name=' + searchInput).
+    success(function(data, status, headers, config) {
+      $scope.searchResults = [];
+      var searchResults = data;
+      searchResults.forEach(function(element, index, array) {
+        $scope.searchResults.push({imglink:'/avatar.jpg',type:'user',text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].userid, link:'./profile/view?id=' + searchResults[index].userid});
+      });
+      $http.get('/search?user=' + searchInput).
       success(function(data, status, headers, config) {
-        $scope.searchResults = [];
-        var searchResults = data.slice(10);
+        var searchResults = data;
+        console.log(searchResults);
+        $('#search-li-dropdown').show();
+        $('#search-li-dropdown').dropdown('toggle');
         searchResults.forEach(function(element, index, array) {
-            $scope.searchResults.push({imglink:'/prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./download/view?upload_id=' + searchResults[index].id});
-            });
-        $http.get('/search/user?name=' + searchInput).
-        success(function(data, status, headers, config) {
-          var searchResults = data.slice(10);
-          //console.log(searchResults);
-          $('#search-li-dropdown').show();
-          $('#search-li-dropdown').dropdown('toggle');
-          searchResults.forEach(function(element, index, array) {
-              $scope.searchResults.push({imglink:'/avatar.jpg',type:'user',text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].userid, link:'./profile/view?id=' + searchResults[index].userid});
-          });
+          $scope.searchResults.push({imglink:'/prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./download/view?upload_id=' + searchResults[index].id});
+        });
 
-          if($scope.searchResults.length)
-            $scope.searchResultSpinner = false;
-        }).
-        error(function(data, status, headers, config) {
-          console.log('error');
-        }); 
-        
+        if($scope.searchResults.length)
+          $scope.searchResultSpinner = false;
       }).
+      error(function(data, status, headers, config) {
+        console.log('error');
+      }); 
+
+    }).
 error(function(data, status, headers, config) {
   console.log('error');
 }); 
@@ -184,7 +186,7 @@ else {
 }
 }
 
-//console.log('started');
+console.log('started');
 $scope.visDashboard = true;
 $scope.visMyUploads = false;
 $scope.visMyDownloads = false;
@@ -200,7 +202,7 @@ $rootScope.searchingUserId = 4;
 $scope.updateNotifications = function() {
   $http.get('/notifications/get').
   success(function(data, status, headers, config) {
-    //console.log(data);
+    console.log(data);
     $scope.notifications = data.notificationsUnread;
     $scope.notificationsUploads = [];
     $scope.notificationsDownloads = [];
@@ -233,8 +235,10 @@ $scope.getArrGrid = function (list, rowElementCount, type) {
   }
   if(type == 1)
     $scope.gridMyUploads = gridArray;
-  else 
+  else if(type == 2)
     $scope.gridMyDownloads = gridArray;
+  else if(type == 3)
+    $scope.gridSmartSearchResults = gridArray;
 }
 
 $scope.reg_socket = function() {
@@ -253,7 +257,7 @@ $scope.reg_socket();
 $scope.getMyUploads = function() {
   $http.get('/upload/get').
   success(function(data, status, headers, config) {
-    //console.log(data);
+    console.log(data);
     $scope.myUploads = data;
     $scope.myRecentUploads = $scope.myUploads.slice(0,10);
     $scope.myUploadsCount = data.length;
@@ -266,7 +270,7 @@ $scope.getMyUploads = function() {
 $scope.getMyDownloads = function() {
   $http.get('/download/get').
   success(function(data, status, headers, config) {
-    //console.log(data);
+    console.log(data);
     $scope.myDownloads = data;
     $scope.myRecentDownloads = $scope.myDownloads.downloads.slice(0,10);
     console.log('getting downloads');
@@ -280,7 +284,7 @@ $scope.getMyDownloads = function() {
 $scope.getFollowStats = function() {
   $http.get('/follow/get').
   success(function(data, status, headers, config) {
-    //console.log(data);
+    console.log(data);
     $scope.following = data.arrFollowing;
     $scope.followers = data.arrFollowers;
     $scope.followingCount=($scope.following).length;
@@ -295,7 +299,7 @@ $scope.getFollowStats = function() {
 $scope.getDetails = function() {
   $http.get('/profile/get').
   success(function(data, status, headers, config) {
-    //console.log(data);
+    console.log(data);
     $scope.user = data.data;
     $scope.getMyUploads();
     $scope.getMyDownloads();
@@ -380,7 +384,7 @@ $scope.getDetails();
       })
     }, false)
     dropbox.addEventListener("drop", function(evt) {
-      //console.log('drop evt:', JSON.parse(JSON.stringify(evt.dataTransfer)))
+      console.log('drop evt:', JSON.parse(JSON.stringify(evt.dataTransfer)))
       evt.stopPropagation()
       evt.preventDefault()
       $scope.$apply(function(){
@@ -400,7 +404,7 @@ $scope.getDetails();
 
     $scope.setFiles = function(element) {
       $scope.$apply(function($scope) {
-        //console.log('files:', element.files);
+        console.log('files:', element.files);
       // Turn the FileList object into an Array
       $scope.files = []
       for (var i = 0; i < element.files.length; i++) {

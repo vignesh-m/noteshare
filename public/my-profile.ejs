@@ -661,7 +661,7 @@ input[type='checkbox']:checked {
 					</div>
 				</div>
 				<div class="col-md-8" ng-show="boolSmartSearchByCollege" style="margin-top:1.42%;">
-					<input type="text" placeholder="College" class="form-control input"/>
+					<input type="text" placeholder="College" ng-model="smartCollege" class="form-control input"/>
 				</div>
 			</div>
 			<div class="row" style="margin-top:2%;">
@@ -675,7 +675,7 @@ input[type='checkbox']:checked {
 					</div>
 				</div>
 				<div class="col-md-8" ng-show="boolSmartSearchByDepartment" style="margin-top:1.42%;">
-					<input type="text" placeholder="Department" class="form-control input"/>
+					<input type="text" placeholder="Department" ng-model="smartDepartment" class="form-control input"/>
 				</div>
 			</div>
 			<div class="row" style="margin-top:2%;">
@@ -689,7 +689,7 @@ input[type='checkbox']:checked {
 					</div>
 				</div>
 				<div class="col-md-8" ng-show="boolSmartSearchByYear" style="margin-top:1.42%;">
-					<input type="text" placeholder="Year" class="form-control input"/>
+					<input type="text" placeholder="Year" ng-model="smartYear" class="form-control input"/>
 				</div>
 			</div>
 			<div class="row" style="margin-top:2%;">
@@ -703,7 +703,7 @@ input[type='checkbox']:checked {
 					</div>
 				</div>
 				<div class="col-md-8" ng-show="boolSmartSearchBySemester" style="margin-top:1.42%;">
-					<input type="text" placeholder="Semester" class="form-control input"/>
+					<input type="text" placeholder="Semester" ng-model="smartSemester" class="form-control input"/>
 				</div>
 			</div>
 			<br>
@@ -711,61 +711,56 @@ input[type='checkbox']:checked {
 				<div class="col-md-10">
 				</div>
 				<div class="col-md-1">
-					<button class="btn btn-default btn-flat-note" ng-click="updateNotificationCounter()" type="button">Search
+					<button class="btn btn-default btn-flat-note" ng-click="getSmartSearchResults(smartCollege, smartDepartment, smartYear, smartSemester, smartSearchLimit, smartSearchOffset, true)" type="button">Search
 					</button>
 				</div>
 			</div>
 
-				<!-- <div class="col-md-2">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="boolSmartSearchByDepartment"> <p><small><small>&nbsp&nbspDepartment</small></small></p>
-						</label>
-					</div>
+			<div ng-show="smartSearchResults.length!=0">
+				<br>
+				<h3>Search results</h3>
+				<br>
+			</div>
+
+			<table class="table nodivider-table">
+				<tbody>
+					<tr ng-repeat="rowSearchResultsElements in gridSmartSearchResults track by $index">
+						<td ng-repeat="searchResultElement in rowSearchResultsElements track by $index">
+							<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + searchResultElement.id}}">
+								<center>
+									<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px"></img>
+									<div class="row">
+										<big>{{truncateString(searchResultElement.name,10)}}</big>
+										<br>
+										{{searchResultElement.rating + "/5.0"}}
+									</div>
+								</center>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div ng-show="smartSearchResultSpinner">
+				<center>
+					<img src="/spinner.gif" style="margin:10px"></img>
+				</center>
+			</div>
+
+			<div class="row" ng-show="!noMoreSmartSearchResults && smartSearchResults.length!=0">
+				<center><h3>No more search results</h3></center>
+				<br>
+			</div>
+
+			<div class="row" ng-show="noMoreSmartSearchResults">
+				<div class="col-md-10">
 				</div>
-				<div class="col-md-2">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="boolSmartSearchByYear"> <p><small><small>&nbsp&nbspYear</small></small></p>
-						</label>
-					</div>
-				</div>
-				<div class="col-md-2">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="boolSmartSearchBySemester"> <p><small><small>&nbsp&nbspSemester</small></small></p>
-						</label>
-					</div>
-				</div>
-			</div> -->
-			<!-- <div class="row">
 				<div class="col-md-1">
+					<button class="btn btn-default btn-flat-note" ng-click="getSmartSearchResults(smartCollege, smartDepartment, smartYear, smartSemester, smartSearchLimit, smartSearchOffset + smartSearchLimit, false)" type="button">More
+					</button>
 				</div>
-				<div class="col-md-2" ng-show="boolSmartSearchByCollege">
-					<input type="text" placeholder="College" class="form-control input"/>
-				</div>
-				<div class="col-md-2">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="boolSmartSearchByDepartment"> <p><small><small>&nbsp&nbspDepartment</small></small></p>
-						</label>
-					</div>
-				</div>
-				<div class="col-md-2">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="boolSmartSearchByYear"> <p><small><small>&nbsp&nbspYear</small></small></p>
-						</label>
-					</div>
-				</div>
-				<div class="col-md-2">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="boolSmartSearchBySemester"> <p><small><small>&nbsp&nbspSemester</small></small></p>
-						</label>
-					</div>
-				</div>
-			</div> -->
+			</div>
+
 		</div>
 	</div>
 

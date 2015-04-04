@@ -110,6 +110,12 @@ function query_upload(req,callback){
         if(i<sort.length-1) querystring+=mysql.escapeId(sort[i])+" DESC, ";
         else querystring+=mysql.escapeId(sort[i])+" DESC";
     }
+    if(req.limit) {
+        querystring+=' LIMIT ' + req.limit;
+    }
+    if(req.offset) {
+        querystring+=' OFFSET ' + req.offset;
+    }
     querystring+=';';
     db.querydb(querystring,function(result){
         console.log(querystring);
@@ -127,9 +133,10 @@ router.get('/user',function(req,res){
     var querystring="";
     if(req.query.name){
         querystring="SELECT user.*,"+match_name(req.query.name,"user.username,user.firstname,user.lastname","score")+" FROM " +
-        "noteshare.user ORDER BY score DESC";
+        "noteshare.user ORDER BY score DESC;";
         db.querydb(querystring,function(result){
             console.log(querystring);
+            console.log(result);
             res.end(JSON.stringify(result));
         });
     } else {
