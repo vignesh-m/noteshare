@@ -79,8 +79,8 @@ router.post('/',isAuth,function(req,res){
         querystring+=mysql.escape(req.body.semester?req.body.semester:'1')+",";
         querystring+=mysql.escape(req.body.year?req.body.year:'1');
         querystring+=");";
-        db.querydb(querystring,function(result){
-            console.log(querystring);
+db.querydb(querystring,function(result){
+    console.log(querystring);
             //TODO : extend it for an array
             //util.savePDFToSWF("uploads/" + files.name, "public/views/" + "test1.swf");
             notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload");
@@ -88,26 +88,59 @@ router.post('/',isAuth,function(req,res){
             console.log(result);
             if(req.body.tags){
                 console.log(req.body.tags);
-                if(Object.prototype.toString.call(req.body.tags ) === '[object Array]') {
+                //if(Object.prototype.toString.call(req.body.tags ) === '[object Array]') {
                     console.log(req.body.tags.length);
-                    console.log("multi tag/add?tagname=" + req.body.tags[i] + "&uploadid=" + result.insertId);
-                    for (var i = 0; i < req.body.tags.length; i++) {
+                    var tags = req.body.tags;
+                    
+                    var uid = result.insertId;
+                    res.end(JSON.stringify(result));
+            /*        var qs1 = [];
+                    var qs2 = [];
 
-                        http.get("tag/add?tagname=" + req.body.tags[i] + "&uploadid=" + result.insertId, function (res2) {
-                            console.log(res2);
-                        });
-                    }
-                } else {
-                    console.log("single tag/add?tagname=" + req.body.tags + "&uploadid=" + result.insertId);
-                    //TODO change localhost to global variable
-                    http.get("http://localhost:3000/tag/add?tagname=" + req.body.tags + "&uploadid=" + result.insertId, function (res2) {
-                        console.log(res2);
-                    });
-                }
-           }
-           res.end(JSON.stringify(result));
-        })
-    }
+                    for(var ind=0;ind<tags.length;ind++) {
+                        qs1.push("SELECT tag.* from noteshare.tag WHERE tag.name = '"+tags[ind]+"';");
+                        qs2.push("INSERT INTO noteshare.tag(name) VALUES('"+tags[ind]+"');");
+
+                        console.log("it");
+
+                        if(ind == tags.length - 1) {
+                            for (var i = 0; i < tags.length; i++) {
+                                debugger;
+                                console.log("multi tag/add?tagname=" + tags[i] + "&uploadid=" + result.insertId);
+                                var tag = tags[i];
+
+                                debugger;
+                                db.querydb(qs1[i],function(result){
+                                    console.log(qs1[i]);
+                                    debugger;
+                                    if(result.length==0){
+                                        db.querydb(qs2[i],function(result){
+                                            console.log(qs2[i]);
+                                            var tagid=result.insertId;
+                                            var qs3 = "INSERT INTO noteshare.tagmap(tagid,uploadid) VALUES("+mysql.escape(tagid)+","+mysql.escape(uid)+");";
+                                            console.log("INSERT INTO noteshare.tag(name) VALUES('"+tags[i]+"');");
+                                            db.querydb(qs3,function(result){
+                                                res.end(JSON.stringify(result));
+                                            })
+                                        })
+                                    } else {
+                                     tagid=result[0].id;
+                                     db.querydb("INSERT INTO noteshare.tagmap(tagid,uploadid) VALUES("+mysql.escape(tagid)+","+mysql.escape(req.query.uploadid)+");",function(result){
+                                         res.end(JSON.stringify(result));
+                                     })
+                                 }
+                             });
+}
+
+}
+
+}
+*/
+
+}else 
+res.end(JSON.stringify(result));
+})
+}
 });
 
 

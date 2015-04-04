@@ -28,16 +28,16 @@ function myProfile($scope,$http,$rootScope,$window) {
     success(function(data, status, headers, config) {
       $scope.notificationModalData = data;
       console.log(data);
-    $('#uploadNotificationModal').modal('toggle');
+      $('#uploadNotificationModal').modal('toggle');
     }).
     error(function(data, status, headers, config) {
       console.log('error');
     }); 
   }
 
-$scope.getArray = function(num) {
-  return new Array(num);
-}
+  $scope.getArray = function(num) {
+    return new Array(num);
+  }
 
   $scope.notificationMarkAsRead = function(purpose, index, link) {
     var notification_id;
@@ -453,7 +453,13 @@ $scope.getDetails();
     fd.append("department", $scope.department);
     fd.append("semester", $scope.semester);
     fd.append("year", $scope.year);
-    fd.append("tags", $scope.tags.split(" "));
+    //fd.append("tags", '[' + $scope.tags.split(" ") + '');
+
+    
+/*
+    for(var i=0;i<tags.length;i++) {
+      fd.append("tags", tags[i]);
+    }*/
 
     console.log($scope.tags.split(" "));
     
@@ -462,10 +468,10 @@ $scope.getDetails();
     xhr.addEventListener("load", $scope.uploadComplete, false)
     xhr.addEventListener("error", $scope.uploadFailed, false)
     xhr.addEventListener("abort", $scope.uploadCanceled, false)
-    xhr.open("POST", "/upload")
+    xhr.open("POST", "/upload");
     xhr.setRequestHeader("x","hello");
     $scope.progressVisible = true
-    xhr.send(fd)
+    xhr.send(fd);
   }
 
 
@@ -482,17 +488,34 @@ $scope.getDetails();
   $scope.uploadComplete = function (evt) {
    /* This event is raised when the server send back a response */
    alert(evt.target.responseText);
-   $scope.visUploadProgress=!$scope.visUploadProgress;
- }
+   var upload_id = JSON.parse(evt.target.responseText).insertId;
+   console.log(upload_id);
 
- $scope.uploadFailed = function (evt) {
-  alert("There was an error attempting to upload the file.")
-}
+    var tags = $scope.tags.split(" ");//jQuery.param("[" + $scope.tags.split(" ") + "]");
+    console.log(tags);
+    
+    for(var i=0;i<tags.length;i++) {
 
-$scope.uploadCanceled = function (evt) {
-  $scope.$apply(function(){
-    $scope.progressVisible = false
-  })
-  alert("The upload has been canceled by the user or the browser dropped the connection.")
-}
+      $http.get('/tag/add?uploadid=' + upload_id + "&tagname=" + tags[i]).
+      success(function(data, status, headers, config) {
+        console.log(data);
+      }).
+      error(function(data, status, headers, config) {
+        console.log('error');
+      }); 
+    }
+
+    $scope.visUploadProgress=!$scope.visUploadProgress;
+  }
+
+  $scope.uploadFailed = function (evt) {
+    alert("There was an error attempting to upload the file.")
+  }
+
+  $scope.uploadCanceled = function (evt) {
+    $scope.$apply(function(){
+      $scope.progressVisible = false
+    })
+    alert("The upload has been canceled by the user or the browser dropped the connection.")
+  }
 }
