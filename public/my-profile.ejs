@@ -1057,8 +1057,10 @@ input[type='checkbox']:checked {
 					</div>
 				</div>
 				<div class="modal-footer">
-					<a>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Download</button>
+					<a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id}}">
+						<button type="button" class="btn btn-default">
+							Download
+						</button>
 					</a>
 				</div>
 			</div><!-- /.modal-content -->
