@@ -12,7 +12,7 @@ var isAuth = function(req, res, next) {
     }
 };
 
-router.get('/add',function(req,res){
+router.get('/add', isAuth, function(req,res){
     var ret={};
    if(req.query.tagname && req.query.uploadid){
        db.querydb("SELECT tag.* from noteshare.tag WHERE tag.name = "+mysql.escape(req.query.tagname)+";",function(result){

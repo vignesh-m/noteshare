@@ -41,7 +41,11 @@ router.get('/getupload',isAuth,function(req,res){
     db.querydb(querystring,function(result){
         console.log(result);
         db.querydb("SELECT * FROM noteshare.user WHERE id="+result[0].userid+";",function(userobj){
-            res.render('uploadview',{file:result[0],user:userobj[0]});
+            db.querydb("SELECT * FROM noteshare.tagmap WHERE uploadid="+ req.query.id + ";",function(tagmapObj){
+                db.querydb("SELECT * FROM noteshare.tags WHERE id=" + tagmapObj.tagid + ";",function(tags){
+                    res.end(JSON.stringify({file:result[0],user:userobj[0],tags:tags}));
+                });
+            });
             console.log(userobj);
         });
 

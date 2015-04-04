@@ -23,8 +23,25 @@ function myProfile($scope,$http,$rootScope,$window) {
     eve.stopPropagation();
   });
 
-  $scope.notificationMarkAsRead = function(purpose, index) {
+  $scope.getNotificationModalData = function(link) {
+    $http.get(link).
+    success(function(data, status, headers, config) {
+      $scope.notificationModalData = data;
+      console.log(data);
+    $('#uploadNotificationModal').modal('toggle');
+    }).
+    error(function(data, status, headers, config) {
+      console.log('error');
+    }); 
+  }
+
+$scope.getArray = function(num) {
+  return new Array(num);
+}
+
+  $scope.notificationMarkAsRead = function(purpose, index, link) {
     var notification_id;
+    $scope.getNotificationModalData(link);
     if(purpose == "Download") {
       notification_id = $scope.notificationsDownloads[index].id;
       $scope.notificationsDownloads[index].unread = false;

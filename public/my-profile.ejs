@@ -496,12 +496,12 @@ input[type='checkbox']:checked {
 						</div>
 					</div>
 					<li ng-repeat="notification in notificationsDownloads">
-							<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index)">
-								<div class="notification-item-text-body"  style="height:54px;">
-									<div class="row" style="margin:2px">
-										<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
-									</img>
-									<div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
+						<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, '/upload/getupload?id=1')">
+							<div class="notification-item-text-body"  style="height:54px;">
+								<div class="row" style="margin:2px">
+									<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
+								</img>
+								<div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
 								<!-- <div class="row pull-right" style="margin-top:4%">
 									<a class="book-preview-a" ng-href="{'/view?id=' + notification.because}">
 										<button type="button" class="btn btn-default"><i class="fa fa-external-link fa-1x"></i></button>
@@ -514,22 +514,22 @@ input[type='checkbox']:checked {
 							</div>
 						</div>
 					</div>
-			</li>
+				</li>
 
-			<li class="notifications-panel-head" ng-show="notificationsUploads.length!=0">
-				Uploads
-			</li>
-			<div style="background:#aaaaaa" ng-show="notificationsUploads.length!=0">
-				<div class="row separator-very-small">
+				<li class="notifications-panel-head" ng-show="notificationsUploads.length!=0">
+					Uploads
+				</li>
+				<div style="background:#aaaaaa" ng-show="notificationsUploads.length!=0">
+					<div class="row separator-very-small">
+					</div>
 				</div>
-			</div>
-			<li ng-repeat="notification in notificationsUploads">
-				<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index)">
-					<div class="notification-item-text-body"  style="height:54px;">
-						<div class="row" style="margin:3px">
-							<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
-						</img>
-						<div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
+				<li ng-repeat="notification in notificationsUploads">
+					<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, '/upload/getupload?id=1')">
+						<div class="notification-item-text-body"  style="height:54px;">
+							<div class="row" style="margin:3px">
+								<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
+							</img>
+							<div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
 							<!-- <div class="row pull-right" style="margin-top:4%">
 								<a class="book-preview-a" ng-href="{'/download/view?id=' + notification.uploadid}">
 									<button type="button" ng-click="notificationMarkAsRead(1,$index)" class="btn btn-default"><i class="fa fa-download fa-1x"></i></button>
@@ -983,6 +983,65 @@ input[type='checkbox']:checked {
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="uploadNotificationModal" tabindex="-1" role="dialog" aria-labelledby="uploadNotificationModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">File : {{notificationModalData.file.name}}</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						File uploaded by 
+						<a class="book-preview-a" ng-href="{{'/profile/view?id=' + notificationModalData.file.userid}}">
+							{{notificationModalData.user.firstname + " " + notificationModalData.user.lastname}}
+						</a>
+					</p>
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped">
+							<thead>
+								<tr>
+									<th>Department</th>
+									<th>Semester</th>
+									<th>Year</th>
+									<th>Upload date</th>
+									<th>Views</th>
+									<th>Ratings</th>
+									<th>Tags</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{{notificationModalData.file.department}}</td>
+									<td>{{notificationModalData.file.semester}}</td>
+									<td>{{notificationModalData.file.year}}</td>
+									<td>{{notificationModalData.file.dateUploaded}}</td>
+									<td>{{notificationModalData.file.views}}</td>
+									<td>
+										<div ng-repeat="tag in getArray(notificationModalData.file.rating)">
+											<i class="fa fa-star"></i>
+										</div>
+									</td>
+									<td>
+										<div ng-repeat="tag in notificationModalData.file.tags">
+											{{tag}}
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Download</button>
+					</a>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 	<div class="modal fade" id="uploadNotes" tabindex="-1" role="dialog" aria-labelledby="uploadNotesModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
