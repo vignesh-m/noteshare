@@ -41,8 +41,17 @@ router.get('/getupload',isAuth,function(req,res){
     db.querydb(querystring,function(result){
         console.log(result);
         db.querydb("SELECT * FROM noteshare.user WHERE id="+result[0].userid+";",function(userobj){
-            db.querydb("SELECT * FROM noteshare.tagmap WHERE uploadid="+ req.query.id + ";",function(tagmapObj){
-                db.querydb("SELECT * FROM noteshare.tags WHERE id=" + tagmapObj.tagid + ";",function(tags){
+            db.querydb("SELECT tagmap.tagid FROM noteshare.tagmap WHERE uploadid="+ req.query.id + ";",function(tagids){
+                var tagidsfinal = "(";
+                for(var i = 0;i<tagids.length - 1;i++) {
+                    tagidsfinal+=tagids[i].tagid+",";
+                }
+                tagidsfinal+=tagids[tagids.length-1].tagid+")";
+                var qs = "SELECT * FROM noteshare.tag WHERE tag.id IN " + tagidsfinal + ";";
+                debugger;
+                db.querydb(qs,function(tags){
+                    debugger;
+                    console.log(tags);
                     res.end(JSON.stringify({file:result[0],user:userobj[0],tags:tags}));
                 });
             });

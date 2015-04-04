@@ -23,6 +23,25 @@ function myProfile($scope,$http,$rootScope,$window) {
     eve.stopPropagation();
   });
 
+  $scope.getTimeInFormat = function(dateStr) {
+    //10/21/2013 3:29 PM
+    var date = new Date(dateStr);
+    var str = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ';
+    var ampm = "";
+    if(date.getHours()>12) {
+      str = str + (date.getHours() - 12);
+      ampm = "PM";
+    }
+    else {
+      str = str + date.getHours();
+      ampm = "AM";
+    }
+
+    str = str + ':' + date.getMinutes() + ' ' + ampm;
+    console.log(str);
+    return str;
+  }
+  
   $scope.getNotificationModalData = function(link) {
     $http.get(link).
     success(function(data, status, headers, config) {
@@ -493,7 +512,7 @@ $scope.getDetails();
 
     var tags = $scope.tags.split(" ");//jQuery.param("[" + $scope.tags.split(" ") + "]");
     console.log(tags);
-    
+
     for(var i=0;i<tags.length;i++) {
 
       $http.get('/tag/add?uploadid=' + upload_id + "&tagname=" + tags[i]).

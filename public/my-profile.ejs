@@ -496,7 +496,7 @@ input[type='checkbox']:checked {
 						</div>
 					</div>
 					<li ng-repeat="notification in notificationsDownloads">
-						<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, '/upload/getupload?id=1')">
+						<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, '/upload/getupload?id=99')">
 							<div class="notification-item-text-body"  style="height:54px;">
 								<div class="row" style="margin:2px">
 									<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
@@ -524,7 +524,7 @@ input[type='checkbox']:checked {
 					</div>
 				</div>
 				<li ng-repeat="notification in notificationsUploads">
-					<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, '/upload/getupload?id=1')">
+					<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, '/upload/getupload?id=99')">
 						<div class="notification-item-text-body"  style="height:54px;">
 							<div class="row" style="margin:3px">
 								<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
@@ -989,43 +989,66 @@ input[type='checkbox']:checked {
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">File : {{notificationModalData.file.name}}</h4>
+					<h4 class="modal-title">
+						<center>
+							File : {{notificationModalData.file.name}} uploaded by 
+							<a style="color:#2e9ba0 !important;" class="book-preview-a" ng-href="{{'/profile/view?id=' + notificationModalData.file.userid}}">
+								{{notificationModalData.user.firstname + " " + notificationModalData.user.lastname}}
+							</a>
+						</center>
+					</h4>
 				</div>
 				<div class="modal-body">
-					<p>
-						File uploaded by 
-						<a class="book-preview-a" ng-href="{{'/profile/view?id=' + notificationModalData.file.userid}}">
-							{{notificationModalData.user.firstname + " " + notificationModalData.user.lastname}}
-						</a>
-					</p>
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover table-striped">
-							<thead>
+							<tbody>
+								{{notificationModalData.file.id}}
 								<tr>
 									<th>Department</th>
-									<th>Semester</th>
-									<th>Year</th>
-									<th>Upload date</th>
-									<th>Views</th>
-									<th>Ratings</th>
-									<th>Tags</th>
+									<td>{{notificationModalData.file.department || "N/A"}}</td>
 								</tr>
-							</thead>
-							<tbody>
 								<tr>
-									<td>{{notificationModalData.file.department}}</td>
-									<td>{{notificationModalData.file.semester}}</td>
-									<td>{{notificationModalData.file.year}}</td>
-									<td>{{notificationModalData.file.dateUploaded}}</td>
+									<th>Semester</th>
+									<td>{{notificationModalData.file.semester || "N/A"}}</td>
+								</tr>
+								<tr>
+									<th>Year</th>
+									<td>{{notificationModalData.file.year || "N/A"}}</td>
+								</tr>
+								<tr>
+									<th>Upload date</th>
+									<td>{{getTimeInFormat(notificationModalData.file.dateUploaded) || "N/A"}}</td>
+								</tr>
+								<tr>
+									<th>Views</th>
 									<td>{{notificationModalData.file.views}}</td>
+								</tr>
+								<tr>
+									<th>Ratings</th>
 									<td>
-										<div ng-repeat="tag in getArray(notificationModalData.file.rating)">
-											<i class="fa fa-star"></i>
+										<div class="row">
+											<div class="col-md-1" ng-repeat="tag in getArray(notificationModalData.file.rating) track by $index">
+												<i class="fa fa-star"></i>
+											</div>
+										</div>
+										<div ng-show="!notificationModalData.file.rating">
+											-NIL-
 										</div>
 									</td>
+								</tr>
+								<tr>
+									<th>Tags</th>
 									<td>
-										<div ng-repeat="tag in notificationModalData.file.tags">
-											{{tag}}
+										<div ng-repeat="tag in notificationModalData.tags track by $index">
+											<center>
+												<span class="badge">
+													{{"      " + tag.name + "      "}}
+												</span>
+												<br>
+											</center>
+										</div>
+										<div ng-show="notificationModalData.tags.length==0 || !notificationModalData.tags">
+											-NIL-
 										</div>
 									</td>
 								</tr>
