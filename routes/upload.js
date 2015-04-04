@@ -8,6 +8,7 @@
  var notification = require('./util/notification');
  var util = require('./util/util');
  var _ = require('underscore');
+ var http=require('http');
 
  var isAuth = function(req, res, next) {
     console.log('Authenticating');
@@ -46,13 +47,13 @@ router.post('/',isAuth,function(req,res){
             } else {
                 res.end('{result:false,error:"not auth"}');
                 return ;
-        }
-        if(req.body.uploadfilename){
-            querystring+=(req.body.name)?req.body.name:mysql.escape(req.body.uploadfilename)+',';
-        } else {
-            querystring+=mysql.escape(files.originalname)+',';
-        }
-        querystring+=mysql.escape(files.name)+',';
+            }
+            if(req.body.uploadfilename){
+                querystring+=(req.body.name)?req.body.name:mysql.escape(req.body.uploadfilename)+',';
+            } else {
+                querystring+=mysql.escape(files.originalname)+',';
+            }
+            querystring+=mysql.escape(files.name)+',';
         querystring+='0,';//default no of views
         querystring+='3,';//default rating
         querystring+=mysql.escape(util.dateToMysqlFormat(new Date()))+",";
@@ -64,9 +65,20 @@ router.post('/',isAuth,function(req,res){
 db.querydb(querystring,function(result){
     console.log(querystring);
     //TODO : extend it for an array
-    util.savePDFToSWF("uploads/" + files.name, "public/views/" + "test1.swf");
+    //util.savePDFToSWF("uploads/" + files.name, "public/views/" + "test1.swf");
     notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload");
-    res.end(JSON.stringify(result));
+
+    console.log(result);
+    if(req.body.tags){
+        for(var i=0;i<req.body.tags.length;i++){
+           http.get("/tag/add?tagname="+req.body.tags[i]+"&uploadid="+result.insertId,function(res){
+               console.log(res);
+           });
+       }
+   }
+
+   //res.end(JSON.stringify(result));
+
 })
 }
 });
