@@ -258,11 +258,12 @@ else {
 }
 
 $('#search-li-dropdown.dropdown-menu').scroll(function() {
+/*
   console.log($('#search-li-dropdown.dropdown-menu'));
   console.log($('#search-li-dropdown.dropdown-menu').scrollTop());
   console.log($('#search-li-dropdown.dropdown-menu').innerHeight());
   console.log($('#search-li-dropdown.dropdown-menu').position());
-  console.log($('#search-li-dropdown.dropdown-menu').offset());
+  console.log($('#search-li-dropdown.dropdown-menu').offset());*/
 
   if($('#search-li-dropdown.dropdown-menu').scrollTop() - $scope.scrollOffset >= $('#search-li-dropdown.dropdown-menu').innerHeight() + $('#search-li-dropdown.dropdown-menu').offset().top){
     $scope.scrollOffset = $('#search-li-dropdown.dropdown-menu').scrollTop();
