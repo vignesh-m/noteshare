@@ -31,7 +31,6 @@ function myProfile($scope,$http,$rootScope,$window) {
   });
 
   $(document).click(function() {
-    $scope.searchInput = "";
     $('#search-li-dropdown.dropdown-menu').hide();
   });
 
@@ -265,7 +264,7 @@ $('#search-li-dropdown.dropdown-menu').scroll(function() {
   console.log($('#search-li-dropdown.dropdown-menu').position());
   console.log($('#search-li-dropdown.dropdown-menu').offset());
 
-  if($('#search-li-dropdown.dropdown-menu').scrollTop() - $scope.scrollOffset >= -20 + $(window).height() - $('#search-li-dropdown.dropdown-menu').innerHeight() - $('#search-li-dropdown.dropdown-menu').offset().top){
+  if($('#search-li-dropdown.dropdown-menu').scrollTop() - $scope.scrollOffset >= $('#search-li-dropdown.dropdown-menu').innerHeight() + $('#search-li-dropdown.dropdown-menu').offset().top){
     $scope.scrollOffset = $('#search-li-dropdown.dropdown-menu').scrollTop();
     $scope.searchUploadOffset += $scope.searchUploadLimit;
     $http.get('/search?user=' + $scope.searchInput + "&limit=" + $scope.searchUploadLimit + "&offset=" + $scope.searchUploadOffset).

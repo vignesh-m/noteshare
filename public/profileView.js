@@ -18,35 +18,68 @@ function profileView($scope,$http,$rootScope,$window) {
     $('#search-li-dropdown.dropdown-menu').hide();
   });
 
-  $rootScope.getSearchResults = function(searchInput) {
-    console.log('changed');
-    $scope.searchResultSpinner = true;
-    if(searchInput!="" && searchInput) {
-      $http.get('/search/user?name=' + searchInput).
+  $scope.searchUploadLimit = 10;
+  $scope.searchUploadOffset = 0;
+  $scope.scrollOffset = 0;
+
+  $('#search-li-dropdown.dropdown-menu').scroll(function() {
+
+    if($('#search-li-dropdown.dropdown-menu').scrollTop() - $scope.scrollOffset >= $('#search-li-dropdown.dropdown-menu').innerHeight() + $('#search-li-dropdown.dropdown-menu').offset().top){
+      $scope.scrollOffset = $('#search-li-dropdown.dropdown-menu').scrollTop();
+      $scope.searchUploadOffset += $scope.searchUploadLimit;
+      $http.get('/search?user=' + $scope.searchInput + "&limit=" + $scope.searchUploadLimit + "&offset=" + $scope.searchUploadOffset).
       success(function(data, status, headers, config) {
-        $scope.searchResults = [];
         var searchResults = data;
+        console.log(searchResults);
+        $('#search-li-dropdown').show();
+        $('#search-li-dropdown').dropdown('toggle');
         searchResults.forEach(function(element, index, array) {
-          $scope.searchResults.push({imglink:'../avatar.jpg',type:'user',text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].id, link:'../profile/view?id=' + searchResults[index].id});
+          $scope.searchResults.push({imglink:'/prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./upload/getupload?id=' + searchResults[index].id});
         });
-        $http.get('/search?user=' + searchInput).
-        success(function(data, status, headers, config) {
-          var searchResults = data;
-          console.log(searchResults);
-          $('#search-li-dropdown').show();
-          $('#search-li-dropdown').dropdown('toggle');
-          searchResults.forEach(function(element, index, array) {
-            $scope.searchResults.push({imglink:'../prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'../upload/getupload?id=' + searchResults[index].id});
-          });
 
-          if($scope.searchResults.length)
-            $scope.searchResultSpinner = false;
-        }).
-        error(function(data, status, headers, config) {
-          console.log('error');
-        }); 
-
+        if($scope.searchResults.length)
+          $scope.searchResultSpinner = false;
       }).
+      error(function(data, status, headers, config) {
+        console.log('error');
+      }); 
+    }
+  });
+
+$rootScope.getSearchResults = function(searchInput) {
+  console.log('changed');
+  $scope.searchResultSpinner = true;
+  if(searchInput!="" && searchInput) {
+    $http.get('/search/user?name=' + searchInput + "&limit=10" + "&offset=0").
+    success(function(data, status, headers, config) {
+      $scope.searchResults = [];
+      var searchResults = data;
+
+      $scope.searchUploadLimit = 10;
+      $scope.searchUploadOffset = 0;
+      $scope.scrollOffset = 0;
+
+      searchResults.forEach(function(element, index, array) {
+        $scope.searchResults.push({imglink:'../avatar.jpg',type:'user',text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].id, link:'../profile/view?id=' + searchResults[index].id});
+      });
+      $http.get('/search?user=' + searchInput  + "&limit=" + $scope.searchUploadLimit + "&offset=" + $scope.searchUploadOffset).
+      success(function(data, status, headers, config) {
+        var searchResults = data;
+        console.log(searchResults);
+        $('#search-li-dropdown').show();
+        $('#search-li-dropdown').dropdown('toggle');
+        searchResults.forEach(function(element, index, array) {
+          $scope.searchResults.push({imglink:'../prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'../upload/getupload?id=' + searchResults[index].id});
+        });
+
+        if($scope.searchResults.length)
+          $scope.searchResultSpinner = false;
+      }).
+      error(function(data, status, headers, config) {
+        console.log('error');
+      }); 
+
+    }).
 error(function(data, status, headers, config) {
   console.log('error');
 }); 
