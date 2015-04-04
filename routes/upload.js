@@ -32,6 +32,16 @@ router.get('/get', isAuth, function(req, res) {
         res.end(JSON.stringify(result));
     });
 });
+router.get('/getupload',isAuth,function(req,res){
+    if(!req.query.id){
+        res.end();return;
+    }
+    var querystring = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(req.query.id) + " ORDER BY uploads.dateUploaded";
+    db.querydb(querystring,function(result){
+        console.log(querystring);
+        res.render('uploadview',{file:result[0]});
+    });
+});
 router.post('/',isAuth,function(req,res){
     console.log(req.files);
     console.log(req.headers.x);
@@ -74,8 +84,8 @@ router.post('/',isAuth,function(req,res){
                    });
                 }
             }
-    })
-}
+        })
+    }
 });
 
 

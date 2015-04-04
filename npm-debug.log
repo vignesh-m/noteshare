@@ -1,179 +1,26 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/bin/node',
-1 verbose cli   '/usr/local/bin/npm',
-1 verbose cli   'install',
-1 verbose cli   '--save',
-1 verbose cli   'socket.io' ]
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'start' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.36
-4 verbose readDependencies using package.json deps
-5 verbose cache add [ 'socket.io', null ]
-6 verbose cache add name=undefined spec="socket.io" args=["socket.io",null]
-7 verbose parsed url { protocol: null,
-7 verbose parsed url   slashes: null,
-7 verbose parsed url   auth: null,
-7 verbose parsed url   host: null,
-7 verbose parsed url   port: null,
-7 verbose parsed url   hostname: null,
-7 verbose parsed url   hash: null,
-7 verbose parsed url   search: null,
-7 verbose parsed url   query: null,
-7 verbose parsed url   pathname: 'socket.io',
-7 verbose parsed url   path: 'socket.io',
-7 verbose parsed url   href: 'socket.io' }
-8 silly lockFile 71475bfd-socket-io socket.io
-9 verbose lock socket.io /Users/vigneshm/.npm/71475bfd-socket-io.lock
-10 silly lockFile 71475bfd-socket-io socket.io
-11 silly lockFile 71475bfd-socket-io socket.io
-12 verbose addNamed [ 'socket.io', '' ]
-13 verbose addNamed [ null, '*' ]
-14 silly lockFile c03de861-socket-io socket.io@
-15 verbose lock socket.io@ /Users/vigneshm/.npm/c03de861-socket-io.lock
-16 silly addNameRange { name: 'socket.io', range: '*', hasData: false }
-17 verbose request where is /socket.io
-18 verbose request registry https://registry.npmjs.org/
-19 verbose request id bb5b22b1da9094ae
-20 verbose url raw /socket.io
-21 verbose url resolving [ 'https://registry.npmjs.org/', './socket.io' ]
-22 verbose url resolved https://registry.npmjs.org/socket.io
-23 verbose request where is https://registry.npmjs.org/socket.io
-24 info trying registry request attempt 1 at 18:10:07
-25 verbose etag "4Q2NZYLBBNCB32U4GJTGULRH3"
-26 http GET https://registry.npmjs.org/socket.io
-27 http 200 https://registry.npmjs.org/socket.io
-28 silly registry.get cb [ 200,
-28 silly registry.get   { date: 'Tue, 31 Mar 2015 12:40:02 GMT',
-28 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-28 silly registry.get     etag: '"5FH1JMAGO7MTLYKF70N1WNXGW"',
-28 silly registry.get     'content-type': 'application/json',
-28 silly registry.get     'cache-control': 'max-age=60',
-28 silly registry.get     'content-length': '110920',
-28 silly registry.get     'accept-ranges': 'bytes',
-28 silly registry.get     via: '1.1 varnish',
-28 silly registry.get     age: '0',
-28 silly registry.get     'x-served-by': 'cache-sn88-SIN',
-28 silly registry.get     'x-cache': 'HIT',
-28 silly registry.get     'x-cache-hits': '1',
-28 silly registry.get     'x-timer': 'S1427805601.727749,VS0,VE830',
-28 silly registry.get     vary: 'Accept',
-28 silly registry.get     'keep-alive': 'timeout=10, max=50',
-28 silly registry.get     connection: 'Keep-Alive' } ]
-29 silly addNameRange number 2 { name: 'socket.io', range: '*', hasData: true }
-30 silly addNameRange versions [ 'socket.io',
-30 silly addNameRange   [ '0.3.8',
-30 silly addNameRange     '0.4.0',
-30 silly addNameRange     '0.4.1',
-30 silly addNameRange     '0.5.1',
-30 silly addNameRange     '0.5.3',
-30 silly addNameRange     '0.6.0',
-30 silly addNameRange     '0.6.1',
-30 silly addNameRange     '0.6.3',
-30 silly addNameRange     '0.6.4',
-30 silly addNameRange     '0.6.5',
-30 silly addNameRange     '0.6.6',
-30 silly addNameRange     '0.6.7',
-30 silly addNameRange     '0.6.8',
-30 silly addNameRange     '0.6.9',
-30 silly addNameRange     '0.6.10',
-30 silly addNameRange     '0.6.11',
-30 silly addNameRange     '0.6.12',
-30 silly addNameRange     '0.6.14',
-30 silly addNameRange     '0.6.15',
-30 silly addNameRange     '0.6.16',
-30 silly addNameRange     '0.6.17',
-30 silly addNameRange     '0.6.18',
-30 silly addNameRange     '0.7.0',
-30 silly addNameRange     '0.7.1',
-30 silly addNameRange     '0.7.2',
-30 silly addNameRange     '0.7.3',
-30 silly addNameRange     '0.7.4',
-30 silly addNameRange     '0.7.5',
-30 silly addNameRange     '0.7.6',
-30 silly addNameRange     '0.7.7',
-30 silly addNameRange     '0.7.8',
-30 silly addNameRange     '0.7.9',
-30 silly addNameRange     '0.7.10',
-30 silly addNameRange     '0.7.11',
-30 silly addNameRange     '0.8.0',
-30 silly addNameRange     '0.8.1',
-30 silly addNameRange     '0.8.2',
-30 silly addNameRange     '0.8.3',
-30 silly addNameRange     '0.8.4',
-30 silly addNameRange     '0.8.5',
-30 silly addNameRange     '0.8.6',
-30 silly addNameRange     '0.8.7',
-30 silly addNameRange     '0.9.0',
-30 silly addNameRange     '0.9.1',
-30 silly addNameRange     '0.9.1-1',
-30 silly addNameRange     '0.9.2',
-30 silly addNameRange     '0.9.3',
-30 silly addNameRange     '0.9.4',
-30 silly addNameRange     '0.9.5',
-30 silly addNameRange     '0.9.6',
-30 silly addNameRange     '0.9.7',
-30 silly addNameRange     '0.9.8',
-30 silly addNameRange     '0.9.9',
-30 silly addNameRange     '0.9.10',
-30 silly addNameRange     '0.9.11',
-30 silly addNameRange     '0.9.12',
-30 silly addNameRange     '0.9.13',
-30 silly addNameRange     '0.9.14',
-30 silly addNameRange     '0.9.15',
-30 silly addNameRange     '0.9.16',
-30 silly addNameRange     '1.0.0-pre',
-30 silly addNameRange     '1.0.0-pre2',
-30 silly addNameRange     '1.0.0-pre3',
-30 silly addNameRange     '1.0.0-pre4',
-30 silly addNameRange     '1.0.0-pre5',
-30 silly addNameRange     '0.9.17',
-30 silly addNameRange     '1.0.0',
-30 silly addNameRange     '1.0.1',
-30 silly addNameRange     '1.0.2',
-30 silly addNameRange     '1.0.3',
-30 silly addNameRange     '1.0.4',
-30 silly addNameRange     '1.0.5',
-30 silly addNameRange     '1.0.6',
-30 silly addNameRange     '1.1.0',
-30 silly addNameRange     '1.2.0',
-30 silly addNameRange     '1.2.1',
-30 silly addNameRange     '1.3.0',
-30 silly addNameRange     '1.3.1',
-30 silly addNameRange     '1.3.2',
-30 silly addNameRange     '1.3.3',
-30 silly addNameRange     '1.3.4',
-30 silly addNameRange     '1.3.5' ] ]
-31 verbose addNamed [ 'socket.io', '1.3.5' ]
-32 verbose addNamed [ '1.3.5', '1.3.5' ]
-33 silly lockFile e27f34ff-socket-io-1-3-5 socket.io@1.3.5
-34 verbose lock socket.io@1.3.5 /Users/vigneshm/.npm/e27f34ff-socket-io-1-3-5.lock
-35 silly lockFile e6e9d1a3-rg-socket-io-socket-io-1-3-5-tgz https://registry.npmjs.org/socket.io/-/socket.io-1.3.5.tgz
-36 verbose lock https://registry.npmjs.org/socket.io/-/socket.io-1.3.5.tgz /Users/vigneshm/.npm/e6e9d1a3-rg-socket-io-socket-io-1-3-5-tgz.lock
-37 verbose addRemoteTarball [ 'https://registry.npmjs.org/socket.io/-/socket.io-1.3.5.tgz',
-37 verbose addRemoteTarball   'bfd609f37626889e94df9d3526db79a84255f1d8' ]
-38 info retry fetch attempt 1 at 18:10:13
-39 verbose fetch to= /var/folders/70/40t45fnx21q5dn1pml1y_v000000gn/T/npm-18904--w7Lp5e3/registry.npmjs.org/socket.io/-/socket.io-1.3.5.tgz
-40 http GET https://registry.npmjs.org/socket.io/-/socket.io-1.3.5.tgz
-41 http 200 https://registry.npmjs.org/socket.io/-/socket.io-1.3.5.tgz
-42 silly lockFile e6e9d1a3-rg-socket-io-socket-io-1-3-5-tgz https://registry.npmjs.org/socket.io/-/socket.io-1.3.5.tgz
-43 silly lockFile e6e9d1a3-rg-socket-io-socket-io-1-3-5-tgz https://registry.npmjs.org/socket.io/-/socket.io-1.3.5.tgz
-44 silly lockFile e27f34ff-socket-io-1-3-5 socket.io@1.3.5
-45 silly lockFile e27f34ff-socket-io-1-3-5 socket.io@1.3.5
-46 silly lockFile c03de861-socket-io socket.io@
-47 silly lockFile c03de861-socket-io socket.io@
-48 error Error: EACCES, mkdir '/Users/vigneshm/.npm/socket.io/1.3.5'
-48 error  { [Error: EACCES, mkdir '/Users/vigneshm/.npm/socket.io/1.3.5']
-48 error   errno: 3,
-48 error   code: 'EACCES',
-48 error   path: '/Users/vigneshm/.npm/socket.io/1.3.5',
-48 error   parent: 'noteshare' }
-49 error Please try running this command again as root/Administrator.
-50 error System Darwin 14.1.0
-51 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "--save" "socket.io"
-52 error cwd /Users/vigneshm/GitHub/noteshare
-53 error node -v v0.10.36
-54 error npm -v 1.4.28
-55 error path /Users/vigneshm/.npm/socket.io/1.3.5
-56 error code EACCES
-57 error errno 3
-58 error stack Error: EACCES, mkdir '/Users/vigneshm/.npm/socket.io/1.3.5'
-59 verbose exit [ 3, true ]
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info prestart noteshare@0.0.0
+6 info start noteshare@0.0.0
+7 verbose unsafe-perm in lifecycle true
+8 info noteshare@0.0.0 Failed to exec start script
+9 error noteshare@0.0.0 start: `node ./bin/www`
+9 error Exit status 8
+10 error Failed at the noteshare@0.0.0 start script.
+10 error This is most likely a problem with the noteshare package,
+10 error not with npm itself.
+10 error Tell the author that this fails on your system:
+10 error     node ./bin/www
+10 error You can get their info via:
+10 error     npm owner ls noteshare
+10 error There is likely additional logging output above.
+11 error System Darwin 14.1.0
+12 error command "/usr/local/bin/node" "/usr/local/bin/npm" "start"
+13 error cwd /Users/vigneshm/GitHub/noteshare
+14 error node -v v0.10.36
+15 error npm -v 1.4.28
+16 error code ELIFECYCLE
+17 verbose exit [ 1, true ]
