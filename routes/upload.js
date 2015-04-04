@@ -46,8 +46,6 @@ router.post('/',isAuth,function(req,res){
             } else {
                 res.end('{result:false,error:"not auth"}');
                 return ;
-            //TODO should throw error
-            querystring+='1,';
         }
         if(req.body.uploadfilename){
             querystring+=(req.body.name)?req.body.name:mysql.escape(req.body.uploadfilename)+',';
@@ -55,8 +53,8 @@ router.post('/',isAuth,function(req,res){
             querystring+=mysql.escape(files.originalname)+',';
         }
         querystring+=mysql.escape(files.name)+',';
-        querystring+='0,';
-        querystring+='3,';
+        querystring+='0,';//default no of views
+        querystring+='3,';//default rating
         querystring+=mysql.escape(util.dateToMysqlFormat(new Date()))+",";
         querystring+=req.body.department?req.body.department:'none,';
         querystring+=req.body.semester?req.body.semester:'1,';
