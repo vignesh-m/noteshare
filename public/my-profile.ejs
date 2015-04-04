@@ -308,20 +308,20 @@ input[type="text"] {
 }
 table { border-collapse: collapse; }
 .percent {
-	position: absolute; width: 300px; height: 14px; z-index: 1; text-align: center; font-size: 0.8em; color: white;
+	position: absolute; width: 300px; height: 17px; z-index: 1; text-align: center; font-size: 0.971428em; color: white;
 }
 .progress-bar {
-	width: 300px; height: 14px;
-	border-radius: 10px;
+	width: 300px; height: 20px;
+	border-radius: 6px;
 	border: 1px solid #CCC;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#6666cc), to(#4b4b95));
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#2e9ba0), to(#2e9ba0));
 	border-image: initial;
 }
 .uploaded {
 	padding: 0;
-	height: 14px;
-	border-radius: 10px;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#66cc00), to(#4b9500));
+	height: 17px;
+	border-radius: 6px;
+	background-image: -webkit-gradient(linear, left, right, from(#2e9ba0), to(#2e9ba0));
 	border-image: initial;
 }
 .dropbox {
@@ -405,12 +405,25 @@ table { border-collapse: collapse; }
 	overflow-y:scroll;
 	overflow-x:hidden;
 }
+.notificationRead {
+	background-color: #fff;
+}
+.notificationUnread {
+	background-color: #dddddd;
+}
+
 input[type='checkbox'] {
 	width:17px;
 	height:17px;
 	background:white;
 	border-radius:5px;
 	border:2px solid #555;
+}
+.dummy-a {
+	display: block;
+	padding: 0px 0px !important;
+	line-height: 1.42857143;
+	white-space: nowrap;
 }
 input[type='checkbox']:checked {
 }
@@ -470,7 +483,7 @@ input[type='checkbox']:checked {
 				</div>
 				<div class="col-lg-1 nopadding"></div>
 				<li id="notification-li" class="nav-button notification-container dropdown">
-					<a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
+					<a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" ng-show="notificationCount!=0" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
 					<ul id="notification-li-dropdown" class="dropdown-menu" style="border: 1px solid #000"> 
 						<li class="notifications-panel-head" ng-show="notificationsDownloads.length!=0">
 							Downloads							
@@ -483,310 +496,310 @@ input[type='checkbox']:checked {
 						</div>
 					</div>
 					<li ng-repeat="notification in notificationsDownloads">
-						<div class="notification-item">
-							<div class="notification-item-text-body"  style="height:54px;">
-								<div class="row" style="margin:2px">
-									<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
-								</img>
-								<big>{{truncateString(notification.text,45)}}</big>
-							</div>
-                                        <!--<div class="row pull-right">
-											<button type="button" ng-click="notificationMarkAsRead(1,$index)" class="btn btn-default"><i class="fa fa-check fa-1x">Mark as Read</i></button>
-											<button type="button" class="btn btn-default"><i class="fa fa-external-link fa-1x"></i></button>
-										</div>-->
-									</div>
-									<div style="background:#aaaaaa">
-										<div class="row separator-very-small">
-										</div>
-									</div>
-								</div>
-							</li>
-
-							<li class="notifications-panel-head" ng-show="notificationsUploads.length!=0">
-								Uploads
-							</li><!-- 
-							<div style="color:black;margin-top:10px" ng-show="notificationsUploads.length==0">
-								<center>No new Uploads</center>
-							</div> -->
-
-							<div style="background:#aaaaaa" ng-show="notificationsUploads.length!=0">
-								<div class="row separator-very-small">
-								</div>
-							</div>
-							<li ng-repeat="notification in notificationsUploads">
-								<div class="notification-item">
-									<div class="notification-item-text-body"  style="height:54px;">
-										<div class="row" style="margin:3px">
-											<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
-										</img>
-										<big>{{truncateString(notification.text,45)}}</big>
-									</div>
-                                        <!--<div class="row pull-right">
-											<button type="button" ng-click="notificationMarkAsRead(1,$index)" class="btn btn-default"><i class="fa fa-check fa-1x">Mark as Read</i></button>
-											<button type="button" class="btn btn-default"><i class="fa fa-external-link fa-1x"></i></button>
-										</div>-->
-									</div>
-									<div style="background:#aaaaaa">
-										<div class="row separator-very-small">
-										</div>
-									</div>
-								</div>
-							</li>
-
-						</ul>
-					</li>
-					<li class="nav-button dropdown">
-						<a href="#" class="dropdown-toggle " id="dropdown" data-toggle="dropdown"><div class="navbar-profile-pic-img-circular"></div></a>
-						<ul class="dropdown-menu"> 
-							<li>
-								<a href="javascript:void(0)" ng-click="settings()"><i class="fa fa-fw fa-cog"></i> Settings</a>
-							</li>         
-							<li>
-								<a href="/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-	<div class="container-fluid">
-		<div class="row" style="height:20%">
-		</div>
-		<div class="col-md-3">
-			<div class="row">
-				<div class="col-lg-10 nopadding">
-					<img src="default-profile-pic.jpg" class="profile-pic"></img>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-2 detail nopadding">
-					<div class="detail detail-large">{{myUploadsCount}}</div>
-					<div class="detail detail-small">Uploads</div>
-				</div>
-				<div class="col-lg-2 detail nopadding">
-					<div class="detail detail-large">{{myDownloadsCount}}</div>
-					<div class="detail detail-small">Downloads</div>
-				</div>
-				<div class="col-lg-2 detail nopadding">
-					<div class="detail detail-large">{{user.credits}}</div>
-					<div class="detail detail-small">Credits</div>
-				</div>
-				<div class="col-lg-2 detail nopadding">
-					<div class="detail detail-large">{{followersCount}}</div>
-					<div class="detail detail-small">Followers</div>
-				</div>
-				<div class="col-lg-2 detail nopadding">
-					<center>
-						<div class="detail detail-large">{{followingCount}}</div>
-						<div class="detail detail-small">Following</div>
-					</center>
-				</div>
-			</div>
-			<div class="row separator-small"></div>
-			<div class="row">
-				<div class="col-lg-10 nopadding" ng-click="visDashboard=true;visMyUploads=false;visSmartSearch=false;visMyDownloads=false;">
-					<div class="nav-link">
-						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspDashboard
-					</div>
-				</div>
-			</div>
-			<div class="row separator-small"></div>
-			<div class="row">
-				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=true;visSmartSearch=false;visMyDownloads=false;getMyUploads();getArrGrid(myUploads,4,1)">
-					<div class="nav-link">
-						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Uploads
-
-					</div>
-				</div>
-			</div>
-			<div class="row separator-small"></div>
-			<div class="row">
-				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=false;visMyDownloads=true;visSmartSearch=false;getMyDownloads();getArrGrid(myDownloads.downloads,4,2)">
-					<div class="nav-link">
-						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Downloads
-					</div>
-				</div>
-			</div>
-			<div class="row separator-small"></div>
-			<div class="row">
-				<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=false;visMyDownloads=false;visSmartSearch=true;">
-					<div class="nav-link">
-						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSmart search
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyUploads;">
-			<div class="container-fluid card-container" >
-				<h3>My uploads</h3>
-				<table class="table nodivider-table">
-					<tbody>
-						<tr ng-repeat="rowUploadElements in gridMyUploads track by $index">
-							<td ng-repeat="uploadElement in rowUploadElements track by $index">
-								<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + uploadElement.id}}">
-									<center>
-										<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+							<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index)">
+								<div class="notification-item-text-body"  style="height:54px;">
+									<div class="row" style="margin:2px">
+										<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
 									</img>
-									<div class="row">
-										<big>{{truncateString(uploadElement.name,10)}}</big>
-										<br>
-										{{uploadElement.rating + "/5.0"}}
-									</div>
-								</center>
-							</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+									<div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
+								<!-- <div class="row pull-right" style="margin-top:4%">
+									<a class="book-preview-a" ng-href="{'/view?id=' + notification.because}">
+										<button type="button" class="btn btn-default"><i class="fa fa-external-link fa-1x"></i></button>
+									</a>
+								</div> -->
+							</div>
+						</div>
+						<div style="background:#aaaaaa">
+							<div class="row separator-very-small">
+							</div>
+						</div>
+					</div>
+			</li>
+
+			<li class="notifications-panel-head" ng-show="notificationsUploads.length!=0">
+				Uploads
+			</li>
+			<div style="background:#aaaaaa" ng-show="notificationsUploads.length!=0">
+				<div class="row separator-very-small">
+				</div>
+			</div>
+			<li ng-repeat="notification in notificationsUploads">
+				<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index)">
+					<div class="notification-item-text-body"  style="height:54px;">
+						<div class="row" style="margin:3px">
+							<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
+						</img>
+						<div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
+							<!-- <div class="row pull-right" style="margin-top:4%">
+								<a class="book-preview-a" ng-href="{'/download/view?id=' + notification.uploadid}">
+									<button type="button" ng-click="notificationMarkAsRead(1,$index)" class="btn btn-default"><i class="fa fa-download fa-1x"></i></button>
+								</a>
+								<a class="book-preview-a" ng-href="{'/view?id=' + notification.because}">
+									<button type="button" class="btn btn-default"><i class="fa fa-external-link fa-1x"></i></button>
+								</a>
+							</div> -->
+						</div>
+					</div>
+					<div style="background:#aaaaaa">
+						<div class="row separator-very-small">
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li class="nav-button dropdown">
+		<a href="#" class="dropdown-toggle " id="dropdown" data-toggle="dropdown"><div class="navbar-profile-pic-img-circular"></div></a>
+		<ul class="dropdown-menu"> 
+			<li>
+				<a href="javascript:void(0)" ng-click="settings()"><i class="fa fa-fw fa-cog"></i> Settings</a>
+			</li>         
+			<li>
+				<a href="/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+			</li>
+		</ul>
+	</li>
+</ul>
+</div>
+</div>
+</nav>
+
+<div class="container-fluid">
+	<div class="row" style="height:20%">
 	</div>
-
-	<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visSmartSearch;">
-		<div class="container-fluid card-container" >
-			<h3>Smart search</h3>
-			<br>
-			
-			<!-- department, college, semester, year-->
-			<div class="row" style="margin-top:2%;">
-				<div class="col-md-1">
-				</div>
-				<div class="col-md-2" style="margin-top:0.8%;">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="boolSmartSearchByCollege"> <p><small><small>&nbsp&nbspCollege</small></small></p>
-						</label>
-					</div>
-				</div>
-				<div class="col-md-8" ng-show="boolSmartSearchByCollege" style="margin-top:1.42%;">
-					<input type="text" placeholder="College" ng-model="smartCollege" class="form-control input"/>
-				</div>
+	<div class="col-md-3">
+		<div class="row">
+			<div class="col-lg-10 nopadding">
+				<img src="default-profile-pic.jpg" class="profile-pic"></img>
 			</div>
-			<div class="row" style="margin-top:2%;">
-				<div class="col-md-1">
-				</div>
-				<div class="col-md-2" style="margin-top:0.8%;">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="boolSmartSearchByDepartment"> <p><small><small>&nbsp&nbspDepartment</small></small></p>
-						</label>
-					</div>
-				</div>
-				<div class="col-md-8" ng-show="boolSmartSearchByDepartment" style="margin-top:1.42%;">
-					<input type="text" placeholder="Department" ng-model="smartDepartment" class="form-control input"/>
-				</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-2 detail nopadding">
+				<div class="detail detail-large">{{myUploadsCount}}</div>
+				<div class="detail detail-small">Uploads</div>
 			</div>
-			<div class="row" style="margin-top:2%;">
-				<div class="col-md-1">
-				</div>
-				<div class="col-md-2" style="margin-top:0.8%;">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="boolSmartSearchByYear"> <p><small><small>&nbsp&nbspYear</small></small></p>
-						</label>
-					</div>
-				</div>
-				<div class="col-md-8" ng-show="boolSmartSearchByYear" style="margin-top:1.42%;">
-					<input type="text" placeholder="Year" ng-model="smartYear" class="form-control input"/>
-				</div>
+			<div class="col-lg-2 detail nopadding">
+				<div class="detail detail-large">{{myDownloadsCount}}</div>
+				<div class="detail detail-small">Downloads</div>
 			</div>
-			<div class="row" style="margin-top:2%;">
-				<div class="col-md-1">
-				</div>
-				<div class="col-md-2" style="margin-top:0.8%;">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="boolSmartSearchBySemester"> <p><small><small>&nbsp&nbspSemester</small></small></p>
-						</label>
-					</div>
-				</div>
-				<div class="col-md-8" ng-show="boolSmartSearchBySemester" style="margin-top:1.42%;">
-					<input type="text" placeholder="Semester" ng-model="smartSemester" class="form-control input"/>
-				</div>
+			<div class="col-lg-2 detail nopadding">
+				<div class="detail detail-large">{{user.credits}}</div>
+				<div class="detail detail-small">Credits</div>
 			</div>
-			<br>
-			<div class="row">
-				<div class="col-md-10">
-				</div>
-				<div class="col-md-1">
-					<button class="btn btn-default btn-flat-note" ng-click="getSmartSearchResults(smartCollege, smartDepartment, smartYear, smartSemester, smartSearchLimit, smartSearchOffset, true)" type="button">Search
-					</button>
-				</div>
+			<div class="col-lg-2 detail nopadding">
+				<div class="detail detail-large">{{followersCount}}</div>
+				<div class="detail detail-small">Followers</div>
 			</div>
-
-			<div ng-show="smartSearchResults.length!=0">
-				<br>
-				<h3>Search results</h3>
-				<br>
-			</div>
-
-			<table class="table nodivider-table">
-				<tbody>
-					<tr ng-repeat="rowSearchResultsElements in gridSmartSearchResults track by $index">
-						<td ng-repeat="searchResultElement in rowSearchResultsElements track by $index">
-							<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + searchResultElement.id}}">
-								<center>
-									<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px"></img>
-									<div class="row">
-										<big>{{truncateString(searchResultElement.name,10)}}</big>
-										<br>
-										{{searchResultElement.rating + "/5.0"}}
-									</div>
-								</center>
-							</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<div ng-show="smartSearchResultSpinner">
+			<div class="col-lg-2 detail nopadding">
 				<center>
-					<img src="/spinner.gif" style="margin:10px"></img>
+					<div class="detail detail-large">{{followingCount}}</div>
+					<div class="detail detail-small">Following</div>
 				</center>
 			</div>
-
-			<div class="row" ng-show="!noMoreSmartSearchResults && smartSearchResults.length!=0">
-				<center><h3>No more search results</h3></center>
-				<br>
-			</div>
-
-			<div class="row" ng-show="noMoreSmartSearchResults">
-				<div class="col-md-10">
-				</div>
-				<div class="col-md-1">
-					<button class="btn btn-default btn-flat-note" ng-click="getSmartSearchResults(smartCollege, smartDepartment, smartYear, smartSemester, smartSearchLimit, smartSearchOffset + smartSearchLimit, false)" type="button">More
-					</button>
+		</div>
+		<div class="row separator-small"></div>
+		<div class="row">
+			<div class="col-lg-10 nopadding" ng-click="visDashboard=true;visMyUploads=false;visSmartSearch=false;visMyDownloads=false;">
+				<div class="nav-link">
+					&nbsp&nbsp&nbsp&nbsp&nbsp&nbspDashboard
 				</div>
 			</div>
+		</div>
+		<div class="row separator-small"></div>
+		<div class="row">
+			<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=true;visSmartSearch=false;visMyDownloads=false;getMyUploads();getArrGrid(myUploads,4,1)">
+				<div class="nav-link">
+					&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Uploads
 
+				</div>
+			</div>
+		</div>
+		<div class="row separator-small"></div>
+		<div class="row">
+			<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=false;visMyDownloads=true;visSmartSearch=false;getMyDownloads();getArrGrid(myDownloads.downloads,4,2)">
+				<div class="nav-link">
+					&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMy Downloads
+				</div>
+			</div>
+		</div>
+		<div class="row separator-small"></div>
+		<div class="row">
+			<div class="col-lg-10 nopadding" ng-click="visDashboard=false;visMyUploads=false;visMyDownloads=false;visSmartSearch=true;">
+				<div class="nav-link">
+					&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSmart search
+				</div>
+			</div>
 		</div>
 	</div>
 
-	<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyDownloads;">
+	<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyUploads;">
 		<div class="container-fluid card-container" >
-			<h3>My downloads</h3>
+			<h3>My uploads</h3>
 			<table class="table nodivider-table">
 				<tbody>
-					<tr ng-repeat="rowDownloadElements in gridMyDownloads track by $index">
-						<td ng-repeat="downloadElement in rowDownloadElements track by $index">
-							<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + downloadElement.file.id}}">
+					<tr ng-repeat="rowUploadElements in gridMyUploads track by $index">
+						<td ng-repeat="uploadElement in rowUploadElements track by $index">
+							<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + uploadElement.id}}">
 								<center>
 									<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
 								</img>
 								<div class="row">
-									<big>{{truncateString(downloadElement.file.name,10)}}</big>
+									<big>{{truncateString(uploadElement.name,10)}}</big>
 									<br>
-									{{downloadElement.file.rating + "/5.0"}}
+									{{uploadElement.rating + "/5.0"}}
 								</div>
 							</center>
 						</a>
 					</td>
 				</tr>
 			</tbody>
-		</table>    
+		</table>
 	</div>
+</div>
+
+<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visSmartSearch;">
+	<div class="container-fluid card-container" >
+		<h3>Smart search</h3>
+		<br>
+
+		<!-- department, college, semester, year-->
+		<div class="row" style="margin-top:2%;">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-2" style="margin-top:0.8%;">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="boolSmartSearchByCollege"> <p><small><small>&nbsp&nbspCollege</small></small></p>
+					</label>
+				</div>
+			</div>
+			<div class="col-md-8" ng-show="boolSmartSearchByCollege" style="margin-top:1.42%;">
+				<input type="text" placeholder="College" ng-model="smartCollege" class="form-control input"/>
+			</div>
+		</div>
+		<div class="row" style="margin-top:2%;">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-2" style="margin-top:0.8%;">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="boolSmartSearchByDepartment"> <p><small><small>&nbsp&nbspDepartment</small></small></p>
+					</label>
+				</div>
+			</div>
+			<div class="col-md-8" ng-show="boolSmartSearchByDepartment" style="margin-top:1.42%;">
+				<input type="text" placeholder="Department" ng-model="smartDepartment" class="form-control input"/>
+			</div>
+		</div>
+		<div class="row" style="margin-top:2%;">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-2" style="margin-top:0.8%;">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="boolSmartSearchByYear"> <p><small><small>&nbsp&nbspYear</small></small></p>
+					</label>
+				</div>
+			</div>
+			<div class="col-md-8" ng-show="boolSmartSearchByYear" style="margin-top:1.42%;">
+				<input type="text" placeholder="Year" ng-model="smartYear" class="form-control input"/>
+			</div>
+		</div>
+		<div class="row" style="margin-top:2%;">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-2" style="margin-top:0.8%;">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="boolSmartSearchBySemester"> <p><small><small>&nbsp&nbspSemester</small></small></p>
+					</label>
+				</div>
+			</div>
+			<div class="col-md-8" ng-show="boolSmartSearchBySemester" style="margin-top:1.42%;">
+				<input type="text" placeholder="Semester" ng-model="smartSemester" class="form-control input"/>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-10">
+			</div>
+			<div class="col-md-1">
+				<button class="btn btn-default btn-flat-note" ng-click="getSmartSearchResults(smartCollege, smartDepartment, smartYear, smartSemester, smartSearchLimit, smartSearchOffset, true)" type="button">Search
+				</button>
+			</div>
+		</div>
+
+		<div ng-show="smartSearchResults.length!=0">
+			<br>
+			<h3>Search results</h3>
+			<br>
+		</div>
+
+		<table class="table nodivider-table">
+			<tbody>
+				<tr ng-repeat="rowSearchResultsElements in gridSmartSearchResults track by $index">
+					<td ng-repeat="searchResultElement in rowSearchResultsElements track by $index">
+						<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + searchResultElement.id}}">
+							<center>
+								<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px"></img>
+								<div class="row">
+									<big>{{truncateString(searchResultElement.name,10)}}</big>
+									<br>
+									{{searchResultElement.rating + "/5.0"}}
+								</div>
+							</center>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div ng-show="smartSearchResultSpinner">
+			<center>
+				<img src="/spinner.gif" style="margin:10px"></img>
+			</center>
+		</div>
+
+		<div class="row" ng-show="!noMoreSmartSearchResults && smartSearchResults.length!=0">
+			<center><h3>No more search results</h3></center>
+			<br>
+		</div>
+
+		<div class="row" ng-show="noMoreSmartSearchResults">
+			<div class="col-md-10">
+			</div>
+			<div class="col-md-1">
+				<button class="btn btn-default" ng-click="getSmartSearchResults(smartCollege, smartDepartment, smartYear, smartSemester, smartSearchLimit, smartSearchOffset + smartSearchLimit, false)" type="button">More >>
+				</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-if="visMyDownloads;">
+	<div class="container-fluid card-container" >
+		<h3>My downloads</h3>
+		<table class="table nodivider-table">
+			<tbody>
+				<tr ng-repeat="rowDownloadElements in gridMyDownloads track by $index">
+					<td ng-repeat="downloadElement in rowDownloadElements track by $index">
+						<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + downloadElement.file.id}}">
+							<center>
+								<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+							</img>
+							<div class="row">
+								<big>{{truncateString(downloadElement.file.name,10)}}</big>
+								<br>
+								{{downloadElement.file.rating + "/5.0"}}
+							</div>
+						</center>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>    
+</div>
 </div>
 
 
@@ -873,13 +886,20 @@ input[type='checkbox']:checked {
 								</span>)
 							</div>
 							<br>
-							<button type="button" class="btn btn-default btn-flat-note" ng-click="uploadFile()">Upload</button>
 							<div ng-show="progressVisible">
-								<div class="percent">{{progress}}%</div>
-								<div class="progress-bar">
-									<div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+								<div class="row">
+									<div class="col-md-4"></div>
+									<div class="col-md-4">
+										<div class="percent">{{progress}}%</div>
+										<div class="progress-bar">
+											<div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+										</div>
+									</div>
 								</div>
 							</div>
+							<br>
+							<button type="button" class="btn btn-default btn-flat-note" ng-click="uploadFile()">Upload</button>
+							
 						</div>
 					</center>
 				</div>

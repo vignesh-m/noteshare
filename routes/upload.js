@@ -56,9 +56,9 @@ router.post('/',isAuth,function(req,res){
         querystring+='0,';//default no of views
         querystring+='3,';//default rating
         querystring+=mysql.escape(util.dateToMysqlFormat(new Date()))+",";
-        querystring+=req.body.department?req.body.department:'none,';
-        querystring+=req.body.semester?req.body.semester:'1,';
-        querystring+=req.body.year?req.body.year:'1';
+        querystring+=mysql.escape(req.body.department?req.body.department:'none')+",";
+        querystring+=mysql.escape(req.body.semester?req.body.semester:'1')+",";
+        querystring+=mysql.escape(req.body.year?req.body.year:'1');
         querystring+=");";
 db.querydb(querystring,function(result){
     console.log(querystring);

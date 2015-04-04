@@ -25,18 +25,20 @@ function myProfile($scope,$http,$rootScope,$window) {
 
   $scope.notificationMarkAsRead = function(purpose, index) {
     var notification_id;
-    if(purpose == 0) {
+    if(purpose == "Download") {
       notification_id = $scope.notificationsDownloads[index].id;
+      $scope.notificationsDownloads[index].unread = false;
       console.log(notification_id);
     }
-    else if(purpose == 1) {
-      notification_id = $scope.notificationsUploads[index].id;      
+    else if(purpose == "Upload") {
+      notification_id = $scope.notificationsUploads[index].id;   
+      $scope.notificationsUploads[index].unread = false;   
       console.log(notification_id);
     }
     $http.get('/notifications/set/read?notification_id=' + notification_id).
     success(function(data, status, headers, config) {
       console.log(data);
-      if(data.result) {
+     /* if(data.result) {
         $http.get('/notifications/get').
         success(function(data, status, headers, config) {
           console.log(data);
@@ -56,8 +58,8 @@ function myProfile($scope,$http,$rootScope,$window) {
         error(function(data, status, headers, config) {
           console.log('error');
         });
-      }
-    }).
+  }*/
+}).
     error(function(data, status, headers, config) {
       console.log('error');
     });
@@ -208,12 +210,14 @@ $scope.updateNotifications = function() {
     $scope.notificationsDownloads = [];
     $scope.notifications.forEach(function(element, index, array) {
       if(element.purpose == "Upload") {
+        element.unread = true;
         $scope.notificationsUploads.push(element);
       }
       else if(element.purpose == "Download") {
-        $scope.notificationsDownloads.push(element);
-      }
-    });
+       element.unread = true;
+       $scope.notificationsDownloads.push(element);
+     }
+   });
     $scope.updateNotificationCounter();
     $scope.notificationCount = $scope.notifications.length;
   }).
@@ -427,40 +431,51 @@ $scope.getDetails();
     for (var i in $scope.files) {
       fd.append("uploadedFile", $scope.files[i])
     }
+
+    fd.append("name", $scope.filename);
+    fd.append("department", $scope.department);
+    fd.append("semester", $scope.semester);
+    fd.append("year", $scope.year);
+    fd.append("tags", $scope.tags.split(" "));
+
+    console.log($scope.tags.split(" "));
+    
     var xhr = new XMLHttpRequest()
-    xhr.upload.addEventListener("progress", uploadProgress, false)
-    xhr.addEventListener("load", uploadComplete, false)
-    xhr.addEventListener("error", uploadFailed, false)
-    xhr.addEventListener("abort", uploadCanceled, false)
+    xhr.upload.addEventListener("progress", $scope.uploadProgress, false)
+    xhr.addEventListener("load", $scope.uploadComplete, false)
+    xhr.addEventListener("error", $scope.uploadFailed, false)
+    xhr.addEventListener("abort", $scope.uploadCanceled, false)
     xhr.open("POST", "/upload")
     xhr.setRequestHeader("x","hello");
     $scope.progressVisible = true
     xhr.send(fd)
   }
-}
 
-function uploadProgress(evt) {
-  $scope.$apply(function(){
-    if (evt.lengthComputable) {
-      $scope.progress = Math.round(evt.loaded * 100 / evt.total)
-    } else {
-      $scope.progress = 'unable to compute'
-    }
-  })
-}
 
-function uploadComplete(evt) {
- /* This event is raised when the server send back a response */
- alert(evt.target.responseText)
-}
+  $scope.uploadProgress = function (evt) {
+    $scope.$apply(function(){
+      if (evt.lengthComputable) {
+        $scope.progress = Math.round(evt.loaded * 100 / evt.total)
+      } else {
+        $scope.progress = 'unable to compute'
+      }
+    })
+  }
 
-function uploadFailed(evt) {
+  $scope.uploadComplete = function (evt) {
+   /* This event is raised when the server send back a response */
+   alert(evt.target.responseText);
+   $scope.visUploadProgress=!$scope.visUploadProgress;
+ }
+
+ $scope.uploadFailed = function (evt) {
   alert("There was an error attempting to upload the file.")
 }
 
-function uploadCanceled(evt) {
+$scope.uploadCanceled = function (evt) {
   $scope.$apply(function(){
     $scope.progressVisible = false
   })
   alert("The upload has been canceled by the user or the browser dropped the connection.")
+}
 }
