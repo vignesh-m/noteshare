@@ -8,7 +8,7 @@
  var notification = require('./util/notification');
  var util = require('./util/util');
  var _ = require('underscore');
-var http=require('http');
+
  var isAuth = function(req, res, next) {
     console.log('Authenticating');
     if (req.isAuthenticated())
@@ -30,16 +30,6 @@ router.get('/get', isAuth, function(req, res) {
     db.querydb(querystring,function(result){ 
         console.log(querystring);
         res.end(JSON.stringify(result));
-    });
-});
-router.get('/getupload',isAuth,function(req,res){
-    if(!req.query.id){
-        res.end();return;
-    }
-    var querystring = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(req.query.id) + " ORDER BY uploads.dateUploaded";
-    db.querydb(querystring,function(result){
-        console.log(querystring);
-        res.render('uploadview',{file:result[0]});
     });
 });
 router.post('/',isAuth,function(req,res){
@@ -66,28 +56,19 @@ router.post('/',isAuth,function(req,res){
         querystring+='0,';//default no of views
         querystring+='3,';//default rating
         querystring+=mysql.escape(util.dateToMysqlFormat(new Date()))+",";
-
-        querystring+=req.body.department?mysql.escape(req.body.department):mysql.escape('none')+',';
-        querystring+=req.body.semester?mysql.escape(req.body.semester):'1,';
-        querystring+=req.body.year?mysql.escape(req.body.year):'1';
-        
+        querystring+=mysql.escape(req.body.department?req.body.department:'none')+",";
+        querystring+=mysql.escape(req.body.semester?req.body.semester:'1')+",";
+        querystring+=mysql.escape(req.body.year?req.body.year:'1');
         querystring+=");";
-        db.querydb(querystring,function(result){
-        console.log(querystring);
-        //TODO : extend it for an array
-        //util.savePDFToSWF("uploads/" + files.name, "public/views/" + "test1.swf");
-        notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload");
-        res.end(JSON.stringify(result));
-            console.log(result);
-            if(req.body.tags){
-                for(var i=0;i<req.body.tags.length;i++){
-                   http.get("/tag/add?tagname="+req.body.tags[i]+"&uploadid="+result.insertId,function(res){
-                       console.log(res);
-                   });
-                }
-            }
-        })
-    }
+
+db.querydb(querystring,function(result){
+    console.log(querystring);
+    //TODO : extend it for an array
+    util.savePDFToSWF("uploads/" + files.name, "public/views/" + "test1.swf");
+    notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload");
+    res.end(JSON.stringify(result));
+})
+}
 });
 
 
