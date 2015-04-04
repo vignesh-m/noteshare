@@ -75,26 +75,35 @@ router.post('/',isAuth,function(req,res){
         querystring+=mysql.escape(req.body.semester?req.body.semester:'1')+",";
         querystring+=mysql.escape(req.body.year?req.body.year:'1');
         querystring+=");";
+        db.querydb(querystring,function(result){
+            console.log(querystring);
+            //TODO : extend it for an array
+            //util.savePDFToSWF("uploads/" + files.name, "public/views/" + "test1.swf");
+            notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload");
 
-db.querydb(querystring,function(result){
-    console.log(querystring);
-    //TODO : extend it for an array
-    //util.savePDFToSWF("uploads/" + files.name, "public/views/" + "test1.swf");
-    notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload");
+            console.log(result);
+            if(req.body.tags){
+                console.log(req.body.tags);
+                if(Object.prototype.toString.call(req.body.tags ) === '[object Array]') {
+                    console.log(req.body.tags.length);
+                    console.log("multi tag/add?tagname=" + req.body.tags[i] + "&uploadid=" + result.insertId);
+                    for (var i = 0; i < req.body.tags.length; i++) {
 
-    console.log(result);
-    if(req.body.tags){
-        for(var i=0;i<req.body.tags.length;i++){
-           http.get("/tag/add?tagname="+req.body.tags[i]+"&uploadid="+result.insertId,function(res){
-               console.log(res);
-           });
-       }
-   }
-
-   //res.end(JSON.stringify(result));
-
-})
-}
+                        http.get("tag/add?tagname=" + req.body.tags[i] + "&uploadid=" + result.insertId, function (res2) {
+                            console.log(res2);
+                        });
+                    }
+                } else {
+                    console.log("single tag/add?tagname=" + req.body.tags + "&uploadid=" + result.insertId);
+                    //TODO change localhost to global variable
+                    http.get("http://localhost:3000/tag/add?tagname=" + req.body.tags + "&uploadid=" + result.insertId, function (res2) {
+                        console.log(res2);
+                    });
+                }
+           }
+           res.end(JSON.stringify(result));
+        })
+    }
 });
 
 
