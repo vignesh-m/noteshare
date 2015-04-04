@@ -1,11 +1,11 @@
 /**
  * Created by vignesh on 9/2/15.
  */
-var express = require('express');
-var router = express.Router();
-var mysql= require('mysql');
-var db=require('../public/db_structure');
-function match_name(search_str,fieldname,col){
+ var express = require('express');
+ var router = express.Router();
+ var mysql= require('mysql');
+ var db=require('../public/db_structure');
+ function match_name(search_str,fieldname,col){
     var search_words=search_str.split(" ");
     var s1="";
     for(var i=0;i<search_words.length;i++){
@@ -32,9 +32,10 @@ function query_upload(req,callback){
      *      semester - by uploads.semester
      *      year - by uploads.year
      */
-    tables.push('uploads');
-    columns.push('uploads.*');
-    if(req.name){
+
+     tables.push('uploads');
+     columns.push('uploads.*');
+     if(req.name){
         columns.push(match_name(req.name,"uploads.name","score1"));
         sort.push("score1");
         //conditions.push('uploads.name LIKE '+mysql.escape('%'+req.name+'%'));
@@ -125,9 +126,15 @@ function query_upload(req,callback){
 router.get('/', function(req, res) {
     var query=req.query;
 
-    query_upload(query,function(result){
-        res.end(JSON.stringify(result));
-    })
+    if(req.query.limit && req.query.limit==0) {
+        res.end(JSON.stringify([]));
+    }
+    else {
+
+        query_upload(query,function(result){
+            res.end(JSON.stringify(result));
+        });
+    }
 });
 router.get('/user',function(req,res){
     var querystring="";

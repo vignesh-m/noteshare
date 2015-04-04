@@ -182,14 +182,14 @@ $scope.getTimeInFormat = function(dateStr) {
   }
 
 
-$scope.searchResponse = function(searchResult) {
-  if(searchResult.type == "book") {
-    $scope.getNotificationModalData(searchResult.link);
+  $scope.searchResponse = function(searchResult) {
+    if(searchResult.type == "book") {
+      $scope.getNotificationModalData(searchResult.link);
+    }
+    else if(searchResult.type == "user") {
+      $scope.redirect(searchResult.link);
+    }
   }
-  else if(searchResult.type == "user") {
-    $scope.redirect(searchResult.link);
-  }
-}
 
 
   $scope.redirect = function(link) {
