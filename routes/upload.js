@@ -38,8 +38,12 @@ router.get('/getupload',isAuth,function(req,res){
     }
     var querystring = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(req.query.id) + " ORDER BY uploads.dateUploaded";
     db.querydb(querystring,function(result){
-        console.log(querystring);
-        res.render('uploadview',{file:result[0]});
+        console.log(result);
+        db.querydb("SELECT * FROM noteshare.user WHERE id="+result[0].userid+";",function(userobj){
+            res.render('uploadview',{file:result[0],user:userobj[0]});
+            console.log(userobj);
+        });
+
     });
 });
 router.post('/',isAuth,function(req,res){
