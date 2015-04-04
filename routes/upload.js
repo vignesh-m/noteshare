@@ -66,9 +66,11 @@ router.post('/',isAuth,function(req,res){
         querystring+='0,';//default no of views
         querystring+='3,';//default rating
         querystring+=mysql.escape(util.dateToMysqlFormat(new Date()))+",";
+
         querystring+=req.body.department?mysql.escape(req.body.department):mysql.escape('none')+',';
         querystring+=req.body.semester?mysql.escape(req.body.semester):'1,';
         querystring+=req.body.year?mysql.escape(req.body.year):'1';
+        
         querystring+=");";
         db.querydb(querystring,function(result){
         console.log(querystring);

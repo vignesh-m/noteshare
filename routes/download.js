@@ -17,7 +17,7 @@ var isAuth = function(req, res, next) {
 	}
 };
 
-app.get('/view', function (req, res) {
+app.get('/view', isAuth, function (req, res) {
 	var errobj = error.err_insuff_params(res, req, ['upload_id']);
 
 	if(!errobj) {
@@ -30,12 +30,38 @@ app.get('/view', function (req, res) {
 		console.log(querystring1);
 		console.log(upload);
 
-		//res.render('pdftest.ejs',{"SWFFileName":"../views/test1.swf?random=884873648269"});		
-		res.download('./uploads/' + upload[0].filename, function(err) {
-			if(err) {
-				console.log(err);
-			}
-		});
+		debugger;
+
+		if(upload[0].userid == req.user.id) {
+			//res.render('pdftest.ejs',{"SWFFileName":"../views/test1.swf?random=884873648269"});
+			res.download('./uploads/' + upload[0].filename, function(err) {
+				if(err) {
+					console.log(err);
+				}
+			});
+		}
+
+		else {
+			var querystring2 = "UPDATE noteshare.user SET credits=credits+1 WHERE id=" + mysql.escape(upload[0].userid);
+			db.querydb(querystring2,function(result){
+				console.log(querystring2);
+
+				var querystring3 = "INSERT INTO noteshare.downloads(userid, uploadid, dateDownloaded) VALUES (" + mysql.escape(req.user.id) + "," + mysql.escape(upload_id) + "," + mysql.escape(util.dateToMysqlFormat(new Date())) + ");";
+				db.querydb(querystring3,function(result){
+					console.log(querystring3);
+					console.log(result);
+					notification.notify(upload[0].userid, "Unread", req.user.username + " has downloaded your file : " + upload[0].name, "Download");
+
+					//res.render('pdftest.ejs',{"SWFFileName":"../views/test1.swf?random=884873648269"});
+					res.download('./uploads/' + upload[0].filename, function(err) {
+						if(err) {
+							console.log(err);
+						}
+					});
+				});
+			});
+		}
+		
 	});
 
 });

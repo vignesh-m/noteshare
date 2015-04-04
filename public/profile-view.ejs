@@ -236,6 +236,19 @@
         margin-left: 10px !important;
         margin-right: 10px !important;
     }
+    .book-preview-a {
+    text-decoration:none !important;
+    color:#333 !important;
+}
+
+.book-preview-a:hover {
+    text-decoration:none !important;
+    color:#000 !important;
+}
+.book-preview-a:active {
+    text-decoration:none !important;
+    color:#000 !important;
+}
     .notification-item-text-body {
         padding-top: 0px;
         padding-bottom: 0px;
@@ -506,15 +519,18 @@
                 <tbody>
                 <tr ng-repeat="rowUploadElements in gridMyUploads track by $index">
                     <td ng-repeat="uploadElement in rowUploadElements track by $index">
-                        <center>
-                        <img class="book-preview" src="../prev-0.jpg" width="120" height="140" style="margin-top:15px">
-                        </img>
-                        <div class="row">
-                            <big>{{truncateString(uploadElement.name, 10)}}</big>
-                            <br>
-                            {{uploadElement.rating + "/5.0"}}
-                        </div>
-                        </center>
+
+                    <a class="book-preview-a" ng-href="{{'../download/view?upload_id=' + uploadElement.id}}">
+                                    <center>
+                                        <img class="book-preview" src="../prev-0.jpg" width="120" height="140" style="margin-top:15px">
+                                    </img>
+                                    <div class="row">
+                                        <big>{{truncateString(uploadElement.name,10)}}</big>
+                                        <br>
+                                        {{uploadElement.rating + "/5.0"}}
+                                    </div>
+                                </center>
+                            </a>
                     </td>
                 </tr>
                 </tbody>
