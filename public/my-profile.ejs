@@ -458,7 +458,7 @@ input[type='checkbox']:checked {
 											</center>
 										</div>
 										<li ng-repeat="searchResult in searchResults">
-											<div class="notification-item" ng-click="redirect(searchResult.link)">
+											<div class="notification-item" ng-click="searchResponse(searchResult)">
 												<div class="notification-item-text-body"  style="height:54px;">
 													<div class="row" style="margin:3px">
 														<img ng-src="{{searchResult.imglink}}" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
@@ -485,6 +485,9 @@ input[type='checkbox']:checked {
 				<li id="notification-li" class="nav-button notification-container dropdown">
 					<a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" ng-show="notificationCount!=0" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
 					<ul id="notification-li-dropdown" class="dropdown-menu" style="border: 1px solid #000"> 
+						<li class="notifications-panel-head" ng-show="notificationsDownloads.length==0 && notificationsUploads.length==0">
+							No new notifications							
+					</li>
 						<li class="notifications-panel-head" ng-show="notificationsDownloads.length!=0">
 							Downloads							
 					</li><!-- 
@@ -496,7 +499,7 @@ input[type='checkbox']:checked {
 						</div>
 					</div>
 					<li ng-repeat="notification in notificationsDownloads">
-						<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, '/upload/getupload?id=99')">
+						<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, notification.link)">
 							<div class="notification-item-text-body"  style="height:54px;">
 								<div class="row" style="margin:2px">
 									<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
@@ -524,7 +527,7 @@ input[type='checkbox']:checked {
 					</div>
 				</div>
 				<li ng-repeat="notification in notificationsUploads">
-					<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, '/upload/getupload?id=99')">
+					<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, notification.link)">
 						<div class="notification-item-text-body"  style="height:54px;">
 							<div class="row" style="margin:3px">
 								<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
@@ -640,7 +643,7 @@ input[type='checkbox']:checked {
 				<tbody>
 					<tr ng-repeat="rowUploadElements in gridMyUploads track by $index">
 						<td ng-repeat="uploadElement in rowUploadElements track by $index">
-							<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + uploadElement.id}}">
+							<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + uploadElement.id)">
 								<center>
 									<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
 								</img>
@@ -740,7 +743,7 @@ input[type='checkbox']:checked {
 			<tbody>
 				<tr ng-repeat="rowSearchResultsElements in gridSmartSearchResults track by $index">
 					<td ng-repeat="searchResultElement in rowSearchResultsElements track by $index">
-						<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + searchResultElement.id}}">
+						<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + searchResultElement.id)">
 							<center>
 								<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px"></img>
 								<div class="row">
@@ -785,7 +788,7 @@ input[type='checkbox']:checked {
 			<tbody>
 				<tr ng-repeat="rowDownloadElements in gridMyDownloads track by $index">
 					<td ng-repeat="downloadElement in rowDownloadElements track by $index">
-						<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + downloadElement.file.id}}">
+						<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + downloadElement.file.id)">
 							<center>
 								<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
 							</img>
@@ -920,7 +923,7 @@ input[type='checkbox']:checked {
 						<table class="table nodivider-table">
 							<tbody>
 								<td ng-repeat="downloadElement in myRecentDownloads track by $index">
-									<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + downloadElement.file.id}}">
+									<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + downloadElement.file.id)">
 										<center>
 											<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px"></img>
 											<div class="row">
@@ -957,7 +960,7 @@ input[type='checkbox']:checked {
 						<table class="table nodivider-table">
 							<tbody>
 								<td ng-repeat="uploadElement in myRecentUploads track by $index">
-									<a class="book-preview-a" ng-href="{{'/download/view?upload_id=' + uploadElement.id}}">
+									<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + uploadElement.id)">
 										<center>
 											<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
 										</img>
@@ -1002,7 +1005,6 @@ input[type='checkbox']:checked {
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover table-striped">
 							<tbody>
-								{{notificationModalData.file.id}}
 								<tr>
 									<th>Department</th>
 									<td>{{notificationModalData.file.department || "N/A"}}</td>

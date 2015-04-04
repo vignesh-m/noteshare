@@ -3,17 +3,19 @@ var db=require('./db_structure');
 var util = require('./util');
 
 //downloads
-var notify = function (userid, type, text, purpose) {
-
-	var querystring = "INSERT INTO noteshare.notifications(userid,type,text,purpose,dateCreated) VALUES (" + mysql.escape(userid) +',' + mysql.escape(type) +','+ mysql.escape(text) + ',' + mysql.escape(purpose) + ',' + mysql.escape(util.dateToMysqlFormat(new Date())) + ")";
+var notify = function (userid, type, text, purpose, link) {
+	console.log(link);
+	debugger;
+	var querystring = "INSERT INTO noteshare.notifications(userid,type,text,purpose,dateCreated,link) VALUES (" + mysql.escape(userid) +',' + mysql.escape(type) +','+ mysql.escape(text) + ',' + mysql.escape(purpose) + ',' + mysql.escape(util.dateToMysqlFormat(new Date())) + "," + mysql.escape(link) + ")";
 	db.querydb(querystring,function(result){
+		debugger;
 		console.log(querystring);
 		global.io.emit('update', JSON.stringify({user_id:userid}) );
 	});
 }
 
 //when a person uploads a file all followers should get notifications
-var notifyAllFollowers = function (userid, type, text, purpose) {
+var notifyAllFollowers = function (userid, type, text, purpose, link) {
 	var querystring1 = "SELECT * FROM noteshare.followers WHERE follows=" + mysql.escape(userid);
 	db.querydb(querystring1,function(arrFollowers){
 		for(var i=0;i<arrFollowers.length;i++) {
@@ -21,7 +23,7 @@ var notifyAllFollowers = function (userid, type, text, purpose) {
 			db.querydb(querystring2,function(result){
 				console.log(querystring2);
 			});*/
-	notify(arrFollowers[i].userid, type, text, purpose);
+	notify(arrFollowers[i].userid, type, text, purpose, link);
 }
 });	
 }

@@ -43,18 +43,20 @@ router.get('/getupload',isAuth,function(req,res){
         db.querydb("SELECT * FROM noteshare.user WHERE id="+result[0].userid+";",function(userobj){
             db.querydb("SELECT tagmap.tagid FROM noteshare.tagmap WHERE uploadid="+ req.query.id + ";",function(tagids){
                 var tagidsfinal = "(";
-                for(var i = 0;i<tagids.length - 1;i++) {
-                    tagidsfinal+=tagids[i].tagid+",";
-                }
-                tagidsfinal+=tagids[tagids.length-1].tagid+")";
-                var qs = "SELECT * FROM noteshare.tag WHERE tag.id IN " + tagidsfinal + ";";
-                debugger;
-                db.querydb(qs,function(tags){
-                    debugger;
-                    console.log(tags);
-                    res.end(JSON.stringify({file:result[0],user:userobj[0],tags:tags}));
-                });
-            });
+                    for(var i = 0;i<tagids.length - 1;i++) {
+                        tagidsfinal+=tagids[i].tagid+",";
+                    }
+                    if(tagids[tagids.length-1]) {
+                        tagidsfinal+=tagids[tagids.length-1].tagid+")";
+        }
+        var qs = "SELECT * FROM noteshare.tag WHERE tag.id IN " + tagidsfinal + ";";
+        debugger;
+        db.querydb(qs,function(tags){
+            debugger;
+            console.log(tags);
+            res.end(JSON.stringify({file:result[0],user:userobj[0],tags:tags}));
+        });
+    });
             console.log(userobj);
         });
 
@@ -92,17 +94,18 @@ db.querydb(querystring,function(result){
     console.log(querystring);
             //TODO : extend it for an array
             //util.savePDFToSWF("uploads/" + files.name, "public/views/" + "test1.swf");
-            notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload");
-
+            
             console.log(result);
-            if(req.body.tags){
-                console.log(req.body.tags);
-                //if(Object.prototype.toString.call(req.body.tags ) === '[object Array]') {
-                    console.log(req.body.tags.length);
-                    var tags = req.body.tags;
-                    
-                    var uid = result.insertId;
-                    res.end(JSON.stringify(result));
+
+            var uid = result.insertId;
+            debugger;
+            var link = "/upload/getupload?id=" + uid;
+            console.log("/upload/getupload?id=" + result.insertId);
+            debugger;
+            console.log(link);
+            notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload", "/upload/getupload?id=" + result.insertId);
+            debugger;
+            res.end(JSON.stringify(result));
             /*        var qs1 = [];
                     var qs2 = [];
 
@@ -146,8 +149,6 @@ db.querydb(querystring,function(result){
 }
 */
 
-}else 
-res.end(JSON.stringify(result));
 })
 }
 });

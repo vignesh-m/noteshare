@@ -50,7 +50,7 @@ app.get('/view', isAuth, function (req, res) {
 				db.querydb(querystring3,function(result){
 					console.log(querystring3);
 					console.log(result);
-					notification.notify(upload[0].userid, "Unread", req.user.username + " has downloaded your file : " + upload[0].name, "Download");
+					notification.notify(upload[0].userid, "Unread", req.user.username + " has downloaded your file : " + upload[0].name, "Download", '/upload/getupload?id=' + upload[0].id);
 
 					//res.render('pdftest.ejs',{"SWFFileName":"../views/test1.swf?random=884873648269"});
 					res.download('./uploads/' + upload[0].filename, function(err) {
@@ -87,7 +87,7 @@ app.get('/create', isAuth, function (req, res) {
 			db.querydb(querystring3,function(result){
 				console.log(querystring3);
 				console.log(result);
-				notification.notify(upload[0].userid, "Unread", req.user.name + "has downloaded your file : " + upload[0].name, "Download");
+				notification.notify(upload[0].userid, "Unread", req.user.name + "has downloaded your file : " + upload[0].name, "Download", '/upload/getupload?id=' + upload[0].id);
 				res.end(JSON.stringify(result));
 			});
 		});
