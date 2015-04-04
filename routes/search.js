@@ -50,10 +50,10 @@ function query_upload(req,callback){
         conditions.push('uploads.rating >= '+mysql.escape(req.rating));
     }
     if(req.department){
-        conditions.push('uploads.department = '+mysql.escape(req.department));
+        conditions.push('uploads.department like %'+mysql.escape(req.department)+'% ');
     }
     if(req.semester){
-        conditions.push('uploads.semester = '+mysql.escape(req.semester));
+        conditions.push('uploads.semester like %'+mysql.escape(req.semester)+'% ');
     }
     if(req.year){
         conditions.push('uploads.year = '+mysql.escape(req.year));

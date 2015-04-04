@@ -40,26 +40,29 @@ router.post('/',isAuth,function(req,res){
     if(!files){
         res.end('error no files sent');
     } else {
-        var querystring="INSERT INTO noteshare.uploads(userid,name,filename,views,rating,dateUploaded) VALUES(";
+        var querystring="INSERT INTO noteshare.uploads(userid,name,filename,views,rating,dateUploaded,department,semester,year) VALUES(";
             if(req.user && req.user.id){
                 querystring+=mysql.escape(req.user.id)+',';
             } else {
-            //TODO should throw error
-            querystring+='1,';
+                res.end('{result:false,error:"not auth"}');
+                return ;
         }
         if(req.body.uploadfilename){
-            querystring+=mysql.escape(req.body.uploadfilename)+',';
+            querystring+=(req.body.name)?req.body.name:mysql.escape(req.body.uploadfilename)+',';
         } else {
             querystring+=mysql.escape(files.originalname)+',';
         }
         querystring+=mysql.escape(files.name)+',';
-        querystring+='0,3,';
-        querystring+=mysql.escape(util.dateToMysqlFormat(new Date()))+");";
+        querystring+='0,';//default no of views
+        querystring+='3,';//default rating
+        querystring+=mysql.escape(util.dateToMysqlFormat(new Date()))+",";
+        querystring+=req.body.department?req.body.department:'none,';
+        querystring+=req.body.semester?req.body.semester:'1,';
+        querystring+=req.body.year?req.body.year:'1';
+        querystring+=");";
 db.querydb(querystring,function(result){
     console.log(querystring);
-
     //TODO : extend it for an array
-
     util.savePDFToSWF("uploads/" + files.name, "public/views/" + "test1.swf");
     notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload");
     res.end(JSON.stringify(result));
