@@ -1,0 +1,9 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<%
+if(pages*1 == 1) {%>
+	<img src=<%= viewPath + "/" + "page" + ".png" %>></img>
+<%}
+else {
+for(var i=0; i<pages*1; i++) {%>
+   <img src=<%= viewPath + "/" + "page-" + i + ".png" %>></img>
+<% } } %>
