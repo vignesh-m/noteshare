@@ -193,6 +193,19 @@ $rootScope.getSmartSearchResults = function(college, department, year, semester,
     else {
       $scope.noMoreSmartSearchResults = false;
     }
+
+    for(var i=0;i<data.length;i++) {
+      var path;
+      element = data[i];
+      if($rootScope.imageExists('/views/' + element.id + "/page.png")) {
+        path = '/views/' + element.id + "/page.png";
+      }
+      else {
+        path = '/views/' + element.id + "/page-0.png";
+      }
+      data[i].path = path;
+    }
+
     $scope.smartSearchResults = $scope.smartSearchResults.concat(data);
     console.log($scope.smartSearchResults);
     $scope.getArrGrid($scope.smartSearchResults,4,3);
@@ -208,6 +221,16 @@ $scope.searchUploadLimit = 10;
 $scope.searchUploadOffset = 0;
 $scope.scrollOffset = 0;
 
+$rootScope.imageExists = function (image_url){
+
+  var http = new XMLHttpRequest();
+
+  http.open('HEAD', image_url, false);
+  http.send();
+
+  return http.status != 404;
+
+}
 
 $rootScope.getSearchResults = function(searchInput) {
   console.log('changed');
@@ -220,6 +243,7 @@ $rootScope.getSearchResults = function(searchInput) {
       $scope.searchResults = [];
 
       var searchResults = data;
+      console.log(searchResults);
 
       $scope.searchUploadLimit = 10;
       $scope.searchUploadOffset = 0;
@@ -235,7 +259,14 @@ $rootScope.getSearchResults = function(searchInput) {
         $('#search-li-dropdown').show();
         $('#search-li-dropdown').dropdown('toggle');
         searchResults.forEach(function(element, index, array) {
-          $scope.searchResults.push({imglink:'/prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./upload/getupload?id=' + searchResults[index].id});
+          var path;
+          if($rootScope.imageExists('/views/' + element.id + "/page.png")) {
+            path = '/views/' + element.id + "/page.png";
+          }
+          else {
+            path = '/views/' + element.id + "/page-0.png";
+          }
+          $scope.searchResults.push({imglink:path,type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./upload/getupload?id=' + searchResults[index].id});
         });
 
         if($scope.searchResults.length)
@@ -275,7 +306,14 @@ $('#search-li-dropdown.dropdown-menu').scroll(function() {
       $('#search-li-dropdown').show();
       $('#search-li-dropdown').dropdown('toggle');
       searchResults.forEach(function(element, index, array) {
-        $scope.searchResults.push({imglink:'/prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./upload/getupload?id=' + searchResults[index].id});
+        var path;
+        if($rootScope.imageExists('/views/' + element.id + "/page.png")) {
+          path = '/views/' + element.id + "/page.png";
+        }
+        else {
+          path = '/views/' + element.id + "/page-0.png";
+        }
+        $scope.searchResults.push({imglink:path,type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./upload/getupload?id=' + searchResults[index].id});
       });
 
       if($scope.searchResults.length)
@@ -317,22 +355,41 @@ $scope.updateNotifications = function() {
     $scope.notifications = data.notificationsUnread;
     $scope.notificationsUploads = [];
     $scope.notificationsDownloads = [];
+
     $scope.notifications.forEach(function(element, index, array) {
       if(element.purpose == "Upload") {
+        var str = element.link.split("=");
+        var x = str[1];
+        if($rootScope.imageExists('/views/' + x + "/page.png")) {
+          path = '/views/' + x + "/page.png";
+        }
+        else {
+          path = '/views/' + x + "/page-0.png";
+        }
+        element.path = path;
         element.unread = true;
         $scope.notificationsUploads.push(element);
       }
       else if(element.purpose == "Download") {
-       element.unread = true;
-       $scope.notificationsDownloads.push(element);
-     }
-   });
+        var str = element.split("=");
+        var x = str[1];
+        if($rootScope.imageExists('/views/' + x + "/page.png")) {
+          path = '/views/' + x + "/page.png";
+        }
+        else {
+          path = '/views/' + x + "/page-0.png";
+        }
+        element.path = path;
+        element.unread = true;
+        $scope.notificationsDownloads.push(element);
+      }
+    });
     $scope.updateNotificationCounter();
     $scope.notificationCount = $scope.notifications.length;
   }).
-  error(function(data, status, headers, config) {
-    $scope.notifications.push({"textDescription":"Could not load notifications"});
-  });
+error(function(data, status, headers, config) {
+  $scope.notifications.push({"textDescription":"Could not load notifications"});
+});
 }
 
 $scope.getArrGrid = function (list, rowElementCount, type) {
@@ -371,6 +428,16 @@ $scope.getMyUploads = function() {
   $http.get('/upload/get').
   success(function(data, status, headers, config) {
     console.log(data);
+    for(var i=0;i<data.length;i++) {
+      var path;
+      if($rootScope.imageExists('/views/' + data[i].id + "/page-0.png")) {
+        path = '/views/' + data[i].id + "/page-0.png";
+      }
+      else {
+        path = '/views/' + data[i].id + "/page.png";
+      }
+      data[i].path = path;
+    }
     $scope.myUploads = data;
     $scope.myRecentUploads = $scope.myUploads.slice(0,10);
     $scope.myUploadsCount = data.length;
@@ -385,6 +452,16 @@ $scope.getMyDownloads = function() {
   success(function(data, status, headers, config) {
     console.log(data);
     $scope.myDownloads = data;
+    for(var i=0;i<data.downloads.length;i++) {
+      var path;
+      if($rootScope.imageExists('/views/' + data.downloads[i].file.id + "/page-0.png")) {
+        path = '/views/' + data.downloads[i].file.id + "/page-0.png";
+      }
+      else {
+        path = '/views/' + data.downloads[i].file.id + "/page.png";
+      }
+      data.downloads[i].file.path = path;
+    }
     $scope.myRecentDownloads = $scope.myDownloads.downloads.slice(0,10);
     console.log('getting downloads');
     $scope.myDownloadsCount = data.downloads.length;

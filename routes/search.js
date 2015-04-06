@@ -33,9 +33,16 @@ function query_upload(req,callback){
      *      year - by uploads.year
      */
 
-     tables.push('uploads');
-     columns.push('uploads.*');
-     if(req.name){
+     
+     if(req.user || req.userid || req.college){
+        tables.push('user');
+        conditions.push('uploads.userid=user.id');
+        columns.push('user.*');
+    }
+
+    tables.push('uploads');
+    columns.push('uploads.*');
+    if(req.name){
         columns.push(match_name(req.name,"uploads.name","score1"));
         sort.push("score1");
         //conditions.push('uploads.name LIKE '+mysql.escape('%'+req.name+'%'));
@@ -82,11 +89,6 @@ function query_upload(req,callback){
     }
     if(req.college){
         conditions.push('user.college = '+mysql.escape(req.college));
-    }
-    if(req.user || req.userid || req.college){
-        tables.push('user');
-        conditions.push('uploads.userid=user.id');
-        columns.push('user.*');
     }
 
     querystring ='SELECT ';

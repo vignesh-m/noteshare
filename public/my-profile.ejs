@@ -502,7 +502,7 @@ input[type='checkbox']:checked {
 						<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, notification.link)">
 							<div class="notification-item-text-body"  style="height:54px;">
 								<div class="row" style="margin:2px">
-									<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
+									<img ng-src="{{notification.path}}" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
 								</img>
 								<div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
 								<!-- <div class="row pull-right" style="margin-top:4%">
@@ -530,7 +530,7 @@ input[type='checkbox']:checked {
 					<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, notification.link)">
 						<div class="notification-item-text-body"  style="height:54px;">
 							<div class="row" style="margin:3px">
-								<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
+								<img ng-src="{{notification.path}}" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
 							</img>
 							<div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
 							<!-- <div class="row pull-right" style="margin-top:4%">
@@ -645,7 +645,7 @@ input[type='checkbox']:checked {
 						<td ng-repeat="uploadElement in rowUploadElements track by $index">
 							<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + uploadElement.id)">
 								<center>
-									<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+									<img class="book-preview" ng-src="{{uploadElement.path}}" width="120" height="140" style="margin-top:15px">
 								</img>
 								<div class="row">
 									<big>{{truncateString(uploadElement.name,10)}}</big>
@@ -745,7 +745,7 @@ input[type='checkbox']:checked {
 					<td ng-repeat="searchResultElement in rowSearchResultsElements track by $index">
 						<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + searchResultElement.id)">
 							<center>
-								<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px"></img>
+								<img class="book-preview" ng-src="{{searchResultElement.path}}" width="120" height="140" style="margin-top:15px"></img>
 								<div class="row">
 									<big>{{truncateString(searchResultElement.name,10)}}</big>
 									<br>
@@ -790,7 +790,7 @@ input[type='checkbox']:checked {
 					<td ng-repeat="downloadElement in rowDownloadElements track by $index">
 						<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + downloadElement.file.id)">
 							<center>
-								<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+								<img class="book-preview" src="{{downloadElement.file.path}}" width="120" height="140" style="margin-top:15px">
 							</img>
 							<div class="row">
 								<big>{{truncateString(downloadElement.file.name,10)}}</big>
@@ -925,7 +925,7 @@ input[type='checkbox']:checked {
 								<td ng-repeat="downloadElement in myRecentDownloads track by $index">
 									<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + downloadElement.file.id)">
 										<center>
-											<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px"></img>
+											<img class="book-preview" ng-src="{{downloadElement.file.path}} " width="120" height="140" style="margin-top:15px"></img>
 											<div class="row">
 												<big>{{truncateString(downloadElement.file.name,10)}}</big>
 												<br>
@@ -962,7 +962,7 @@ input[type='checkbox']:checked {
 								<td ng-repeat="uploadElement in myRecentUploads track by $index">
 									<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + uploadElement.id)">
 										<center>
-											<img class="book-preview" src="prev-0.jpg" width="120" height="140" style="margin-top:15px">
+											<img class="book-preview" ng-src="{{uploadElement.path}}" width="120" height="140" style="margin-top:15px">
 										</img>
 										<div class="row">
 											<big>{{truncateString(uploadElement.name,10)}}</big>

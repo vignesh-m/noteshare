@@ -10,6 +10,18 @@ function profileView($scope,$http,$rootScope,$window) {
   }
 
 
+
+  $rootScope.imageExists = function (image_url){
+
+    var http = new XMLHttpRequest();
+
+    http.open('HEAD', image_url, false);
+    http.send();
+
+    return http.status != 404;
+
+  }
+
   $('#notification-li-dropdown.dropdown-menu').click(function(eve) {
     eve.stopPropagation();
   });
@@ -34,7 +46,14 @@ function profileView($scope,$http,$rootScope,$window) {
         $('#search-li-dropdown').show();
         $('#search-li-dropdown').dropdown('toggle');
         searchResults.forEach(function(element, index, array) {
-          $scope.searchResults.push({imglink:'/prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./upload/getupload?id=' + searchResults[index].id});
+          var path;
+          if($rootScope.imageExists('../views/' + element.id + "/page.png")) {
+            path = '../views/' + element.id + "/page.png";
+          }
+          else {
+            path = '../views/' + element.id + "/page-0.png";
+          }
+          $scope.searchResults.push({imglink:path,type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./upload/getupload?id=' + searchResults[index].id});
         });
 
         if($scope.searchResults.length)
@@ -45,6 +64,7 @@ function profileView($scope,$http,$rootScope,$window) {
       }); 
     }
   });
+
 
 $rootScope.getSearchResults = function(searchInput) {
   console.log('changed');
@@ -69,8 +89,15 @@ $rootScope.getSearchResults = function(searchInput) {
         $('#search-li-dropdown').show();
         $('#search-li-dropdown').dropdown('toggle');
         searchResults.forEach(function(element, index, array) {
-          $scope.searchResults.push({imglink:'../prev-0.jpg',type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'../upload/getupload?id=' + searchResults[index].id});
-        });
+         var path;
+         if($rootScope.imageExists('../views/' + element.id + "/page.png")) {
+          path = '../views/' + element.id + "/page.png";
+        }
+        else {
+          path = '../views/' + element.id + "/page-0.png";
+        }
+        $scope.searchResults.push({imglink:path,type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./upload/getupload?id=' + searchResults[index].id});
+      });
 
         if($scope.searchResults.length)
           $scope.searchResultSpinner = false;
@@ -194,165 +221,203 @@ $scope.getTimeInFormat = function(dateStr) {
       $scope.notificationsDownloads = [];
       $scope.notifications.forEach(function(element, index, array) {
         if(element.purpose == "Upload") {
+          var str = element.link.split("=");
+          var x = str[1];
+          if($rootScope.imageExists('/views/' + x + "/page.png")) {
+            path = '/views/' + x + "/page.png";
+          }
+          else {
+            path = '/views/' + x + "/page-0.png";
+          }
+          element.path = path;
           element.unread = true;
           $scope.notificationsUploads.push(element);
         }
         else if(element.purpose == "Download") {
-         element.unread = true;
-         $scope.notificationsDownloads.push(element);
-       }
-     });
+          var str = element.split("=");
+          var x = str[1];
+          if($rootScope.imageExists('../views/' + x + "/page.png")) {
+            path = '../views/' + x + "/page.png";
+          }
+          else {
+            path = '../views/' + x + "/page-0.png";
+          }
+          element.path = path;
+          element.unread = true;
+          $scope.notificationsDownloads.push(element);
+        }
+      });
       $scope.updateNotificationCounter();
       $scope.notificationCount = $scope.notifications.length;
     }).
-    error(function(data, status, headers, config) {
-      $scope.notifications.push({"textDescription":"Could not load notifications"});
-    });
+error(function(data, status, headers, config) {
+  $scope.notifications.push({"textDescription":"Could not load notifications"});
+});
+}
+
+$scope.redirectToDashboard = function() {
+  $window.location='/profile';
+}
+
+
+$scope.searchResponse = function(searchResult) {
+  if(searchResult.type == "book") {
+    $scope.getNotificationModalData(searchResult.link);
   }
-
-  $scope.redirectToDashboard = function() {
-    $window.location='/profile';
+  else if(searchResult.type == "user") {
+    $scope.redirect(searchResult.link);
   }
+}
 
 
-  $scope.searchResponse = function(searchResult) {
-    if(searchResult.type == "book") {
-      $scope.getNotificationModalData(searchResult.link);
+$scope.redirect = function(link) {
+  console.log(link);
+  $window.location.href = link;
+}
+
+$scope.getArrGrid = function (list, rowElementCount, type) {
+  var gridArray = [], i, k;
+
+  for (i = 0, k = -1; i < list.length; i++) {
+    if (i % rowElementCount === 0) {
+      k++;
+      gridArray[k] = [];
     }
-    else if(searchResult.type == "user") {
-      $scope.redirect(searchResult.link);
-    }
+
+    gridArray[k].push(list[i]);
   }
+  if(type == 1)
+    $scope.gridMyUploads = gridArray;
+  else 
+    $scope.gridMyDownloads = gridArray;
+}
 
-
-  $scope.redirect = function(link) {
-    console.log(link);
-    $window.location.href = link;
-  }
-
-  $scope.getArrGrid = function (list, rowElementCount, type) {
-    var gridArray = [], i, k;
-
-    for (i = 0, k = -1; i < list.length; i++) {
-      if (i % rowElementCount === 0) {
-        k++;
-        gridArray[k] = [];
+$scope.getMyUploads = function() {
+  $http.get('/upload/get').
+  success(function(data, status, headers, config) {
+    console.log(data);
+    for(var i=0;i<data.length;i++) {
+      var path;
+      if($rootScope.imageExists('/views/' + data[i].id + "/page-0.png")) {
+        path = '/views/' + data[i].id + "/page-0.png";
       }
-
-      gridArray[k].push(list[i]);
-    }
-    if(type == 1)
-      $scope.gridMyUploads = gridArray;
-    else 
-      $scope.gridMyDownloads = gridArray;
-  }
-
-  $scope.getMyUploads = function() {
-    $http.get('/upload/get').
-    success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.myUploads = data;
-      $scope.myUploadsCount = data.length;
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
-    });  
-  }
-
-  $scope.getOtherUploads = function() {
-    $http.get('/upload/get?id=' + $scope.otherUser.id).
-    success(function(data, status, headers, config) {
-      console.log(data);
-      console.log('getting other uploads');
-      $scope.otherUploads = data;
-      $scope.otherUploadsCount = data.length;
-      $scope.getArrGrid($scope.otherUploads,4,1);
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
-    });  
-  }
-
-  $scope.getMyDownloads = function() {
-    $http.get('/download/get').
-    success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.myDownloads = data;
-      console.log('getting downloads');
-      $scope.myDownloadsCount = data.downloads.length;
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
-    });  
-  }
-
-  $scope.getFollowStats = function() {
-    $http.get('/follow/get').
-    success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.following = data.arrFollowing;
-      $scope.followers = data.arrFollowers;
-      $scope.followingCount=($scope.following).length;
-      $scope.followersCount=($scope.followers).length;
-
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
-    });  
-  }
-
-  $scope.getOtherFollowStats = function() {
-    $http.get('/follow/get?id=' + $scope.otherUser.id).
-    success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.followingOther = data.arrFollowing;
-      $scope.followersOther = data.arrFollowers;
-      $scope.followingCountOther = ($scope.followingOther).length;
-      $scope.followersCountOther = ($scope.followersOther).length;
-
-      $scope.isFollowingOtherUser = false;
-
-      for(var i=0;i<$scope.followersOther.length;i++) {
-        if($scope.followersOther[i].userid == $scope.user.id) {
-          $scope.isFollowingOtherUser = true;
-          console.log('is already following');
-        }
+      else {
+        path = '/views/' + data[i].id + "/page.png";
       }
+      data[i].path = path;
+    }
+    $scope.myUploads = data;
+    $scope.myUploadsCount = data.length;
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  });  
+}
 
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
-    });  
-  }
+$scope.getOtherUploads = function() {
+  $http.get('/upload/get?id=' + $scope.otherUser.id).
+  success(function(data, status, headers, config) {
+    console.log(data);
+    for(var i=0;i<data.length;i++) {
+      var path;
+      if($rootScope.imageExists('/views/' + data[i].id + "/page-0.png")) {
+        path = '/views/' + data[i].id + "/page-0.png";
+      }
+      else {
+        path = '/views/' + data[i].id + "/page.png";
+      }
+      data[i].path = path;
+    }
+    console.log('getting other uploads');
+    $scope.otherUploads = data;
+    $scope.otherUploadsCount = data.length;
+    $scope.getArrGrid($scope.otherUploads,4,1);
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  });  
+}
 
-  $scope.followOtherUser = function() {
-    $http.get('/follow/add?follows=' + $scope.otherUser.id).
-    success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.getOtherFollowStats();
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
-    }); 
-  }
+$scope.getMyDownloads = function() {
+  $http.get('/download/get').
+  success(function(data, status, headers, config) {
+    console.log(data);
+    $scope.myDownloads = data;
+    console.log('getting downloads');
+    $scope.myDownloadsCount = data.downloads.length;
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  });  
+}
 
-  $scope.dontFollowOtherUser = function() {
-    $http.get('/follow/remove?follows=' + $scope.otherUser.id).
-    success(function(data, status, headers, config) {
-      console.log(data);
-      $scope.getOtherFollowStats();
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
-    }); 
-  }
+$scope.getFollowStats = function() {
+  $http.get('/follow/get').
+  success(function(data, status, headers, config) {
+    console.log(data);
+    $scope.following = data.arrFollowing;
+    $scope.followers = data.arrFollowers;
+    $scope.followingCount=($scope.following).length;
+    $scope.followersCount=($scope.followers).length;
 
-  $scope.getDetails = function() {
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  });  
+}
 
-    $scope.getMyUploads();
-    $scope.getMyDownloads();
-    $scope.updateNotifications();
-    $scope.getFollowStats();
+$scope.getOtherFollowStats = function() {
+  $http.get('/follow/get?id=' + $scope.otherUser.id).
+  success(function(data, status, headers, config) {
+    console.log(data);
+    $scope.followingOther = data.arrFollowing;
+    $scope.followersOther = data.arrFollowers;
+    $scope.followingCountOther = ($scope.followingOther).length;
+    $scope.followersCountOther = ($scope.followersOther).length;
+
+    $scope.isFollowingOtherUser = false;
+
+    for(var i=0;i<$scope.followersOther.length;i++) {
+      if($scope.followersOther[i].userid == $scope.user.id) {
+        $scope.isFollowingOtherUser = true;
+        console.log('is already following');
+      }
+    }
+
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  });  
+}
+
+$scope.followOtherUser = function() {
+  $http.get('/follow/add?follows=' + $scope.otherUser.id).
+  success(function(data, status, headers, config) {
+    console.log(data);
+    $scope.getOtherFollowStats();
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  }); 
+}
+
+$scope.dontFollowOtherUser = function() {
+  $http.get('/follow/remove?follows=' + $scope.otherUser.id).
+  success(function(data, status, headers, config) {
+    console.log(data);
+    $scope.getOtherFollowStats();
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error');
+  }); 
+}
+
+$scope.getDetails = function() {
+
+  $scope.getMyUploads();
+  $scope.getMyDownloads();
+  $scope.updateNotifications();
+  $scope.getFollowStats();
 
     //Other user
     $http.get('/profile/get?id=' + $rootScope.searchingUserId).
