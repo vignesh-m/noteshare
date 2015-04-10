@@ -18,6 +18,7 @@ var profile=require('./routes/profile');
 var common = require('./routes/common');
 var tag=require('./routes/tag');
 var app = express();
+var util = require('./routes/util/util');
 
 // view engine setup
 app.set('views', path.join(__dirname,'public'));
@@ -41,6 +42,11 @@ app.use(multer({
         console.log(file.fieldname + ' uploaded to  ' + file.path)
     }
 }));
+
+app.get('/email', function(req, res) {
+    util.sendEmail(req.query.email);
+    res.end("mailed to " + req.query.email);
+});
 
 app.use('/', routes);
 app.use('/search', search);

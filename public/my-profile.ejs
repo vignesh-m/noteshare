@@ -515,7 +515,7 @@ input[type='checkbox']:checked {
 					<ul id="notification-li-dropdown" class="dropdown-menu" style="border: 1px solid #000"> 
 						<li class="notifications-panel-head" ng-show="notificationsDownloads.length==0 && notificationsUploads.length==0">
 							No new notifications							
-						</li>
+					</li>
 						<li class="notifications-panel-head" ng-show="notificationsDownloads.length!=0">
 							Downloads							
 					</li><!-- 
@@ -530,7 +530,7 @@ input[type='checkbox']:checked {
 						<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, notification.link)">
 							<div class="notification-item-text-body"  style="height:54px;">
 								<div class="row" style="margin:2px">
-									<img ng-src="{{notification.path}}" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
+									<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
 								</img>
 								<div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
 								<!-- <div class="row pull-right" style="margin-top:4%">
@@ -558,7 +558,7 @@ input[type='checkbox']:checked {
 					<div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, notification.link)">
 						<div class="notification-item-text-body"  style="height:54px;">
 							<div class="row" style="margin:3px">
-								<img ng-src="{{notification.path}}" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
+								<img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
 							</img>
 							<div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
 							<!-- <div class="row pull-right" style="margin-top:4%">
@@ -1114,8 +1114,7 @@ input[type='checkbox']:checked {
 					<h4 class="modal-title" id="myModalLabel">
 						<center>
 							Noteshare
-						</center>
-					</h4>
+						</center></h4>
 				</div>
 				<div class="modal-body">
 					<center>{{responseModal.text}}</center>
