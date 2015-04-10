@@ -425,9 +425,37 @@ input[type='checkbox'] {
 	line-height: 1.42857143;
 	white-space: nowrap;
 }
+body, html {
+	height:100%;
+	width:100%;
+	min-height:100%;
+	padding:0;
+	margin:0;
+}
+.aToast-view-message {
+	width:200px;
+	height:20px;
+	height:auto;
+	position:absolute;
+	left:50%;
+	margin-left:-100px;
+	bottom:10px;
+	background-color: #383838;
+	color: #F0F0F0;
+	font-family: Calibri;
+	font-size: 20px;
+	padding:10px;
+	text-align:center;
+	border-radius: 2px;
+	-webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+	-moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+	box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+}
 input[type='checkbox']:checked {
 }
 </style>
+
+
 
 <html ng-app="">
 <div  ng-controller="myProfile">
@@ -1077,6 +1105,27 @@ input[type='checkbox']:checked {
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+
+	<div class="modal fade" id="modalResponse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<center>
+							Noteshare
+						</center>
+					</h4>
+				</div>
+				<div class="modal-body">
+					<center>{{responseModal.text}}</center>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="modal fade" id="uploadNotes" tabindex="-1" role="dialog" aria-labelledby="uploadNotesModalLabel" aria-hidden="true">
 		<div class="modal-dialog">

@@ -105,9 +105,9 @@ db.querydb(querystring,function(result){
             console.log(link);
             notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload", "/upload/getupload?id=" + result.insertId);
             debugger;
-
+            res.end(JSON.stringify({result:true}));
             util.savePDFToPNG("uploads/" + files.name, "public/views/" + result.insertId + "/page.png", result.insertId, function() {
-                res.end(JSON.stringify(result));
+                console.log('completed converting..');
             });
             /*        var qs1 = [];
                     var qs2 = [];

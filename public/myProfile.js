@@ -18,6 +18,7 @@ function myProfile($scope,$http,$rootScope,$window) {
   $scope.smartSearchPage = 1;
   $scope.smartSearchResults = [];
   $scope.noMoreSmartSearchResults = false;
+  $scope.responseModal = {};
 
  /* $scope.searchLimit1 = 10;
   $scope.searchOffset1 = 0;
@@ -422,7 +423,7 @@ $scope.reg_socket = function() {
   });
 }
 
-//$scope.reg_socket();
+$scope.reg_socket();
 
 $scope.getMyUploads = function() {
   $http.get('/upload/get').
@@ -656,7 +657,9 @@ $scope.getDetails();
 
   $scope.uploadComplete = function (evt) {
    /* This event is raised when the server send back a response */
-   alert(evt.target.responseText);
+   //alert(evt.target.responseText);
+   $scope.responseModal.text = "Your file has been uploaded successfully";
+   $('#modalResponse').modal('toggle');
    var upload_id = JSON.parse(evt.target.responseText).insertId;
    console.log(upload_id);
 
@@ -678,13 +681,15 @@ $scope.getDetails();
   }
 
   $scope.uploadFailed = function (evt) {
-    alert("There was an error attempting to upload the file.")
+    $scope.responseModal.text = "There was an error attempting to upload the file.";
+    $('#modalResponse').modal('toggle');
   }
 
   $scope.uploadCanceled = function (evt) {
     $scope.$apply(function(){
       $scope.progressVisible = false
     })
-    alert("The upload has been canceled by the user or the browser dropped the connection.")
+    $scope.responseModal.text = "The upload has been canceled by the user or the browser dropped the connection.";
+    $('#modalResponse').modal('toggle');
   }
 }
