@@ -790,7 +790,7 @@ input[type='checkbox']:checked {
 					<td ng-repeat="downloadElement in rowDownloadElements track by $index">
 						<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + downloadElement.file.id)">
 							<center>
-								<img class="book-preview" src="{{downloadElement.file.path}}" width="120" height="140" style="margin-top:15px">
+								<img class="book-preview" ng-src="{{downloadElement.file.path}}" width="120" height="140" style="margin-top:15px">
 							</img>
 							<div class="row">
 								<big>{{truncateString(downloadElement.file.name,10)}}</big>

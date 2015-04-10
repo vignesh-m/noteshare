@@ -51,7 +51,15 @@ else {
 
 		if(req.query.view) {
 			console.log('viewing');
-			res.render('pdfview.ejs',{"viewPath":"../views/" + upload_id, "pages":10});
+			util.getPages(upload_id, res, function (upload_id, res, pages) {
+				if(pages*1<10) {
+					pages = pages;
+				}
+				else {
+					pages = 10;
+				}
+				res.render('pdfview.ejs',{"viewPath":"../views/" + upload_id, "pages":pages});
+			});
 		}
 
 		else {
