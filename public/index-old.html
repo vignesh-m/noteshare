@@ -1,0 +1,325 @@
+<style>
+.vert-center-note {
+	margin-top: 0.2%;
+}
+#uploadNotesModalLabel {
+	color:#339999;
+}
+
+.border-bottom-text {
+	border-top: 0px solid;
+	border-left: 0px solid;
+	border-right: 0px solid;
+	border-bottom: 1px solid;
+	border-color: rgba(0, 103, 23, 0.5);
+}
+
+.container-fluid {
+	padding-right: 0px !important;
+	padding-left: 0px !important;
+	margin-right: 0px !important;
+	margin-left: 0px !important;
+}
+
+::-webkit-scrollbar {  
+	width: 1%;
+}  
+::-webkit-scrollbar-track {  
+	background-color: #eaeaea;  
+	border-left: 1px solid #ccc;
+}  
+::-webkit-scrollbar-thumb {  
+	background-color: #ccc;
+}  
+::-webkit-scrollbar-thumb:hover {  
+	background-color: #aaa; 
+} 
+
+.border-bottom-text:focus {   
+	border-top: 0px solid;
+	border-left: 0px solid;
+	border-right: 0px solid;
+	border-bottom: 1px solid;
+	border-color: rgba(0, 103, 23, 1);
+	box-shadow: 0 1px 1px rgba(229, 103, 23, 0.0) inset, 0 0 8px rgba(229, 103, 23, 0);
+	outline: 0 none;
+}
+
+.panel-form-body {
+	padding: 15px;
+}
+
+.panel-form-title {
+	padding: 30px;
+}
+
+.btn-flat-note {
+	background-color: #339999 !important;
+	border-radius: 0px !important;
+	color: white !important;
+}
+.btn-flat-note:hover {
+	background-color: #339999 !important;
+	border-radius: 0px !important;
+	color: white !important;
+	box-shadow: 0 1px 1px #349a9a inset, 0 0 8px #349a9a !important;
+}
+.btn-flat-note:active {
+	background-color: #339999 !important;
+	border-radius: 0px !important;
+	color: white !important;
+	box-shadow: 0 1px 1px #349a9a inset, 0 0 8px #349a9a !important;
+}
+.profile-pic {
+	width: 83.3%;
+	height: 38%;
+	border: 1px solid;
+	border-color: black;
+}
+.fixed-top-nav {
+	position: fixed !important;
+	z-index: 1 !important;
+}
+.detail-large {
+	font-size: 1.4em;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	padding-left: 5px;
+	margin-top: 0px;
+	text-align: center;
+	font-weight: bold;
+}
+.detail-small {
+	font-size: 0.75em;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	padding-left: 5px;
+	margin-top: 0px;
+	text-align: center;
+}
+.nopadding {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+.detail {
+	background: #333333;
+	color: white;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-left: 0px;
+	text-align: center;
+}
+.nav-link {
+	background: #bbaaaa;
+	color: #444444;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 92.3%;
+	font-size: 1.1em;
+}
+.nav-link:hover {
+	background: #333333;
+	color: #ffffff;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 92.3%;
+	font-size: 1.1em;
+	cursor: pointer;
+}
+.separator-small {
+	width:auto;
+	background-color: transparent;
+	height:2px;
+}
+.card-container {
+	background-color:white;
+	padding:25px;
+	margin-top:20px;
+	border:1px solid grey;
+}
+.disclaimer {
+	color:grey !important;
+}
+.nav-button>a {
+	background: #2e9ba0 !important;
+	color: #ffffff !important;
+	padding-top: 18px !important;
+	padding-bottom: 18px !important;
+	font-size: 1.0em;
+}
+.nav-button>a:hover {
+	background: #ffffff !important;
+	color: #2e9ba0 !important;
+	font-size: 1.0em;
+}
+.navbar-schema {
+	background: #2e9ba0 !important;
+	color: #ffffff !important;
+	border: 0px solid;
+	border-radius: 0px !important;
+}
+.navbar-logo {
+	width:8%;
+	height:auto;
+	position: absolute;
+	left: 5%;
+	top: 5%;
+}
+.nav-center {
+	margin-top:1.8%;
+	margin-left: 30%;
+}
+.nav-gly-search {
+	left: 10% !important;
+}
+</style>
+<html>
+<!doctype html>
+<html>
+<head lang="en">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<title>NoteShare:Notes Worth Sharing</title> 
+	<meta name="description" content="BlackTie.co - Free Handsome Bootstrap Themes" />	    
+	<meta name="keywords" content="themes, bootstrap, free, templates, bootstrap 3, freebie,">
+	<meta property="og:title" content="">
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" rel="stylesheet">
+	
+	<link rel="stylesheet" type="text/css" href="css/Style.css">	
+	
+	<!--link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,600,300,200&subset=latin,latin-ext' rel='stylesheet' type='text/css'-->
+		
+</head>
+	
+	<body>
+		<div class="container-fluid">
+			<nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
+				<div class="container-fluid">
+					<a href="#"><img class="navbar-logo" src="logo.png"></img></a>
+					<div class="collapse navbar-collapse navbar-center-buttons">
+						<ul class="nav navbar-nav navbar-right">
+							<li class="nav-button"><a href="/profile">HOME</a></li>
+							<li class="nav-button"><a href="#">ABOUT US</a></li>
+							<li class="nav-button"><a href="#">CONTACT US</a></li>
+							<li class="nav-button"><a href="/signup"><span class="glyphicon glyphicon-user"></span>&nbsp&nbspSIGN UP</a></li>
+							<li class="nav-button"><a href="/login"><span class="glyphicon glyphicon-log-in"></span>&nbsp&nbspLOGIN</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<!--<div style="position:absolute;top:0%;margin:0;padding:0;border:0">
+				<div class="tool" >
+					<img src="logo.png" style="width:auto;height:110px;position:absolute;left:5%"/>
+					<div style="position:absolute;top:30%;right:5%;width:40%;height:35%">
+						<button id="bu1" class = "toolbutton">
+							HOME
+						</button>
+						<button id="bu2" class = "toolbutton">
+							ABOUT US
+						</button>
+						<button id="bu3" class = "toolbutton">
+							CONTACT US
+						</button>
+						<button id="bu3" class = "toolbutton">
+							SIGN IN
+						</button>
+					</div>
+				</div>
+			</div>-->
+		
+		<div class="cont" style="margin-top:5%;margin-bottom:5%;height:90%">
+				<div style="position:absolute;top:150px;left:10%;right:10%;width:80%;height:400px">
+					<div  style="position:absolute;top:20%;left:4%;width:45%;height:40%">
+						<div style="color:white;position:relative;margin-bottom:5%;">
+							<h4 style="font-size: 32px;"><strong>Your Note Search</strong> <span style="color:#2e9ba0;">starts here</span></h4>
+						</div>
+						<div class="input-group">
+     					 <input type="text" class="form-control" placeholder="Search Notes...">
+     					 <span class="input-group-btn">
+     					   <button class="btn btn-info" style="background-color:#1abc9c;" type="button">Search</button>
+     					 </span>
+   					 </div>
+						
+						<!--div class="input-group" style="text-align:center;margin:0 auto;">
+            				<input class="form-control input-lg" title="Don't worry. We hate spam, and will not share your email with anyone." placeholder="Enter your email address" type="text">
+             				 <span class="input-group-btn"><button class="btn btn-lg btn-primary" type="button">Search</button></span>
+           				 </div-->
+						<!--div style="margin-top:10px;padding:1%;background-color:#5e5e5e;width:100%;height:15%;font-size:0">
+							<input type="text" placeholder="Type the title of notes" class="form">
+							<button id="search" class = "searchbutton">
+							SEARCH
+							</button>
+						</div-->
+						
+						
+						<div style="margin-top:5%;color:white;font-weight:lighter;font-family:"Titillium Web", sans-serif;font-size:28px">
+							"Notes Worth Sharing"
+						</div>	
+					</div>
+					<div style="width:40% ;height:100%;position:absolute;right:0%;top:0%" >
+						<img src="share.png" style="width:90%" />
+					</div>
+				</div>	
+		</div>
+		<div class="topics" style="position:relative;height:90%">
+			<div style="position:relative;top:50px;left:10%;right:10%;width:80%;height:400px;text-align:center;font-family:Verdana;font-size:34px">
+				Trending Topics in your Region
+				<div style="margin-top:10px">
+				<img src="divider.png" style="width:40%"/>
+				<div style="margin-top:50px">
+					<table style="width:100%;position:relative">
+  						<tr>
+    						<td><sri>Sample</sri></td>
+    						<td><sri>Sample</sri></td>		
+    						<td><sri>Sample</sri></td>
+    						<td><sri>Sample</sri></td>		
+    						<td><sri>Sample</sri></td>
+  						</tr>
+  						<tr>
+    						<td><sri>Sample</sri></td>
+    						<td><sri>Sample</sri></td>		
+    						<td><sri>Sample</sri></td>
+    						<td><sri>Sample</sri></td>		
+    						<td><sri>Sample</sri></td>
+  						</tr>
+  						<tr>
+    						<td><sri>Sample</sri></td>
+    						<td><sri>Sample</sri></td>		
+    						<td><sri>Sample</sri></td>
+    						<td><sri>Sample</sri></td>		
+    						<td><sri>Sample</sri></td>
+  						</tr>
+  					</table>
+				</div>
+			</div>
+			</div>
+
+		</div>
+		<div class="credit" style="position:relative;height:90%">
+			<div style="position:relative;top:100px;left:10%;right:10%;width:80%;height:400px;text-align:center;font-family:Verdana;font-size:34px;color:white">
+				Share your Notes and <strong>Earn credits</strong>
+				<div style="margin-top:10px">
+				<img src="divider.png" style="width:40%"/>
+				<div style="margin-top:50px;font-family:Sans-Serif">
+					It's simple try it out <a style="font-size:24px;" class="btn btn-warning" href="/profile"><strong>Upload Notes</strong></a>
+					<span class="glyphicon glyphicon-open" aria-hidden="true"></span>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>		
+	</body>
+	
+	<!--script-->
+	<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script-->
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script src="js/script.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</html>

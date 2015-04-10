@@ -371,7 +371,7 @@ $scope.updateNotifications = function() {
         $scope.notificationsUploads.push(element);
       }
       else if(element.purpose == "Download") {
-        var str = element.split("=");
+        var str = element.link.split("=");
         var x = str[1];
         if($rootScope.imageExists('/views/' + x + "/page.png")) {
           path = '/views/' + x + "/page.png";
@@ -422,7 +422,7 @@ $scope.reg_socket = function() {
   });
 }
 
-$scope.reg_socket();
+//$scope.reg_socket();
 
 $scope.getMyUploads = function() {
   $http.get('/upload/get').

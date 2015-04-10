@@ -32,7 +32,7 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 
-<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://cdn.socket.io/socket.io-1.2.0.js"></script>
 
 <script src="uploadNotes.js"></script>
 <script src="myProfile.js"></script>
@@ -487,7 +487,7 @@ input[type='checkbox']:checked {
 					<ul id="notification-li-dropdown" class="dropdown-menu" style="border: 1px solid #000"> 
 						<li class="notifications-panel-head" ng-show="notificationsDownloads.length==0 && notificationsUploads.length==0">
 							No new notifications							
-					</li>
+						</li>
 						<li class="notifications-panel-head" ng-show="notificationsDownloads.length!=0">
 							Downloads							
 					</li><!-- 
@@ -808,7 +808,11 @@ input[type='checkbox']:checked {
 
 
 <div class="col-md-9 jumbotron" style="border:1px solid #CCCCCC;padding:20px" ng-show="visDashboard">
-	<span style="font:italic bold 20px Arial,Helvetica,sans-serif;color:#555555">Welcome {{ user.firstname +" "+user.lastname }},</span>
+	<big>
+		<big>
+			<span style="color:#000">Welcome {{ user.firstname +" "+user.lastname + " "}},</span>
+		</big>
+	</big>
 	<div class="container-fluid card-container" ng-show="!visUploadProgress">
 		<h3>Upload Notes & Earn Credits</h3>
 		<br>
@@ -1059,6 +1063,11 @@ input[type='checkbox']:checked {
 					</div>
 				</div>
 				<div class="modal-footer">
+					<a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id + '&view=1'}}">
+						<button type="button" class="btn btn-default">
+							View
+						</button>
+					</a>
 					<a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id}}">
 						<button type="button" class="btn btn-default">
 							Download

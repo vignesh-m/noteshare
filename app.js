@@ -15,6 +15,7 @@ var notifications = require('./routes/notifications');
 var follow = require('./routes/follow');
 var download = require('./routes/download');
 var profile=require('./routes/profile');
+var common = require('./routes/common');
 var tag=require('./routes/tag');
 var app = express();
 
@@ -49,6 +50,7 @@ app.use('/notifications', notifications);
 app.use('/follow', follow);
 app.use('/profile',profile);
 app.use('/tag', tag);
+app.use('/common', common);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

@@ -1,47 +1,144 @@
 <!-- views/login.ejs -->
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
-	<title>Note Share Login</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
-	<style>
-		body 		{ padding-top:80px; }
-	</style>
+    <!-- BASICS -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Noteshare Login</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/isotope.css" media="screen" /> 
+    <link rel="stylesheet" href="js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- skin -->
+    <link rel="stylesheet" href="skin/default.css">
 </head>
-<body>
-    <div class="container">
+
+<style>
+.placeholder-black::-webkit-input-placeholder {
+    color: black !important;
+}
+.placeholder-black:-moz-placeholder {
+    /* FF 4-18 */
+    color: black !important;
+}
+.placeholder-black::-moz-placeholder {
+    /* FF 19+ */
+    color: black !important;
+}
+.placeholder-black:-ms-input-placeholder {
+    /* IE 10+ */
+    color: black !important;
+}
+.placeholder-black {
+    border-radius: 4px !important;
+}
+</style>
+
+<body ng-app="" ng-controller="index">
+    <section id="header" class="appear"></section>
+    <div class="navbar navbar-fixed-top" role="navigation" data-0="line-height:100px; height:100px; background-color:rgba(0,0,0,0.3);" data-300="line-height:60px; height:60px; background-color:rgba(0,0,0,1);">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="fa fa-bars color-white"></span>
+                </button>
+                <h1><a class="navbar-brand" href="index.html" data-0="line-height:90px;" data-300="line-height:50px;">Noteshare
+                </a></h1>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/signup">Register</a></li>
+                    <li class="active"><a href="/login">Login</a></li>
+                </ul>
+            </div><!--/.navbar-collapse -->
+        </div>
+    </div>
+
+    <!-- services --><br><br><br><br>
+    <section id="section-services" class="section pad-bot30 bg-white">
+       <div class="container">
         <div class="col-sm-6 col-sm-offset-3">
-            <h1><span class="fa fa-sign-in"></span> Login</h1>
+            <h2>Login to share notes</h2>
 
             <!-- show any messages that come back with authentication -->
             <% if (message.length > 0) { %>
-                <div class="alert alert-danger"><%= message %></div>
+            <div class="alert alert-danger"><%= message %></div>
             <% } %>
 
             <!-- LOGIN FORM -->
             <form action="/login" method="post">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" class="form-control" name="username">
+                    <input type="text" class="form-control placeholder-black" name="username">
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control placeholder-black" name="password">
                 </div>
-                <div class="form-group">
-                    <label>Remember Me</label>
-                    <input type="checkbox" class="form-control" name="remember" value="yes">
-                </div>
+                <br>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="remember" value="yes">  Remember me
+                  </label>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg" style="border-radius:4px">Login</button>
+          </form>
+          <hr>
 
-                <button type="submit" class="btn btn-warning btn-lg">Login</button>
-            </form>
+          <big>
+            <p>Need an account? <a href="/signup"><b>Signup</b></a></p>
+            <p>Or go <a href="/"><b>home</b></a>.</p>
+        </big>
+    </div>
+</div>
+</section>
 
-            <hr>
+<section id="footer" class="section footer">
+    <div class="container">
+        <div class="row animated opacity mar-bot20" data-andown="fadeIn" data-animation="animation">
+            <div class="col-sm-12 align-center">
+                <ul class="social-network social-circle">
+                    <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
+                    <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                </ul>               
+            </div>
+        </div>
 
-            <p>Need an account? <a href="/signup">Signup</a></p>
-            <p>Or go <a href="/">home</a>.</p>
+        <div class="row align-center copyright">
+            <div class="col-sm-12"><p>Copyright &copy; 2015 <a href="http://noteshare.in/">Noteshare</a></p></div>
         </div>
     </div>
+
+</section>
+<a href="#header" class="scrollup"><i class="fa fa-chevron-up"></i></a> 
+
+<script src="js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="index.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASm3CwaK9qtcZEWYa-iQwHaGi3gcosAJc&sensor=false"></script>
+<script src="js/jquery.isotope.min.js"></script>
+<script src="js/jquery.nicescroll.min.js"></script>
+<script src="js/fancybox/jquery.fancybox.pack.js"></script>
+<script src="js/skrollr.min.js"></script>       
+<script src="js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script src="js/jquery.localscroll-1.2.7-min.js"></script>
+<script src="js/stellar.js"></script>
+<script src="js/jquery.appear.js"></script>
+<script src="js/validate.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

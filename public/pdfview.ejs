@@ -181,16 +181,12 @@
 .nav-gly-search {
 	left: 10% !important;
 }
+.view {
+	background: #fff;
+}
 </style>
 
-<script type="text/javascript">
-$('.overlay').on("scroll",function() {
-	console.log('scroll');
-	$('#view').prop("scrollTop", this.scrollTop);
-});
-</script>
-
-<div style="overflow-x:hidden;overflow-y:scroll;width:100%;height:100%;background:rgba(0,0,0,0.1)" id="view">
+<div style="overflow-x:hidden;overflow-y:scroll;width:100%;height:100%;background:rgba(0,0,0,0.1)">
 <nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
 	<div class="container-fluid">
 		<a href="#"><img class="navbar-logo" src="../logo.png"></img></a>
@@ -212,14 +208,14 @@ $('.overlay').on("scroll",function() {
 	<%
 	if(pages*1 == 1) {%>
 	<center>
-		<img src=<%= viewPath + "/" + "page" + ".png" %>>
+		<img class="view" src=<%= viewPath + "/" + "page" + ".png" %>>
 	</img>
 </center>
 <%}
 else {
 	for(var i=0; i<pages*1; i++) {%>
 	<center>
-		<img src=<%= viewPath + "/" + "page-" + i + ".png" %>>
+		<img class="view" src=<%= viewPath + "/" + "page-" + i + ".png" %>>
 	</img>
 </center>
 <br>

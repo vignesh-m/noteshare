@@ -122,6 +122,7 @@ console.log('started');
 $scope.visDashboard = true;
 $scope.visMyUploads = true;
 $scope.visMyDownloads = false;
+$scope.visFollow = false;
 
 $scope.notifications=[];
 $scope.visUploadProgress = false;
@@ -426,6 +427,12 @@ $scope.getDetails = function() {
       $scope.otherUser = data.data;
       $scope.getOtherUploads();
       $scope.getOtherFollowStats();
+      if($scope.otherUser.id == $scope.user.id) {
+        $scope.visFollow = false;
+      }
+      else {
+        $scope.visFollow = true;
+      }
     }).
     error(function(data, status, headers, config) {
       console.log('error');

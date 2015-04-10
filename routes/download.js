@@ -49,11 +49,19 @@ else {
 	db.querydb(querystring2,function(result){
 		console.log(querystring2);
 
-		var querystring3 = "INSERT INTO noteshare.downloads(userid, uploadid, dateDownloaded) VALUES (" + mysql.escape(req.user.id) + "," + mysql.escape(upload_id) + "," + mysql.escape(util.dateToMysqlFormat(new Date())) + ") WHERE NOT EXISTS (SELECT userid, uploadid FROM noteshare.downloads WHERE userid=" + mysql.escape(req.user.id) + " AND uploadid=" + mysql.escape(upload_id) +");";
-		db.querydb(querystring3,function(result){
-			console.log(querystring3);
-			console.log(result);
-			notification.notify(upload[0].userid, "Unread", req.user.username + " has downloaded your file : " + upload[0].name, "Download", '/upload/getupload?id=' + upload[0].id);
+		if(req.query.view) {
+			console.log('viewing');
+			res.render('pdfview.ejs',{"viewPath":"../views/" + upload_id, "pages":10});
+		}
+
+		else {
+
+			//var querystring3 = "INSERT INTO noteshare.downloads(userid, uploadid, dateDownloaded) SELECT * FROM (SELECT " + mysql.escape(req.user.id) + "," + upload_id*1 + ") AS tmp WHERE NOT EXISTS (SELECT userid, uploadid FROM noteshare.downloads WHERE userid=" + mysql.escape(req.user.id) + " AND uploadid=" + upload_id +") LIMIT 1;";
+			var querystring3 = "INSERT INTO noteshare.downloads(userid, uploadid, dateDownloaded) VALUES (" + mysql.escape(req.user.id) + "," + upload_id*1 + "," + mysql.escape(util.dateToMysqlFormat(new Date())) + ");";
+			db.querydb(querystring3,function(result){
+				console.log(querystring3);
+				console.log(result);
+				notification.notify(upload[0].userid, "Unread", req.user.username + " has downloaded your file : " + upload[0].name, "Download", '/upload/getupload?id=' + upload[0].id);
 
 					//res.render('pdfview.ejs', {"viewPath":"../views/" + upload_id, "pages":pages});
 
@@ -66,7 +74,8 @@ else {
 							console.log(err);
 						}
 					});*/
-	});
+		});
+		}
 	});
 }
 

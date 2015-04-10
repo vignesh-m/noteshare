@@ -1,10 +1,9 @@
 <link href="../css/bootstrap-switch.css" rel="stylesheet">
-<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <link rel="stylesheet" href="../css/normalize.css">
-<link rel="stylesheet" href="../css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/ospb.css">
 <link rel="stylesheet" href="../css/horizontal.css">
 <script src="../js/vendor/modernizr.js"></script>
@@ -598,17 +597,28 @@ input[type='checkbox']:checked {
                 </center>
             </div> 
         </div>
-        <div class="row separator-small"></div>
-        <div class="row" style="cursor:pointer" ng-click="followOtherUser()" ng-show="!isFollowingOtherUser">
+        <div class="row" style="cursor:pointer" ng-click="followOtherUser()" ng-show="!isFollowingOtherUser && visFollow">
+            <div class="row separator-small"></div>
             <div class="col-lg-10 nopadding">
-                <div class="detail detail-large">f</div>
-                <big><div class="detail detail-small">Follow</div></big>
+                <big>
+                    <div class="detail detail-small" style="padding-top:15px !important;padding-bottom: 15px !important;">
+                        <i class="fa fa-user-plus">
+                            <big>&nbsp&nbspfollow</big>
+                        </i>
+                    </div>
+                </big>
             </div>
         </div>
-        <div class="row" style="cursor:pointer" ng-click="dontFollowOtherUser()" ng-show="isFollowingOtherUser">
+        <div class="row" style="cursor:pointer" ng-click="dontFollowOtherUser()" ng-show="isFollowingOtherUser && visFollow">
+            <div class="row separator-small"></div>
             <div class="col-lg-10 nopadding">
-                <div class="detail detail-large" >f</div>
-                <big><div class="detail detail-small">Following</div></big>
+                <big>
+                    <div class="detail detail-small" style="padding-top:15px !important;padding-bottom: 15px !important;">
+                        <i class="fa fa-check">
+                            <big>&nbsp&nbspfollowing</big>
+                        </i>
+                    </div>
+                </big>
             </div>
         </div>
         <div class="row separator-small"></div>
@@ -728,6 +738,11 @@ input[type='checkbox']:checked {
                 </div>
             </div>
             <div class="modal-footer">
+                <a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id + '&view=1'}}">
+                    <button type="button" class="btn btn-default">
+                        View
+                    </button>
+                </a>
                 <a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id}}">
                     <button type="button" class="btn btn-default">
                         Download
