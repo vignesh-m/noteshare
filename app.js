@@ -19,6 +19,7 @@ var common = require('./routes/common');
 var tag=require('./routes/tag');
 var app = express();
 var util = require('./routes/util/util');
+var forgot=require('./routes/forgot_password');
 
 // view engine setup
 app.set('views', path.join(__dirname,'public'));
@@ -57,6 +58,7 @@ app.use('/follow', follow);
 app.use('/profile',profile);
 app.use('/tag', tag);
 app.use('/common', common);
+app.use('/forgot',forgot);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

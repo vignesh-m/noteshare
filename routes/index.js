@@ -64,5 +64,9 @@ function isLoggedIn(req, res, next) {
         return next();
     res.redirect('/login');
 }
+/*
+app.get('/samplemail',function(req,res){
+    require('./util/mailer.js').sendMail('arvindsuresh2009@gmail.com','Noteshare mailer test','Test Mail Hello ? ',res)
+})*/
 
 module.exports=app;
