@@ -36,7 +36,7 @@ var index = function($scope, $rootScope, $http, $window) {
 			}
 			data.topDownloads[i].path = path;
 		}
-		$scope.getArrGrid(data.topDownloads, 4);
+		$scope.getArrGrid(data.topDownloads, 6);
 		console.log(data);
 		$scope.stats = data;
 	}).

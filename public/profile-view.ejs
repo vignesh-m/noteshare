@@ -341,27 +341,6 @@ table { border-collapse: collapse; }
 .dropbox.over {
     background-color: #bfb;
 }
-.book-preview
-{
-    -moz-box-shadow: 0 0 0px #349a9a;
-    -webkit-box-shadow: 0 0 0px #349a9a;
-    box-shadow: 0px 0px 0px #349a9a;
-    border-radius: 4px;
-    border: 1px solid #349a9a;
-    padding: 5px;
-    margin-bottom: 10px;
-}
-.book-preview:hover
-{
-    -moz-box-shadow: 0 0 40px #222;
-    -webkit-box-shadow: 0 0 40px #222;
-    box-shadow: 0px 0px 40px #222;
-    border-radius: 2px;
-    border: 1px solid transparent;
-    padding: 5px;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
 .nodivider-table
 {
     font-family:calibri;
@@ -382,6 +361,35 @@ table { border-collapse: collapse; }
 ::-webkit-scrollbar-thumb:hover {  
     background-color: #aaa;  
 }  
+.book-preview
+{
+    border-radius: 4px;
+    border: 1px solid #EDEDED;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.book-preview:hover
+{
+    border-radius: 2px;
+    border: 1px solid #EDEDED;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.book-preview-card {
+    background: #fff;
+    border-radius: 2px;
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+}
+.book-preview-card:hover {
+    background: #fff;
+    border-radius: 2px;
+    cursor: pointer;
+    -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
 
 .book-preview-a {
     text-decoration:none !important;

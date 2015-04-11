@@ -54,44 +54,68 @@
 }
 .book-preview
 {
-	-moz-box-shadow: 0 0 0px #349a9a;
-	-webkit-box-shadow: 0 0 0px #349a9a;
-	box-shadow: 0px 0px 0px #349a9a;
 	border-radius: 4px;
-	border: 1px solid #349a9a;
+	border: 1px solid #EDEDED;
 	padding: 5px;
 	margin-bottom: 10px;
 }
 .book-preview:hover
 {
-	-moz-box-shadow: 0 0 40px #222;
-	-webkit-box-shadow: 0 0 40px #222;
-	box-shadow: 0px 0px 40px #222;
 	border-radius: 2px;
-	border: 1px solid transparent;
+	border: 1px solid #EDEDED;
 	padding: 5px;
 	margin-bottom: 10px;
+}
+.book-preview-card {
+	background: #fff;
+	border-radius: 2px;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+}
+.book-preview-card:hover {
+	background: #fff;
+	border-radius: 2px;
 	cursor: pointer;
+	-moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.book-preview-a {
+	text-decoration:none !important;
+	color:#333 !important;
+}
+
+.book-preview-a:hover {
+	text-decoration:none !important;
+	color:#000 !important;
+}
+.book-preview-a:active {
+	text-decoration:none !important;
+	color:#000 !important;
 }
 </style>
 
 <body ng-app="" ng-controller="index" style="font-family:Helvetica">
 	<section id="header" class="appear" style="background:#2e9ba0"></section>
 	<div class="navbar navbar-fixed-top" role="navigation" data-0="line-height:100px; height:80px; background-color:#2e9ba0;" data-300="line-height:60px; height:60px;">
+		<img class="navbar-logo pull-left" src="logo.png" style="width:8%;margin-left:2%;"></img>
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="fa fa-bars color-white"></span>
 				</button>
+				<!-- 
 				<h1><a class="navbar-brand" href="index.html" data-0="line-height:90px;" data-300="line-height:50px;">Noteshare
-				</a></h1>
+				</a></h1> -->
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
 					<li class="active"><a href="index.html">Home</a></li>
 					<li><a href="#section-about">About</a></li>
 					<li><a href="#section-contact">Contact</a></li>
-					<li><a href="/signup">Register</a></li>
+					<!-- <li><a href="/signup">Register</a></li> -->
 					<li><a href="/login">Login</a></li>
 				</ul>
 			</div><!--/.navbar-collapse -->
@@ -300,26 +324,37 @@
 							<tbody>
 								<tr ng-repeat="rowDownloadElements in gridTopDownloads track by $index">
 									<td ng-repeat="downloadElement in rowDownloadElements track by $index">
-										<a class="book-preview-a" ng-click="redirect('/login')">
-											<center>
-												<img class="book-preview" ng-src="{{downloadElement.path}}" width="120" height="140" style="margin-top:15px">
-											</img>
-											<div class="row">
-												<big>{{truncateString(downloadElement.name,10)}}</big>
-											</div>
-										</center>
-									</a>
-								</td>
-							</tr>
-						</tbody>
-					</table> 
-				</div>
-
-			</div>
-
-
-		</div>
+										<div class="book-preview-card">
+											<a class="book-preview-a" ng-click="redirect('/login')">
+												<center>
+													<img class="book-preview" ng-src="{{downloadElement.path}}" width="120" height="140" style="margin-top:15px">
+												</img>
+												<div class="row">
+													<div style="color:#000;opacity:0.87;">
+														<big>{{truncateString(downloadElement.name,10)}}</big>
+													</div>
+										<!-- 
+										{{downloadElement.rating + "/5.0"}} -->
+										<div style="color:#555;padding-bottom:4px">
+											<small>
+												{{downloadElement.views + " views"}}
+											</small>
+										</div>
+									</div>
+								</center>
+							</a>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table> 
 	</div>
+
+</div>
+
+
+</div>
+</div>
 
 </div>
 </section>

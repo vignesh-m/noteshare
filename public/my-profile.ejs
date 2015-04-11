@@ -89,8 +89,9 @@
 	box-shadow: 0 1px 1px #349a9a inset, 0 0 8px #349a9a !important;
 }
 .profile-pic {
-	border: 1px solid;
+	border: 0px solid;
 	border-color: black;
+	border-radius: 3px;
 	width: 265px;
 	height: 300px;
 }
@@ -136,7 +137,7 @@
 	color: #000;
 	vertical-align: middle;
 	padding-top: 10px;
-	width: 100%;
+	width: 265px;
 	padding-bottom: 10px;
 	font-size: 1.1em;
 	border-radius: 2px;
@@ -148,7 +149,7 @@
 	vertical-align: middle;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	width: 100%;
+	width: 265px;
 	font-size: 1.1em;
 	cursor: pointer;
 	border-radius: 2px;
@@ -198,7 +199,7 @@
 }
 .navbar-logo {
 	width:auto;
-	height:150%;
+	height:175%;
 	position: absolute;
 	left: 5%;
 	top: 0%;
@@ -297,7 +298,7 @@ input[type="text"] {
 	background: #eeeeee;
 }
 #notification-li-dropdown.dropdown-menu {
-	width: 350px !important;
+	width: 420px !important;
 	max-height: 500px !important;
 	overflow-y:scroll;
 	overflow-x:hidden;
@@ -544,7 +545,7 @@ input[type='checkbox']:checked {
 				</div>
 				<li id="notification-li" class="nav-button notification-container dropdown">
 					<a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" ng-show="notificationCount!=0" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
-					<ul id="notification-li-dropdown" class="dropdown-menu" style="border: 1px solid #000"> 
+					<ul id="notification-li-dropdown" class="dropdown-menu pull-right" style="border: 1px solid #000"> 
 						<li class="notifications-panel-head" ng-show="notificationsDownloads.length==0 && notificationsUploads.length==0">
 							No new notifications							
 						</li>
@@ -641,7 +642,7 @@ input[type='checkbox']:checked {
 				<img src="img/team/member4.jpg" class="profile-pic"></img>
 			</div>
 		</div>
-		<div style="position:relative;top:-44px;bottom:-44px;z-index:4;">
+		<div style="position:relative;top:-43px;bottom:-43px;z-index:4;">
 			<div class="row">
 				<div class="col-lg-2 detail nopadding">
 					<div class="detail detail-large">{{myUploadsCount}}</div>
@@ -673,7 +674,7 @@ input[type='checkbox']:checked {
 					<div class="nav-link">
 						<i style="margin-left:15px;" class="fa fa-dashboard">
 						</i>
-							&nbsp&nbsp&nbsp&nbsp&nbsp&nbspDashboard
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbspDashboard
 					</div>
 				</div>
 			</div>
@@ -712,7 +713,7 @@ input[type='checkbox']:checked {
 
 	<div class="col-md-9 jumbotron" style="border:1px solid rgba(204, 204, 204, 0.32);padding:0px;margin-left:-35px" ng-if="visMyUploads;">
 		<div class="container-fluid card-container" style="margin-top:0px" >
-			<h3>My uploads</h3>
+			<div class="col-md-4" style="color:#2e9ba0;padding-left:0px;padding-bottom:10px;"><big><big>My Uploads</big></big></div>
 			<table class="table nodivider-table">
 				<tbody>
 					<tr ng-repeat="rowUploadElements in gridMyUploads track by $index">
@@ -746,7 +747,7 @@ input[type='checkbox']:checked {
 
 <div class="col-md-9 jumbotron" style="border:1px solid rgba(204, 204, 204, 0.32);padding:0px;margin-left:-35px" ng-if="visSmartSearch;">
 	<div class="container-fluid card-container" style="margin-top:0px" >
-		<h3>Smart search</h3>
+			<div class="col-md-4" style="color:#2e9ba0;padding-left:0px;padding-bottom:10px;"><big><big>Smart Search</big></big></div>
 		<br>
 
 		<!-- department, college, semester, year-->
@@ -826,62 +827,80 @@ input[type='checkbox']:checked {
 			<tbody>
 				<tr ng-repeat="rowSearchResultsElements in gridSmartSearchResults track by $index">
 					<td ng-repeat="searchResultElement in rowSearchResultsElements track by $index">
-						<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + searchResultElement.id)">
-							<center>
-								<img class="book-preview" ng-src="{{searchResultElement.path}}" width="120" height="140" style="margin-top:15px"></img>
-								<div class="row">
-									<big>{{truncateString(searchResultElement.name,10)}}</big>
-									<br>
-									{{searchResultElement.rating + "/5.0"}}
+						<div class="book-preview-card">							
+							<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + searchResultElement.id)">
+								<center>
+									<img class="book-preview" ng-src="{{searchResultElement.path}}" width="120" height="140" style="margin-top:15px"></img>
+									<div class="row">
+										<div style="color:#000;opacity:0.87;">
+											<big>{{truncateString(searchResultElement.name,10)}}</big>
+										</div><div style="color:#555;padding-bottom:4px">
+										<small>
+											{{searchResultElement.views + " views"}}
+										</small>
+									</div>
+									<!-- {{searchResultElement.rating + "/5.0"}} -->
 								</div>
 							</center>
 						</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+					</div>
 
-		<div ng-show="smartSearchResultSpinner">
-			<center>
-				<img src="/spinner.gif" style="margin:10px"></img>
-			</center>
-		</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
-		<div class="row" ng-show="!noMoreSmartSearchResults && smartSearchResults.length!=0">
-			<center><h3>No more search results</h3></center>
-			<br>
-		</div>
-
-		<div class="row" ng-show="noMoreSmartSearchResults">
-			<div class="col-md-10">
-			</div>
-			<div class="col-md-1">
-				<button class="btn btn-default" ng-click="getSmartSearchResults(smartCollege, smartDepartment, smartYear, smartSemester, smartSearchLimit, smartSearchOffset + smartSearchLimit, false)" type="button">More >>
-				</button>
-			</div>
-		</div>
-
+	<div ng-show="smartSearchResultSpinner">
+		<center>
+			<img src="/spinner.gif" style="margin:10px"></img>
+		</center>
 	</div>
+
+	<div class="row" ng-show="!noMoreSmartSearchResults && smartSearchResults.length!=0">
+		<center><h3>No more search results</h3></center>
+		<br>
+	</div>
+
+	<div class="row" ng-show="noMoreSmartSearchResults">
+		<div class="col-md-10">
+		</div>
+		<div class="col-md-1">
+			<button class="btn btn-default" ng-click="getSmartSearchResults(smartCollege, smartDepartment, smartYear, smartSemester, smartSearchLimit, smartSearchOffset + smartSearchLimit, false)" type="button">More >>
+			</button>
+		</div>
+	</div>
+
+</div>
 </div>
 
 <div class="col-md-9 jumbotron" style="border:1px solid rgba(204, 204, 204, 0.32);padding:0px;margin-left:-35px" ng-if="visMyDownloads;">
 	<div class="container-fluid card-container" style="margin-top:0px;" >
-		<h3>My downloads</h3>
+			<div class="col-md-4" style="color:#2e9ba0;padding-left:0px;padding-bottom:10px;"><big><big>My downloads</big></big></div>
 		<table class="table nodivider-table">
 			<tbody>
 				<tr ng-repeat="rowDownloadElements in gridMyDownloads track by $index">
 					<td ng-repeat="downloadElement in rowDownloadElements track by $index">
-						<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + downloadElement.file.id)">
-							<center>
-								<img class="book-preview" ng-src="{{downloadElement.file.path}}" width="120" height="140" style="margin-top:15px">
-							</img>
-							<div class="row">
-								<big>{{truncateString(downloadElement.file.name,10)}}</big>
-								<br>
-								{{downloadElement.file.rating + "/5.0"}}
-							</div>
-						</center>
-					</a>
+
+						<div class="book-preview-card">
+
+							<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + downloadElement.file.id)">
+								<center>
+									<img class="book-preview" ng-src="{{downloadElement.file.path}}" width="120" height="140" style="margin-top:15px">
+								</img>
+								<div class="row">
+									<div style="color:#000;opacity:0.87;">
+										<big>{{truncateString(downloadElement.file.name,10)}}</big>
+									</div>
+									<!-- {{downloadElement.file.rating + "/5.0"}} -->
+									<div style="color:#555;padding-bottom:4px">
+										<small>
+											{{downloadElement.file.views + " views"}}
+										</small>
+									</div>
+								</div>
+							</center>
+						</a>
+					</div>
 				</td>
 			</tr>
 		</tbody>
@@ -1005,33 +1024,42 @@ input[type='checkbox']:checked {
 			</div>
 			<div class="container-fluid card-container">
 				<!--<p style="font-size:25px;color:#339999">Recent Downloads</p>-->
-				<div class="col-md-4" style="color:#339999;padding-left:0px;padding-bottom:10px;"><big><big>Recent Downloads</big></ig></div>
+				<div class="col-md-4" style="color:#2e9ba0;padding-left:0px;padding-bottom:10px;"><big><big>Recent Downloads</big></ig></div>
 				<div class="col-md-12">
 					<div style="overflow-x:scroll;overflow-y:hidden;">
 						<table class="table nodivider-table">
 							<tbody>
 								<td ng-repeat="downloadElement in myRecentDownloads track by $index">
-									<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + downloadElement.file.id)">
-										<center>
-											<img class="book-preview" ng-src="{{downloadElement.file.path}} " width="120" height="140" style="margin-top:15px"></img>
+									<div class="book-preview-card">
+										<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + downloadElement.file.id)">
+											<center>
+												<img class="book-preview" ng-src="{{downloadElement.file.path}}" width="120" height="140" style="margin-top:15px">
+											</img>
 											<div class="row">
-												<big>{{truncateString(downloadElement.file.name,10)}}</big>
-												<br>
-												{{downloadElement.file.rating + "/5.0"}}
+												<div style="color:#000;opacity:0.87;">
+													<big>{{truncateString(downloadElement.file.name,10)}}</big>
+												</div>
+												<!-- {{downloadElement.file.rating + "/5.0"}} -->
+												<div style="color:#555;padding-bottom:4px">
+													<small>
+														{{downloadElement.file.views + " views"}}
+													</small>
+												</div>
 											</div>
 										</center>
 									</a>
-								</td>
-							</tbody>
-						</table>
-					</div>
+								</div>
+							</td>
+						</tbody>
+					</table>
 				</div>
-
 			</div>
-			<div class="container-fluid card-container">
-				<!--<p style="font-size:25px;color:#339999">Recent Uploads</p>-->
-				<div class="col-md-4" style="color:#339999;padding-left:0px;padding-bottom:10px;"><big>Recent Uploads</big></div>
-				<div class="col-md-12">
+
+		</div>
+		<div class="container-fluid card-container">
+			<!--<p style="font-size:25px;color:#339999">Recent Uploads</p>-->
+			<div class="col-md-4" style="color:#2e9ba0;padding-left:0px;padding-bottom:10px;"><big>Recent Uploads</big></div>
+			<div class="col-md-12">
 					<!-- <div id="prevUpload" ng-click="prevUpload()" class="col-md-1 side-chevron">
 						<i class="fa fa-chevron-left fa-3x grey-icon prev"></i>
 					</div> -->
@@ -1048,21 +1076,30 @@ input[type='checkbox']:checked {
 						<table class="table nodivider-table">
 							<tbody>
 								<td ng-repeat="uploadElement in myRecentUploads track by $index">
-									<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + uploadElement.id)">
-										<center>
-											<img class="book-preview" ng-src="{{uploadElement.path}}" width="120" height="140" style="margin-top:15px">
-										</img>
-										<div class="row">
-											<big>{{truncateString(uploadElement.name,10)}}</big>
-											<br>
-											{{uploadElement.rating + "/5.0"}}
+									<div class="book-preview-card">
+										<a class="book-preview-a" ng-click="getNotificationModalData('/upload/getupload?id=' + uploadElement.id)">
+											<center>
+												<img class="book-preview" ng-src="{{uploadElement.path}}" width="120" height="140" style="margin-top:15px">
+											</img>
+											<div class="row">
+												<div style="color:#000;opacity:0.87;">
+													<big>{{truncateString(uploadElement.name,10)}}</big>
+												</div>
+										<!-- 
+										{{uploadElement.rating + "/5.0"}} -->
+										<div style="color:#555;padding-bottom:4px">
+											<small>
+												{{uploadElement.views + " views"}}
+											</small>
 										</div>
-									</center>
-								</a>
-							</td>
-						</tbody>
-					</table>
-				</div>
+									</div>
+								</center>
+							</a>
+						</div>
+					</td>
+				</tbody>
+			</table>
+		</div>
 					<!-- 
 					<div class="controls center" style="visibility:hidden;opacity:0;">
 						<button id="nextUploadHidden" class="btn next">next <i class="icon-chevron-right"></i></button>

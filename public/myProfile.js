@@ -13,7 +13,7 @@ function myProfile($scope,$http,$rootScope,$window) {
   $scope.smartYear = "";
   $scope.smartSemester = "";
 
-  $scope.smartSearchLimit = 12;
+  $scope.smartSearchLimit = 10;
   $scope.smartSearchOffset = 0;
   $scope.smartSearchPage = 1;
   $scope.smartSearchResults = [];
@@ -180,7 +180,7 @@ $rootScope.getSmartSearchResults = function(college, department, year, semester,
 
   if(reset) {    
     $scope.smartSearchResults = [];
-    $scope.smartSearchLimit = 12;
+    $scope.smartSearchLimit = 10;
     $scope.smartSearchOffset = 0;
     $scope.smartSearchPage = 1;
     $scope.noMoreSmartSearchResults = false;
@@ -209,7 +209,7 @@ $rootScope.getSmartSearchResults = function(college, department, year, semester,
 
     $scope.smartSearchResults = $scope.smartSearchResults.concat(data);
     console.log($scope.smartSearchResults);
-    $scope.getArrGrid($scope.smartSearchResults,4,3);
+    $scope.getArrGrid($scope.smartSearchResults,5,3);
     $scope.smartSearchResultSpinner = false;
   }).
   error(function(data, status, headers, config) {

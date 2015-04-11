@@ -25,7 +25,7 @@ app.get('/get/all', function (req, res) {
 				console.log(count);
 				stats.totalUsers = count[0]["count(*)"];
 				//TODO : ORDER BY user id here
-				var querystring = "SELECT uploadid,count(*) FROM noteshare.downloads GROUP BY uploadid" + " LIMIT 8 OFFSET 0";
+				var querystring = "SELECT uploadid,count(*) FROM noteshare.downloads GROUP BY uploadid" + " LIMIT 10 OFFSET 0";
 				console.log(querystring);
 				db.querydb(querystring, function (result){
 					var topDownloads = [];
