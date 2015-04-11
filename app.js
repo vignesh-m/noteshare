@@ -58,7 +58,7 @@ app.use('/follow', follow);
 app.use('/profile',profile);
 app.use('/tag', tag);
 app.use('/common', common);
-app.use('/forgot',forgot);
+app.use('/pass',forgot);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

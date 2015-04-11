@@ -7,9 +7,9 @@ var bcrypt=require('bcrypt-nodejs');
 var db = require('../public/db_structure');
 var mailer=require('./util/mailer');
 function reset_url(user,newpass){
-    return encodeURI("http://localhost:3000/forgot/activate?username="+user.username+"&code="+newpass);
+    return encodeURI("http://localhost:3000/pass/activate?username="+user.username+"&code="+newpass);
 }
-router.get("/",function(req,res){
+router.get("/forgot",function(req,res){
     if(!req.query.email && !req.query.username) {
         res.end("{result:false}");
         return;
@@ -58,5 +58,5 @@ router.get("/activate",function(req,res){
         }
     })
 })
-
+router.get("change")
 module.exports=router;
