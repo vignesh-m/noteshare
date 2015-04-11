@@ -235,7 +235,7 @@ $scope.getTimeInFormat = function(dateStr) {
           $scope.notificationsUploads.push(element);
         }
         else if(element.purpose == "Download") {
-          var str = element.split("=");
+          var str = element.link.split("=");
           var x = str[1];
           if($rootScope.imageExists('../views/' + x + "/page.png")) {
             path = '../views/' + x + "/page.png";
@@ -332,7 +332,7 @@ $scope.getOtherUploads = function() {
     console.log('getting other uploads');
     $scope.otherUploads = data;
     $scope.otherUploadsCount = data.length;
-    $scope.getArrGrid($scope.otherUploads,4,1);
+    $scope.getArrGrid($scope.otherUploads,5,1);
   }).
   error(function(data, status, headers, config) {
     console.log('error');
