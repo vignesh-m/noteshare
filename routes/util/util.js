@@ -23,7 +23,7 @@ var dateToMysqlFormat = function(date) {
 
  var sendEmail = function(email) {
   var exec = require('child_process').exec;
-  var commandLineInput = "mail" + " -s " + "\"Noteshare Team\" \"" + email + "\" < public/signupEmailBody.txt";
+  var commandLineInput = "mail" + " -s " + "\"Noteshare Team\" \"" + email + "\" ";
   console.log(commandLineInput);
   exec(commandLineInput, function (error, stdout, stderr) {
     console.log('stdout: ' + stdout);
