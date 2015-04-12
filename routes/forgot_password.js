@@ -78,7 +78,7 @@ router.get("/activate",function(req,res){
         }
     })
 })
-router.get("/change",isAuth,function(req,res){
+router.post("/change",isAuth,function(req,res){
     console.log('at change');
     if(!req.query.oldpass || !req.query.newpass){
         res.end("{result:false}");
