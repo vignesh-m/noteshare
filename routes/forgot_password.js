@@ -80,14 +80,14 @@ router.get("/activate",function(req,res){
 })
 router.post("/change",isAuth,function(req,res){
     console.log('at change');
-    if(!req.query.oldpass || !req.query.newpass){
+    if(!req.body.oldpass || !req.body.newpass){
         res.end("{result:false}");
         return;
     }
     db.querydb("SELECT * from noteshare.user where username="+mysql.escape(req.user.username)+";",function(result){
         var user=result[0];
-        if(bcrypt.compareSync(req.query.oldpass,user.password)){
-            var newhash=bcrypt.hashSync(req.query.newpass);
+        if(bcrypt.compareSync(req.body.oldpass,user.password)){
+            var newhash=bcrypt.hashSync(req.body.newpass);
             db.querydb("UPDATE noteshare.user set password = "+mysql.escape(newhash)+" where username="+mysql.escape(user.username)+";",function(result){
                 res.end("successfully changed password");
             })
