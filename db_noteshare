@@ -49,7 +49,6 @@ CREATE TABLE followers(
 	follows INT
 );
 
-//userid follows the one in follows..
 
 CREATE TABLE notifications(
 	id INT AUTO_INCREMENT,
@@ -85,3 +84,6 @@ alter table uploads add year INTEGER;
 alter table user add email VARCHAR(100);
 alter table user add newpass VARCHAR(100);
 alter table user add isupdatingpass BOOLEAN;
+
+
+//userid follows the one in follows..

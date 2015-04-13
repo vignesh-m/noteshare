@@ -6,6 +6,8 @@ var mysql = require('mysql');
 var dbconfig = require('../public/db_structure');
 var passport = require('passport');
 var connection = mysql.createConnection(dbconfig.connection);
+var mailer=require('./util/mailer');
+
 app.get('/', function(req, res) {
     res.render('index.ejs');
 });
