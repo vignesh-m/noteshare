@@ -50,6 +50,10 @@ app.get('/get/all', function (req, res) {
 							});
 						}
 					}
+					else {
+						stats.topDownloads = [];
+						res.end(JSON.stringify(stats));
+					}
 				});
 			});
 });
