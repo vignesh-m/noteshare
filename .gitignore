@@ -1,4 +1,5 @@
 uploads/*
 node_modules/*
 .idea
-
+routes/util/db_structure.js
+public/db_structure.js

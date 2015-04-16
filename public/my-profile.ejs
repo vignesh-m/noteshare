@@ -1150,7 +1150,7 @@ input[type='checkbox']:checked {
 									<th>Views</th>
 									<td>{{notificationModalData.file.views}}</td>
 								</tr>
-								<tr>
+								<!-- <tr>
 									<th>Ratings</th>
 									<td>
 										<div class="row">
@@ -1163,7 +1163,7 @@ input[type='checkbox']:checked {
 										</div>
 									</td>
 								</tr>
-								<tr>
+								<tr> -->
 									<th>Tags</th>
 									<td>
 										<div ng-repeat="tag in notificationModalData.tags track by $index">
@@ -1184,12 +1184,12 @@ input[type='checkbox']:checked {
 					</div>
 				</div>
 				<div class="modal-footer">
-					<a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id + '&view=1'}}">
+					<a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id + '&view=1'}}" target="_blank">
 						<button type="button" class="btn btn-default">
 							View
 						</button>
 					</a>
-					<a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id}}">
+					<a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id}}" target="_blank">
 						<button type="button" class="btn btn-default">
 							Download
 						</button>
@@ -1268,11 +1268,11 @@ input[type='checkbox']:checked {
 										<small><span style="color:red" ng-show="uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$error.required">Tags are required.</span></small>
 									</div><br><br><br>
 
-									<div class="row" ng-show="uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$valid &&  
-									uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$valid &&
-									uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$valid">
+									<div class="row">
 									<center>
-										<button type="button" class="btn btn-default btn-flat-note" data-dismiss="modal" ng-click="uploadNotesDetails()"><big>&nbsp&nbspShare&nbsp&nbsp</big></button>
+										<button type="button" ng-disabled="!(uploadDetailsForm.filename.$dirty && uploadDetailsForm.filename.$valid &&  
+									uploadDetailsForm.department.$dirty && uploadDetailsForm.department.$valid &&
+									uploadDetailsForm.tags.$dirty && uploadDetailsForm.tags.$valid)" class="btn btn-default btn-flat-note" data-dismiss="modal" ng-click="uploadNotesDetails()"><big>&nbsp&nbspShare&nbsp&nbsp</big></button>
 									</center>
 								</div>
 

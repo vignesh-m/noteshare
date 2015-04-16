@@ -692,12 +692,21 @@ input[type='checkbox']:checked {
                 <div class="col-lg-10 nopadding">
                     <div class="user-details-card" style="padding:10px">
                         <strong>
-                            {{otherUser.firstname + " " + otherUser.lastname}}
+                            <div class="col-md-4">
+                                Name 
+                            </div>
+                            <div class="col-md-8">          
+                                {{otherUser.firstname + " " + otherUser.lastname}}
+                            </div>
                         </strong>
+                        <br>   
+                        <div class="col-md-4">
+                            College
+                        </div>
+                        <div class="col-md-8">
+                            {{otherUser.college}}
+                        </div>
                         <br>
-                        {{getTimeInFormat(otherUser.dateCreated)}}
-                        <br>
-                        {{otherUser.college}}
                     </div>
                 </div>
             </div>
@@ -826,12 +835,12 @@ input[type='checkbox']:checked {
                 </div>
             </div>
             <div class="modal-footer">
-                <a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id + '&view=1'}}">
+                <a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id + '&view=1'}}" target="_blank">
                     <button type="button" class="btn btn-default">
                         View
                     </button>
                 </a>
-                <a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id}}">
+                <a ng-href="{{'/download/view?upload_id=' + notificationModalData.file.id}}" target="_blank">
                     <button type="button" class="btn btn-default">
                         Download
                     </button>

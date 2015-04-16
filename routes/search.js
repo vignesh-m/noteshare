@@ -58,10 +58,10 @@ function query_upload(req,callback){
         conditions.push('uploads.rating >= '+mysql.escape(req.rating));
     }
     if(req.department){
-        conditions.push('uploads.department like %'+mysql.escape(req.department)+'% ');
+        conditions.push('uploads.department like '+mysql.escape('%'+(req.department)+'%'));
     }
     if(req.semester){
-        conditions.push('uploads.semester like %'+mysql.escape(req.semester)+'% ');
+        conditions.push('uploads.semester like '+mysql.escape('%'+(req.semester)+'%'));
     }
     if(req.year){
         conditions.push('uploads.year = '+mysql.escape(req.year));
@@ -73,19 +73,19 @@ function query_upload(req,callback){
             sort=req.sort;
         }
     }
-    if(req.tag || req.tagmap){
+    if(req.tag || req.tagmap || req.tagname){
         tables.push('tagmap');
         tables.push('tag');
         conditions.push('tagmap.uploadid = uploads.id');
         conditions.push('tagmap.tagid=tag.id');
-
-        columns.push('tag.name');
+        columns.push('tag.*');
     }
     if(req.tag){
         conditions.push('tag.id='+mysql.escape(req.tag));
     }
     if(req.tagname){
-        conditions.push('tag.tagname='+mysql.escape(req.tagname));
+        console.log(req.tagname);
+        conditions.push('tag.name='+mysql.escape(req.tagname));
     }
     if(req.college){
         conditions.push('user.college = '+mysql.escape(req.college));

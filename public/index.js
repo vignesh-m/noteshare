@@ -1,6 +1,45 @@
 var index = function($scope, $rootScope, $http, $window) {
 
 	var link = location.origin + "/common/get/all";
+	$scope.searchResultSpinner = false;
+	$scope.searchUploadLimit  = 12;
+	$scope.searchUploadOffset = 0;
+	$scope.searchResults = [];
+
+	$rootScope.getSearchResults = function(searchInput) {
+		console.log('changed');
+		$scope.searchResultSpinner = true;
+		$scope.searchResults = [];
+
+		if(searchInput!="" && searchInput) {
+			$http.get('/search?name=' + searchInput + "&limit=" + $scope.searchUploadLimit + "&offset=" + $scope.searchUploadOffset).
+			success(function(data, status, headers, config) {
+				var searchResults = data;
+				console.log(searchResults);
+				searchResults.forEach(function(element, index, array) {
+					var path;
+					if($rootScope.imageExists('/views/' + element.id + "/page.png")) {
+						path = '/views/' + element.id + "/page.png";
+					}
+					else {
+						path = '/views/' + element.id + "/page-0.png";
+					}
+					$scope.searchResults.push(element);
+					$scope.getArrGrid($scope.searchResults, 6, 1);
+				});
+
+				if($scope.searchResults.length)
+					$scope.searchResultSpinner = false;
+			}).
+			error(function(data, status, headers, config) {
+				console.log('error');
+			});
+		}
+		else {
+			$('#search-li-dropdown').hide();
+			console.log('hide');
+		}
+	}
 
 	$rootScope.imageExists = function (image_url){
 
@@ -37,7 +76,7 @@ var index = function($scope, $rootScope, $http, $window) {
 			console.log('error');
 		}); 
 	}
-	
+
 	$rootScope.truncateString = function(str,length){
 		var trunc = str.split('.')[0]; 
 		if(str.length > length) 
@@ -57,7 +96,7 @@ var index = function($scope, $rootScope, $http, $window) {
 			}
 			data.topDownloads[i].path = path;
 		}
-		$scope.getArrGrid(data.topDownloads, 6);
+		$scope.getArrGrid(data.topDownloads, 6, 0);
 		console.log(data);
 		$scope.stats = data;
 	}).
@@ -69,7 +108,7 @@ var index = function($scope, $rootScope, $http, $window) {
 		console.log('error');
 	}); 
 
-	$scope.getArrGrid = function (list, rowElementCount) {
+	$scope.getArrGrid = function (list, rowElementCount, type) {
 		var gridArray = [], i, k;
 
 		for (i = 0, k = -1; i < list.length; i++) {
@@ -80,7 +119,12 @@ var index = function($scope, $rootScope, $http, $window) {
 
 			gridArray[k].push(list[i]);
 		}
-		$scope.gridTopDownloads = gridArray;
+		if(type==0) {
+			$scope.gridTopDownloads = gridArray;
+		}
+		else if(type==1) {
+			$scope.gridSearchResults = gridArray;
+		}
 		console.log(gridArray);
 	}
 }

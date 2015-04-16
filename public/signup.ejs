@@ -76,29 +76,40 @@
 				<% } %>
 
 				<!-- LOGIN FORM -->
-				<form action="/signup" method="post">
+				<form action="/signup" method="post" name="signupForm" novalidate>
 					<div class="form-group">
 						<label>First Name</label>	
-						<input type="text" class="form-control placeholder-black" name="firstname">
+						<input type="text" class="form-control placeholder-black" name="firstname" required/>
+						<small><span style="color:red" ng-show="signupForm.firstname.$dirty && signupForm.firstname.$error.required">Firstname is required.</span></small>
 					</div>
 					<div class="form-group">
 						<label>Last Name</label>
-						<input type="text" class="form-control placeholder-black" name="lastname">
+						<input type="text" class="form-control placeholder-black" name="lastname" required>
+						<small><span style="color:red" ng-show="signupForm.lastname.$dirty && signupForm.lastname.$error.required">Lastname is required.</span></small>
 					</div>
 					<div class="form-group">
 						<label>College</label>
-						<input type="text" class="form-control placeholder-black" name="college">
+						<input type="text" class="form-control placeholder-black" name="college" required>
+						<small><span style="color:red" ng-show="signupForm.college.$dirty && signupForm.college.$error.required">College is required.</span></small>
+					</div>
+					<div class="form-group">
+						<label>Email</label>
+						<input type="text" class="form-control placeholder-black" name="email" required>
+						<small><span style="color:red" ng-show="signupForm.email.$dirty && signupForm.email.$error.required">Email is required.</span></small>
 					</div>
 					<div class="form-group">
 						<label>Username</label>
-						<input type="text" class="form-control placeholder-black" name="username">
+						<input type="text" class="form-control placeholder-black" name="username" required>
+						<small><span style="color:red" ng-show="signupForm.username.$dirty && signupForm.username.$error.required">Username is required.</span></small>
 					</div>
 					<div class="form-group">
 						<label>Password</label>
-						<input type="password" class="form-control placeholder-black" name="password">
+						<input type="password" class="form-control placeholder-black" name="password" required>
+						<small><span style="color:red" ng-show="signupForm.password.$dirty && signupForm.password.$error.required">Password is required.</span></small>
 					</div>
-
-					<button type="submit" class="btn btn-primary btn-lg" style="border-radius:4px">Register</button>
+					<button type="submit" class="btn btn-primary btn-lg" style="border-radius:4px" ng-disabled="signupForm.firstname.$dirty && signupForm.firstname.$valid &&  
+					signupForm.lastname.$dirty && signupForm.lastname.$valid &&
+					signupForm.college.$dirty && signupForm.college.$valid && signupForm.email.$dirty && signupForm.email.$valid && signupForm.username.$dirty && signupForm.username.$valid && signupForm.password.$dirty && signupForm.password.$valid">Register</button>
 				</form>
 
 				<hr>

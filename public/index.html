@@ -114,7 +114,7 @@
 				<ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
 					<li class="active"><a href="index.html">Home</a></li>
 					<li><a href="#section-about">About</a></li>
-					<li><a href="#section-contact">Contact</a></li>
+					<!-- <li><a href="#section-contact">Contact</a></li> -->
 					<!-- <li><a href="/signup">Register</a></li> -->
 					<li><a href="/login">Login</a></li>
 				</ul>
@@ -137,9 +137,9 @@
 						</h2>
 						<div class="input-group">
 							<input type="text" class="form-control placeholder-black
-							" placeholder="Search Notes..." style="color:#000;"></input>
+							" placeholder="Search Notes..." style="color:#000;" ng-model="searchInput"></input>
 							<span class="input-group-btn">
-								<button class="btn btn-default" style="background:#2e9ba0;color:#fff;border:0px;border-radius:2px;" type="button">&nbsp&nbspSearch&nbsp
+								<button class="btn btn-default" style="background:#2e9ba0;color:#fff;border:0px;border-radius:2px;" type="button" ng-click="getSearchResults(searchInput)">&nbsp&nbspSearch&nbsp
 								</button>
 							</span>
 						</input>
@@ -149,6 +149,52 @@
 			<div class="col-md-4 col-md-offset-2">
 				<div class="align-left">
 					<img src="share.png" style="width:100%"/>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="section-works" class="section appear clearfix" ng-show="searchResults.length!=0;">
+	<div class="container">
+
+		<div class="row mar-bot40">
+			<div class="col-md-offset-3 col-md-6">
+				<div class="section-header">
+					<h2 class="section-heading animated" data-animation="bounceInUp">Search results</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row">
+					<div>
+						<table class="table nodivider-table">
+							<tbody>
+								<tr ng-repeat="rowDownloadElements in gridSearchResults track by $index">
+									<td ng-repeat="downloadElement in rowDownloadElements track by $index">
+										<div class="book-preview-card">
+											<a class="book-preview-a" ng-click="redirect('/login')">
+												<center>
+													<img class="book-preview" ng-src="{{downloadElement.path}}" width="120" height="140" style="margin-top:15px"></img>
+													<div class="row">
+														<div style="color:#000;opacity:0.87;">
+															<big>{{truncateString(downloadElement.name,10)}}</big>
+														</div>
+														<div style="color:#555;padding-bottom:4px">
+															<small>
+																{{downloadElement.views + " views"}}
+															</small>
+														</div>
+													</div>
+												</center>
+											</a>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table> 
+					</div>
 				</div>
 			</div>
 		</div>
@@ -213,97 +259,6 @@
 	</div>	
 </section>
 
-<!-- about -->
-<section id="section-about" class="section appear clearfix">
-	<div class="container">
-
-		<div class="row mar-bot40">
-			<div class="col-md-offset-3 col-md-6">
-				<div class="section-header">
-					<h2 class="section-heading animated" data-animation="bounceInUp">About Us</h2>
-				</div>
-			</div>
-		</div>
-
-		<div class="row align-center mar-bot40">
-			<div class="col-md-3">
-				<div class="team-member">
-					<figure class="member-photo"><img src="img/team/member1.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
-					<div class="team-detail">
-						<h4>Rohith Dharavath</h4>
-						<span>Founder</span>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="team-member">
-					<figure class="member-photo"><img src="img/team/member2.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
-					<div class="team-detail">
-						<h4>Anvesh Bandari</h4>
-						<span>Co Founder</span>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="team-member">
-					<figure class="member-photo"><img src="img/team/member3.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
-					<div class="team-detail">
-						<h4>Bharath Kumar</h4>
-						<span>Web designer</span>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="team-member">
-					<figure class="member-photo"><img src="img/team/member4.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
-					<div class="team-detail">
-						<h4>Aravind Suresh</h4>
-						<span>Tech Team</span>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
-</section>
-<!-- /about -->
-
-<!-- spacer section:stats -->
-<section id="parallax1" class="section pad-top40 pad-bot40" data-stellar-background-ratio="0.5">
-
-	<div class="container">
-		<div class="row">				
-			<div class="col-lg-12">
-				<div class="align-center">
-					<div class="testimonial pad-top40 pad-bot40 clearfix">
-						<h5>
-							<big>
-								<big>
-									Share your Notes and <strong>earn credits</strong>
-									<div style="margin-top:6px">
-										<div style="margin-top:50px;">
-											It's simple , try it out . 
-											<br>
-											<br>
-											<a href="/profile" class="btn btn-default btn-lg btn-flat-note" style="border-radius:4px">
-												<i class="fa fa-cloud-upload">
-													&nbspUpload notes
-												</i>
-											</a>
-										</div>
-									</div>
-								</big>
-							</big>
-						</h5>
-						<br/>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>	
-</section>
-
 <!-- section works -->
 <section id="section-works" class="section appear clearfix">
 	<div class="container">
@@ -358,6 +313,43 @@
 
 </div>
 </section>
+
+<!-- spacer section:stats -->
+<section id="parallax1" class="section pad-top40 pad-bot40" data-stellar-background-ratio="0.5">
+
+	<div class="container">
+		<div class="row">				
+			<div class="col-lg-12">
+				<div class="align-center">
+					<div class="testimonial pad-top40 pad-bot40 clearfix">
+						<h5>
+							<big>
+								<big>
+									Share your Notes and <strong>earn credits</strong>
+									<div style="margin-top:6px">
+										<div style="margin-top:50px;">
+											It's simple , try it out . 
+											<br>
+											<br>
+											<a href="/profile" class="btn btn-default btn-lg btn-flat-note" style="border-radius:4px">
+												<i class="fa fa-cloud-upload">
+													&nbspUpload notes
+												</i>
+											</a>
+										</div>
+									</div>
+								</big>
+							</big>
+						</h5>
+						<br/>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>	
+</section>
+
 <!-- <section id="parallax2" class="section parallax" data-stellar-background-ratio="0.5">	
 	<div class="align-center pad-top40 pad-bot40">
 		<blockquote class="bigquote color-white">Indoctum accusamus comprehensam</blockquote>
@@ -414,6 +406,60 @@
 
 	</div>
 </section> -->
+
+<!-- about -->
+<section id="section-about" class="section appear clearfix">
+	<div class="container">
+
+		<div class="row mar-bot40">
+			<div class="col-md-offset-3 col-md-6">
+				<div class="section-header">
+					<h2 class="section-heading animated" data-animation="bounceInUp">About Us</h2>
+				</div>
+			</div>
+		</div>
+
+		<div class="row align-center mar-bot40">
+			<div class="col-md-3">
+				<div class="team-member">
+					<figure class="member-photo"><img src="img/team/member1.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
+					<div class="team-detail">
+						<h4>Rohith Dharavath</h4>
+						<span>Founder</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="team-member">
+					<figure class="member-photo"><img src="img/team/member2.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
+					<div class="team-detail">
+						<h4>Anvesh Bandari</h4>
+						<span>Co Founder</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="team-member">
+					<figure class="member-photo"><img src="img/team/member3.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
+					<div class="team-detail">
+						<h4>Bharath Kumar</h4>
+						<span>Web designer</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="team-member">
+					<figure class="member-photo"><img src="img/team/member4.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
+					<div class="team-detail">
+						<h4>Aravind Suresh</h4>
+						<span>Tech Team</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</section>
 
 <section id="footer" class="section footer">
 	<div class="container">

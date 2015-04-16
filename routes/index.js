@@ -33,13 +33,13 @@ function(req, res) {
 });
 
 
-//app.get('/auth/facebook', passport.authenticate('facebook'));
-//app.get('/auth/facebook/callback',
-//    passport.authenticate('facebook', { successRedirect: '/profile',
-//        failureRedirect: '/login' }));
-//app.get('/auth/facebook',
-//    passport.authenticate('facebook', { scope: 'read_stream' })
-//);
+app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { successRedirect: '/profile',
+        failureRedirect: '/login' }));
+app.get('/auth/facebook',
+    passport.authenticate('facebook', { scope: 'read_stream' })
+);
 app.get('/signup', function(req, res) {
     // render the page and pass in any flash data if it exists
     res.render('signup.ejs', { message: req.flash('signupMessage') });
@@ -68,9 +68,4 @@ function isLoggedIn(req, res, next) {
         return next();
     res.redirect('/login');
 }
-/*
-app.get('/samplemail',function(req,res){
-    require('./util/mailer.js').sendMail('arvindsuresh2009@gmail.com','Noteshare mailer test','Test Mail Hello ? ',res)
-})*/
-
 module.exports=app;

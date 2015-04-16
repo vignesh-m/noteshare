@@ -171,7 +171,7 @@
 	width:8%;
 	height:auto;
 	position: absolute;
-	left: 5%;
+	left: 10%;
 	top: 5%;
 }
 .nav-center {
@@ -184,26 +184,49 @@
 .view {
 	background: #fff;
 }
+.circular-btn {
+  border-radius: 50% 50% 50% 50%;
+  color: #333;
+  margin-top: 2%;
+  padding: 12px;
+}
 </style>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<script>
+function goBack() {
+	window.history.back();
+}
+</script>
 
 <div style="overflow-x:hidden;overflow-y:scroll;width:100%;height:100%;background:rgba(0,0,0,0.1)">
-<nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
-	<div class="container-fluid">
-		<a href="#"><img class="navbar-logo" src="../logo.png"></img></a>
-		<div class="col-md-5">
-		</div>
-		<div class="col-md-4">
-			<div class="collapse navbar-collapse navbar-center-buttons">
-				<ul class="nav navbar-nav">
-					<li style="color:#fff"><a style="color:#fff;text-decoration:none;" href="/profile">NOTESHARE VIEWER</a></li>
-				</ul>
+	<nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
+		<div class="container-fluid">
+			<div class="col-md-2">
+				<button class="btn btn-default circular-btn" onclick="goBack()"><i class="fa fa-arrow-left"></i></button>
 			</div>
-		</div>		
-	</div>
-</nav>
+			<div class="col-md-1">
+			</div>
+			<a href="#"><img class="navbar-logo" src="../logo.png"></img></a>
+			<div class="col-md-2">
+			</div>
+			<div class="col-md-3">
+				<div class="collapse navbar-collapse navbar-center-buttons">
+					<ul class="nav navbar-nav">
+						<li style="color:#fff"><a style="color:#fff;text-decoration:none;">NOTESHARE VIEWER</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-3">
+			</div>
+			<div class="col-md-1" style="margin-top:1%">
+				Pages : <%= pages %>
+			</div>
+		</div>
+	</nav>
 
-<br>
-<br>
+	<br>
+	<br>
 
 	<%
 	if(pages*1 == 1) {%>

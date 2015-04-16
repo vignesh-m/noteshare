@@ -105,7 +105,7 @@ db.querydb(querystring,function(result){
             console.log(link);
             notification.notifyAllFollowers(req.user.id,"Unread",req.user.username + " has uploaded a file : " + files.originalname, "Upload", "/upload/getupload?id=" + result.insertId);
             debugger;
-            res.end(JSON.stringify({result:true}));
+            res.end(JSON.stringify({result:true,upload_id:uid}));
             util.savePDFToPNG("uploads/" + files.name, "public/views/" + result.insertId + "/page.png", result.insertId, function() {
                 console.log('completed converting..');
             });
