@@ -16,13 +16,34 @@ var index = function($scope, $rootScope, $http, $window) {
 		console.log(link);
 		$window.location.href = link;
 	}
+
+	$scope.Fusername = "";
+	$scope.Femail = "";
+	$scope.alertMessageResetPassword = "";
+	$scope.responseModal = {};
+
+	$scope.submitResetPasswordForm = function (username, email) {
+		$http.get("/pass/forgot?username=" + username + "&email=" + email).
+		success(function(data, status, headers, config) {
+			if(data.result) {
+				$scope.responseModal.text = "A reset link has been sent to the Email ID provided. Follow the instructions given in the mail to reset your password";
+				$('#modalResponse').modal('toggle');
+			}
+			else {
+				$scope.alertMessageResetPassword = "Invalid credentials";
+			}
+		}).
+		error(function(data, status, headers, config) {
+			console.log('error');
+		}); 
+	}
 	
-  $rootScope.truncateString = function(str,length){
-    var trunc = str.split('.')[0]; 
-    if(str.length > length) 
-      trunc = str.substring(0,length) +'..';
-    return trunc;
-  }
+	$rootScope.truncateString = function(str,length){
+		var trunc = str.split('.')[0]; 
+		if(str.length > length) 
+			trunc = str.substring(0,length) +'..';
+		return trunc;
+	}
 
 	$http.get(link).
 	success(function(data, status, headers, config) {

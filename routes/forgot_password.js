@@ -29,7 +29,8 @@ router.get("/forgot",function(req,res){
                 var newpass=bcrypt.hashSync(newpass_plain);
                 db.querydb("UPDATE noteshare.user set newpass = "+mysql.escape(newpass)+",isupdatingpass= true "+"where username="+mysql.escape(user.username),function(result){
                     mailer.sendMail(req.query.email,'Reset Noteshare Password ','Your new password is '+newpass_plain+'\nClick this link to activate your password : '+reset_url(user,newpass));
-                    res.end('done');})
+                    res.end("{result:true}");
+                })
             })
         })
     } else if(req.query.email){//todo enforce unique email or remove this
@@ -42,7 +43,7 @@ router.get("/forgot",function(req,res){
                 var newpass=bcrypt.hashSync(newpass_plain);
                 db.querydb("UPDATE noteshare.user set newpass = "+mysql.escape(newpass)+",isupdatingpass= true "+"where username="+mysql.escape(user.username),function(result){
                     mailer.sendMail(req.query.email,'Reset Noteshare Password ','Your new password is '+newpass_plain+'\nClick this link to activate your password : '+reset_url(user,newpass));
-                    res.end('done');
+                    res.end("{result:true}");
                 })
 
             })

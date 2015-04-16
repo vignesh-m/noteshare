@@ -6,6 +6,8 @@ var mysql = require('mysql');
 var dbconfig = require('../public/db_structure');
 var passport = require('passport');
 var connection = mysql.createConnection(dbconfig.connection);
+var mailer=require('./util/mailer');
+
 app.get('/', function(req, res) {
     res.render('index.ejs');
 });
@@ -13,20 +15,24 @@ app.get('/login', function(req, res) {
     res.render('login.ejs', { message: req.flash('loginMessage') });
 });
 
+app.get('/forgotpassword', function (req, res) {
+    res.render('forgotpassword.ejs', { message : ""});
+});
+
 // process the login form
 app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/profile',
-        failureRedirect : '/login',
-        failureFlash : true
-    }),
-    function(req, res) {
-        if (req.body.remember) {
-            req.session.cookie.maxAge = 1000 * 60 * 3;
-        } else {
-            req.session.cookie.expires = false;
-        }
-        res.redirect('/');
-    });
+    successRedirect : '/profile',
+    failureRedirect : '/login',
+    failureFlash : true
+}),
+function(req, res) {
+    if (req.body.remember) {
+        req.session.cookie.maxAge = 1000 * 60 * 3;
+    } else {
+        req.session.cookie.expires = false;
+    }
+    res.redirect('/');
+});
 
 
 //app.get('/auth/facebook', passport.authenticate('facebook'));
