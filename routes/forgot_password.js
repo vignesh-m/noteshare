@@ -18,7 +18,7 @@ var isAuth = function(req, res, next) {
 function reset_url(user,newpass){
     return encodeURI("http://localhost:3000/pass/activate?username="+user.username+"&code="+newpass);
 }
-router.get("/forgot",isAuth,function(req,res){
+router.get("/forgot",function(req,res){
     if(req.query.username){
         db.querydb("SELECT * from noteshare.user where username="+mysql.escape(req.query.username)+";",function(result){
             var user=result[0];
