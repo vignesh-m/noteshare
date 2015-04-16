@@ -82,7 +82,7 @@ $rootScope.getSearchResults = function(searchInput) {
       searchResults.forEach(function(element, index, array) {
         $scope.searchResults.push({imglink:'../avatar.jpg',type:'user',text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].id, link:'../profile/view?id=' + searchResults[index].id});
       });
-      $http.get('/search?user=' + searchInput  + "&limit=" + $scope.searchUploadLimit + "&offset=" + $scope.searchUploadOffset).
+      $http.get('/search?name=' + searchInput  + "&limit=" + $scope.searchUploadLimit + "&offset=" + $scope.searchUploadOffset).
       success(function(data, status, headers, config) {
         var searchResults = data;
         console.log(searchResults);
