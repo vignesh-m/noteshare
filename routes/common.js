@@ -43,12 +43,17 @@ app.get('/get/all', function (req, res) {
 									console.log(querystring1);
 									if(topDownloads.length == result.length) {
 										console.log('result-length');
+										debugger;
 										stats.topDownloads = topDownloads;
 										res.end(JSON.stringify(stats));
 									}
 								}
 							});
 						}
+					}
+					else {
+						stats.topDownloads = [];
+						res.end(JSON.stringify(stats));
 					}
 				});
 			});

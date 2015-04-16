@@ -62,6 +62,10 @@ var index = function($scope, $rootScope, $http, $window) {
 		$scope.stats = data;
 	}).
 	error(function(data, status, headers, config) {
+		console.log(data);
+		console.log(status);
+		console.log(headers);
+		console.log(config);
 		console.log('error');
 	}); 
 
