@@ -73,19 +73,19 @@ function query_upload(req,callback){
             sort=req.sort;
         }
     }
-    if(req.tag || req.tagmap){
+    if(req.tag || req.tagmap || req.tagname){
         tables.push('tagmap');
         tables.push('tag');
         conditions.push('tagmap.uploadid = uploads.id');
         conditions.push('tagmap.tagid=tag.id');
-
-        columns.push('tag.name');
+        columns.push('tag.*');
     }
     if(req.tag){
         conditions.push('tag.id='+mysql.escape(req.tag));
     }
     if(req.tagname){
-        conditions.push('tag.tagname='+mysql.escape(req.tagname));
+        console.log(req.tagname);
+        conditions.push('tag.name='+mysql.escape(req.tagname));
     }
     if(req.college){
         conditions.push('user.college = '+mysql.escape(req.college));
