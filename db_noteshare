@@ -67,6 +67,8 @@ alter table user add dateLastLoggedOut Date;
 alter table user add views int;
 
 alter table notifications add dateCreated Date;
+alter table notifications add purpose varchar(10);
+alter table notifications add link varchar(100);
 
 alter table uploads add dateUploaded Date;
 

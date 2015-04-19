@@ -44,6 +44,10 @@ app.use(multer({
     }
 }));
 
+app.post('/', function(req, res) {
+    res.end("awesome");
+});
+
 app.get('/email', function(req, res) {
     util.sendEmail(req.query.email);
     res.end("mailed to " + req.query.email);
