@@ -406,6 +406,8 @@ table { border-collapse: collapse; }
 
 .book-preview-card {
 	background: #fff;
+	padding-left:20px;
+	padding-right: 20px;
 	border-radius: 2px;
 	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
 	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
@@ -621,7 +623,7 @@ input[type='checkbox']:checked {
 					<a href="javascript:void(0)" ng-click="settings()"><i class="fa fa-fw fa-cog"></i> Settings</a>
 				</li>         
 				<li>
-					<a href="/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+					<a href="/logout" ng-click="setIsLoggedInToFalse()"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
 				</li>
 			</ul>
 		</li>

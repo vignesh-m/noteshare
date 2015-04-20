@@ -349,6 +349,11 @@ $scope.files = [];
 
 $rootScope.searchingUserId = 4;
 
+$scope.setIsLoggedInToFalse = function() {
+  console.log('logout');
+  localStorage.isLoggedIn="false";
+}
+
 $scope.updateNotifications = function() {
   $http.get('/notifications/get').
   success(function(data, status, headers, config) {
@@ -492,6 +497,7 @@ $scope.getDetails = function() {
   success(function(data, status, headers, config) {
     console.log(data);
     $scope.user = data.data;
+    localStorage.isLoggedIn = true;
     $scope.getMyUploads();
     $scope.getMyDownloads();
     $scope.updateNotifications();

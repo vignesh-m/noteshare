@@ -6,12 +6,19 @@ var index = function($scope, $rootScope, $http, $window) {
 	$scope.searchUploadOffset = 0;
 	$scope.searchResults = [];
 
+	$scope.redirectIfLoggedIn = function() {
+		console.log('in redirectIfLoggedIn');
+		if(localStorage.isLoggedIn == "true") {
+			$scope.redirect('/profile');
+		}
+	}
+
 	$rootScope.getSearchResults = function(searchInput) {
 		console.log('changed');
 		$scope.searchResultSpinner = true;
 		$scope.searchResults = [];
 
-		if(searchInput!="" && searchInput) {
+		if((searchInput!="" && searchInput)||true) {
 			$http.get('/search?name=' + searchInput + "&limit=" + $scope.searchUploadLimit + "&offset=" + $scope.searchUploadOffset).
 			success(function(data, status, headers, config) {
 				var searchResults = data;
