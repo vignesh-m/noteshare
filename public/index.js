@@ -31,9 +31,11 @@ var index = function($scope, $rootScope, $http, $window) {
 					else {
 						path = '/views/' + element.id + "/page-0.png";
 					}
+					element.path = path;
 					$scope.searchResults.push(element);
-					$scope.getArrGrid($scope.searchResults, 6, 1);
 				});
+				$scope.getArrGrid($scope.searchResults, 6, 1);
+				console.log($scope.gridSearchResults);
 
 				if($scope.searchResults.length)
 					$scope.searchResultSpinner = false;
@@ -132,6 +134,5 @@ var index = function($scope, $rootScope, $http, $window) {
 		else if(type==1) {
 			$scope.gridSearchResults = gridArray;
 		}
-		console.log(gridArray);
 	}
 }
