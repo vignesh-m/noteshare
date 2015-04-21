@@ -13,10 +13,20 @@ app.get('/login', function(req, res) {
     res.render('login.ejs', { message: req.flash('loginMessage') });
 });
 
-app.get('/forgotpassword', function (req, res) {
+app.get('/forgotpassword', isLoggedIn,function (req, res) {
     res.render('forgotpassword.ejs', { message : ""});
 });
-
+app.get('/changepass',isLoggedIn,function(req,res){
+    res.render('changepass.ejs');
+});
+app.get('/info',isLoggedIn,function(req,res){
+    if(req.session.message!="") {
+        res.render('blank_template.ejs', {content: req.session.message});
+        req.session.message="";
+    }
+    else
+        res.redirect('/profile');
+})
 // process the login form
 app.post('/login', passport.authenticate('local-login', {
     successRedirect : '/profile',

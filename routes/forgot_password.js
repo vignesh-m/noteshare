@@ -80,7 +80,8 @@ router.get("/activate",function(req,res){
     })
 })
 router.post("/change",isAuth,function(req,res){
-    console.log('at change');
+    console.log('oldpass ' +req.body.oldpass);
+    console.log('newpass '+req.body.newpass);
     if(!req.body.oldpass || !req.body.newpass){
         res.end("{result:false}");
         return;
@@ -90,10 +91,14 @@ router.post("/change",isAuth,function(req,res){
         if(bcrypt.compareSync(req.body.oldpass,user.password)){
             var newhash=bcrypt.hashSync(req.body.newpass);
             db.querydb("UPDATE noteshare.user set password = "+mysql.escape(newhash)+" where username="+mysql.escape(user.username)+";",function(result){
-                res.end("successfully changed password");
+                req.session.message='Successfully changed password';
+                console.log("changed")
+                res.redirect('/info');
             })
         } else {
-            res.end('invalid request. wrong password')
+            req.session.message='Invalid password';
+            console.log("not changed")
+            res.redirect('/info');
         }
     })
 })
