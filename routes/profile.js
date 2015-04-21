@@ -6,7 +6,7 @@ var db = require('../public/db_structure');
 var _ = require('underscore');
 
 var isAuth = function(req, res, next) {
-    console.log('Authenticating');
+   //console.log('Authenticating');
     if (req.isAuthenticated())
         next();
     else {
@@ -27,7 +27,7 @@ router.get('/get', function(req, res) {
     else id = req.user.id;
     var qs = "SELECT * FROM noteshare.user WHERE user.id=" + mysql.escape(id);
     db.querydb(qs,function(user){
-        console.log(user);
+       //console.log(user);
         res.end(JSON.stringify({result:true,data:user[0]}));
     })
 });
@@ -35,14 +35,14 @@ router.get('/view',isAuth,function(req,res){
     if(req.query.id){
         var qs = "SELECT * FROM noteshare.user WHERE user.id=" + mysql.escape(req.query.id);
         var qs1 = "UPDATE noteshare.user" + " SET views=views+1 " + "WHERE id=" + req.query.id;
-        console.log(req.query.id);
+       //console.log(req.query.id);
         db.querydb(qs,function(user){
-            console.log(user);
-            console.log(req.user);
-            console.log('updating view..');
-            console.log(qs1);
+           //console.log(user);
+           //console.log(req.user);
+           //console.log('updating view..');
+           //console.log(qs1);
             db.querydb(qs1,function(result){
-                console.log(qs1);
+               //console.log(qs1);
                 res.render('profile-view.ejs',{user:req.user,otherUser:user[0]});
             });
         });

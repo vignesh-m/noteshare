@@ -5,7 +5,7 @@ var mysql = require('mysql');
 var db = require('../public/db_structure');
 var notification = require('./util/notification');
 var isAuth = function(req, res, next) {
-	console.log('Authenticating');
+//console.log('Authenticating');
 	if (req.isAuthenticated())
 		next();
 	else {
@@ -48,8 +48,8 @@ app.get('/get',isAuth,function(req,res){
 	db.querydb(querystring,function(arrFollowing){
 		var querystring2="SELECT * from noteshare.followers WHERE followers.follows="+mysql.escape(id)+";";
 		db.querydb(querystring2,function(arrFollowers){
-			console.log(arrFollowers);
-			console.log(arrFollowing);
+		//console.log(arrFollowers);
+		//console.log(arrFollowing);
 			res.end(JSON.stringify({result:true,arrFollowing:arrFollowing,arrFollowers:arrFollowers}));
 		});
 	});

@@ -22,9 +22,9 @@ var transporter = nodemailer.createTransport({
 function test() {
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-            console.log(error);
+           //console.log(error);
         } else {
-            console.log('Message sent: ' + info.response);
+           //console.log('Message sent: ' + info.response);
         }
     });
 }
@@ -38,9 +38,9 @@ function sendMail(tolist,subject,text,res){
     };
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-            console.log(error);
+           //console.log(error);
         } else {
-            console.log('Message sent: ' + info.response);
+           //console.log('Message sent: ' + info.response);
         }
     });
 }
