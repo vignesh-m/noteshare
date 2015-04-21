@@ -71,13 +71,12 @@ router.get("/activate",function(req,res){
     db.querydb("SELECT * from noteshare.user where username="+mysql.escape(req.query.username)+";",function(result){
         var user=result[0];
         if(req.query.code == user.newpass){
-            db.querydb("UPDATE noteshare.user set password = "+mysql.escape(req.query.code)+",isupdatingpass= false "+"where username="+mysql.escape(user.username)+";",function(result){
-                res.end("successfully changed password");
-            })
+            req.LogIn()
         } else {
             res.end('invalid request')
         }
     })
+
 })
 router.post("/change",isAuth,function(req,res){
     //console.log('oldpass ' +req.body.oldpass);
