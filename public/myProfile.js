@@ -238,7 +238,7 @@ $rootScope.getSearchResults = function(searchInput) {
   $scope.searchResultSpinner = true;
 
   if(searchInput!="" && searchInput) {
-    $http.get('/search/user?name=' + searchInput + "&limit=10" + "&offset=0").
+    $http.get('/search/user?name=' + searchInput + "&limit=3" + "&offset=0").
     success(function(data, status, headers, config) {
 
       $scope.searchResults = [];

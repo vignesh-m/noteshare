@@ -268,7 +268,7 @@ input[type="text"] {
 .navbar-profile-pic-img-circular{
     width: 28px;
     height: 28px;
-    background-image: url('../img/team/member4.jpg');
+    background-image: url('../default-profile-pic.jpg');
     background-size: cover;
     display: block;
     opacity: 0.7;
@@ -479,7 +479,7 @@ input[type='checkbox']:checked {
 }
 </style>
 
-<html ng-app="">
+<html ng-app="" style="background:#E7E7E7;">
 <div ng-controller="profileView"  style="background:#E7E7E7;font-family:Helvetica" ng-init="user = <%= JSON.stringify(user) %>;otherUser = <%= JSON.stringify(otherUser) %>;">
     <head>
         <link rel="stylesheet" href="/css/my-profile.css">
