@@ -42,7 +42,7 @@ module.exports = function(passport) {
     passport.use('facebook',new FacebookStrategy({
         clientID: '101982750133452',
         clientSecret: "e2aa9d68d8a47fa9cb507a2a5ba5d8b5",
-        callbackURL: "/auth/facebook/login"
+        callbackURL: "/auth/facebook/callback"
         },
         function(accessToken, refreshToken, profile, done) {
             /*User.findOrCreate(..., function(err, user) {
@@ -66,9 +66,9 @@ module.exports = function(passport) {
                         password: bcrypt.hashSync("nothing", null, null)  // use the generateHash function in our user model
                     };
 
-                    var insertQuery = "INSERT INTO user ( username, password, dateCreated) values (?,?,?)";
+                    var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,credits,views, dateCreated) values (?,?,?,?,?,0,0,?)";
 
-                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password, util.dateToMysqlFormat(new Date())],function(err, rows) {
+                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password, 'unknown' ,profile.name.givenName,profile.name.familyName,0,0,util.dateToMysqlFormat(new Date())],function(err, rows) {
                         debugger;
                         newUserMysql.id = rows.insertId;
 
