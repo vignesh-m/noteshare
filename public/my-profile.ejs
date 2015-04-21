@@ -166,7 +166,7 @@
 	height:1px;
 }
 .card-container {
-	background-color:white;
+	background-color:rgb(245, 244, 244);
 	padding:25px;
 	margin-top:15px;
 	border:1px solid rgba(204, 204, 204, 0.32);
@@ -406,20 +406,20 @@ table { border-collapse: collapse; }
 
 .book-preview-card {
 	background: #fff;
-	padding-left:20px;
-	padding-right: 20px;
+	padding-left:5px;
+	padding-right: 5px;
 	border-radius: 2px;
-	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
-	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.12);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.12);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.12);
 }
 .book-preview-card:hover {
 	background: #fff;
 	border-radius: 2px;
 	cursor: pointer;
-	-moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .book-preview-a {
@@ -492,7 +492,7 @@ input[type='checkbox']:checked {
 
 
 <html ng-app="">
-<div  ng-controller="myProfile" style="background:#E7E7E7;font-family:Helvetica">
+<div  ng-controller="myProfile" style="background:#E7E7E7;font-family:Helvetica;height:100%">
 	<head>
 		<link rel="stylesheet" href="css/my-profile.css">
 		<meta charset="utf-8">
@@ -543,7 +543,7 @@ input[type='checkbox']:checked {
 						</div>
 					</li>
 				</div>
-				<div class="col-md-1">
+				<div class="col-md-2">
 				</div>
 				<li id="notification-li" class="nav-button notification-container dropdown">
 					<a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" ng-show="notificationCount!=0" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
@@ -1039,7 +1039,7 @@ input[type='checkbox']:checked {
 											</img>
 											<div class="row">
 												<div style="color:#000;opacity:0.87;">
-													<big>{{truncateString(downloadElement.file.name,10)}}</big>
+													{{truncateString(downloadElement.file.name,10)}}
 												</div>
 												<!-- {{downloadElement.file.rating + "/5.0"}} -->
 												<div style="color:#555;padding-bottom:4px">
@@ -1085,7 +1085,7 @@ input[type='checkbox']:checked {
 											</img>
 											<div class="row">
 												<div style="color:#000;opacity:0.87;">
-													<big>{{truncateString(uploadElement.name,10)}}</big>
+													{{truncateString(uploadElement.name,10)}}
 												</div>
 										<!-- 
 										{{uploadElement.rating + "/5.0"}} -->
