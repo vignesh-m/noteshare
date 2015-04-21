@@ -16,7 +16,7 @@ var isAuth = function(req, res, next) {
     }
 };
 function reset_url(user,newpass){
-    return encodeURI("http://localhost:3000/pass/activate?username="+user.username+"&code="+newpass);
+    return encodeURI("http://52.74.135.20/pass/activate?username="+user.username+"&code="+newpass);
 }
 router.get("/forgot",function(req,res){
     if(req.query.username){

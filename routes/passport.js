@@ -42,7 +42,7 @@ module.exports = function(passport) {
     passport.use('facebook',new FacebookStrategy({
         clientID: '101982750133452',
         clientSecret: "e2aa9d68d8a47fa9cb507a2a5ba5d8b5",
-        callbackURL: "facebook/callback"
+        callbackURL: "/login"
         },
         function(accessToken, refreshToken, profile, done) {
             /*User.findOrCreate(..., function(err, user) {
@@ -52,9 +52,11 @@ module.exports = function(passport) {
                 debugger;
                  connection.query("SELECT * FROM user WHERE username = ?",[profile.name.givenName+' '+profile.name.familyName], function(err, rows) {
                     debugger;
-                if (err)
+                if (err){
+console.log(err);
                     return done(err);
-                if (rows.length) {
+}                
+if (rows.length) {
 
                     return done(null, false);
                 } else {
@@ -65,7 +67,7 @@ module.exports = function(passport) {
                         username: profile.name.givenName+' '+profile.name.familyName,
                         password: bcrypt.hashSync("nothing", null, null)  // use the generateHash function in our user model
                     };
-
+	console.log(newUserMysql.username);
                     var insertQuery = "INSERT INTO user ( username, password, dateCreated) values (?,?,?)";
 
                     connection.query(insertQuery,[newUserMysql.username, newUserMysql.password, util.dateToMysqlFormat(new Date())],function(err, rows) {
