@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../public/db_structure');
 var mysql= require('mysql');
 var isAuth = function(req, res, next) {
-    console.log('Authenticating');
+   //console.log('Authenticating');
     if (req.isAuthenticated())
         next();
     else {

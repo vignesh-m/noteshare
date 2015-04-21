@@ -7,7 +7,7 @@ var bcrypt=require('bcrypt-nodejs');
 var db = require('../public/db_structure');
 var mailer=require('./util/mailer');
 var isAuth = function(req, res, next) {
-    console.log('Authenticating');
+    //console.log('Authenticating');
     if (req.isAuthenticated())
         next();
     else {
@@ -22,10 +22,10 @@ router.get("/forgot",function(req,res){
     if(req.query.username){
         db.querydb("SELECT * from noteshare.user where username="+mysql.escape(req.query.username)+";",function(result){
             var user=result[0];
-            console.log(user);
+            //console.log(user);
             crypto.randomBytes(20,function(err,buf){
                 var newpass_plain=buf.toString('hex');
-                console.log(newpass_plain)
+                //console.log(newpass_plain)
                 var newpass=bcrypt.hashSync(newpass_plain);
                 db.querydb("UPDATE noteshare.user set newpass = "+mysql.escape(newpass)+",isupdatingpass= true "+"where username="+mysql.escape(user.username),function(result){
                     mailer.sendMail(req.query.email,'Reset Noteshare Password ','Your new password is '+newpass_plain+'\nClick this link to activate your password : '+reset_url(user,newpass));
@@ -36,10 +36,10 @@ router.get("/forgot",function(req,res){
     } else if(req.query.email){//todo enforce unique email or remove this
         db.querydb("SELECT * from noteshare.user where email="+mysql.escape(req.query.email)+";",function(result){
             var user=result[0];
-            console.log(user);
+            //console.log(user);
             crypto.randomBytes(20,function(err,buf){
                 var newpass_plain=buf.toString('hex');
-                console.log(newpass_plain);
+                //console.log(newpass_plain);
                 var newpass=bcrypt.hashSync(newpass_plain);
                 db.querydb("UPDATE noteshare.user set newpass = "+mysql.escape(newpass)+",isupdatingpass= true "+"where username="+mysql.escape(user.username),function(result){
                     mailer.sendMail(req.query.email,'Reset Noteshare Password ','Your new password is '+newpass_plain+'\nClick this link to activate your password : '+reset_url(user,newpass));
@@ -51,10 +51,10 @@ router.get("/forgot",function(req,res){
     } else {
         db.querydb("SELECT * from noteshare.user where username="+mysql.escape(req.user.username)+";",function(result){
             var user=result[0];
-            console.log(user);
+            //console.log(user);
             crypto.randomBytes(8,function(err,buf){
                 var newpass_plain=buf.toString('hex');
-                console.log(newpass_plain)
+                //console.log(newpass_plain)
                 var newpass=bcrypt.hashSync(newpass_plain);
                 db.querydb("UPDATE noteshare.user set newpass = "+mysql.escape(newpass)+",isupdatingpass= true "+"where username="+mysql.escape(user.username),function(result){
                     mailer.sendMail(req.query.email,'Reset Noteshare Password ','Your new password is '+newpass_plain+'\nClick this link to activate your password : '+reset_url(user,newpass));
@@ -80,7 +80,8 @@ router.get("/activate",function(req,res){
     })
 })
 router.post("/change",isAuth,function(req,res){
-    console.log('at change');
+    //console.log('oldpass ' +req.body.oldpass);
+    //console.log('newpass '+req.body.newpass);
     if(!req.body.oldpass || !req.body.newpass){
         res.end("{result:false}");
         return;
@@ -90,10 +91,14 @@ router.post("/change",isAuth,function(req,res){
         if(bcrypt.compareSync(req.body.oldpass,user.password)){
             var newhash=bcrypt.hashSync(req.body.newpass);
             db.querydb("UPDATE noteshare.user set password = "+mysql.escape(newhash)+" where username="+mysql.escape(user.username)+";",function(result){
-                res.end("successfully changed password");
+                req.session.message='Successfully changed password';
+                //console.log("changed")
+                res.redirect('/info');
             })
         } else {
-            res.end('invalid request. wrong password')
+            req.session.message='Invalid password';
+            //console.log("not changed")
+            res.redirect('/info');
         }
     })
 })

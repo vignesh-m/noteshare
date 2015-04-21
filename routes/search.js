@@ -84,7 +84,7 @@ function query_upload(req,callback){
         conditions.push('tag.id='+mysql.escape(req.tag));
     }
     if(req.tagname){
-        console.log(req.tagname);
+       //console.log(req.tagname);
         conditions.push('tag.name='+mysql.escape(req.tagname));
     }
     if(req.college){
@@ -121,7 +121,7 @@ function query_upload(req,callback){
     }
     querystring+=';';
     db.querydb(querystring,function(result){
-        console.log(querystring);
+       //console.log(querystring);
         callback(result);
     });
 }
@@ -144,8 +144,8 @@ router.get('/user',function(req,res){
         querystring="SELECT user.*,"+match_name(req.query.name,"user.username,user.firstname,user.lastname","score")+" FROM " +
         "noteshare.user ORDER BY score DESC;";
         db.querydb(querystring,function(result){
-            console.log(querystring);
-            console.log(result);
+           //console.log(querystring);
+           //console.log(result);
             res.end(JSON.stringify(result));
         });
     } else {

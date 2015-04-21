@@ -7,7 +7,7 @@ var pool=mysql.createPool({
 function querydb(querystring,callback){
     pool.getConnection(function(err, connection) {
         if(err) {
-            console.log(err);
+           //console.log(err);
             return;
         }
         // Use the connection
