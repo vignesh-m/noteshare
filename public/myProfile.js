@@ -253,7 +253,7 @@ $rootScope.getSearchResults = function(searchInput) {
       searchResults.forEach(function(element, index, array) {
         $scope.searchResults.push({imglink:'/avatar.jpg',type:'user',text:searchResults[index].firstname + " " + searchResults[index].lastname, user_id:searchResults[index].id, link:'./profile/view?id=' + searchResults[index].id});
       });
-      $http.get('/search?user=' + searchInput + "&limit=" + $scope.searchUploadLimit + "&offset=" + $scope.searchUploadOffset).
+      $http.get('/search?name=' + searchInput + "&limit=" + $scope.searchUploadLimit + "&offset=" + $scope.searchUploadOffset).
       success(function(data, status, headers, config) {
         var searchResults = data;
         console.log(searchResults);
@@ -348,6 +348,11 @@ $scope.visUploadProgress = false;
 $scope.files = [];
 
 $rootScope.searchingUserId = 4;
+
+$scope.setIsLoggedInToFalse = function() {
+  console.log('logout');
+  localStorage.isLoggedIn="false";
+}
 
 $scope.updateNotifications = function() {
   $http.get('/notifications/get').
@@ -492,6 +497,7 @@ $scope.getDetails = function() {
   success(function(data, status, headers, config) {
     console.log(data);
     $scope.user = data.data;
+    localStorage.isLoggedIn = true;
     $scope.getMyUploads();
     $scope.getMyDownloads();
     $scope.updateNotifications();
@@ -619,7 +625,7 @@ $scope.getDetails();
       fd.append("uploadedFile", $scope.files[i])
     }
 
-    fd.append("name", $scope.filename);
+    fd.append("uploadfilename", $scope.filename);
     fd.append("department", $scope.department);
     fd.append("semester", $scope.semester);
     fd.append("year", $scope.year);
@@ -660,7 +666,7 @@ $scope.getDetails();
    //alert(evt.target.responseText);
    $scope.responseModal.text = "Your file has been uploaded successfully";
    $('#modalResponse').modal('toggle');
-   var upload_id = JSON.parse(evt.target.responseText).insertId;
+   var upload_id = JSON.parse(evt.target.responseText).upload_id;
    console.log(upload_id);
 
     var tags = $scope.tags.split(" ");//jQuery.param("[" + $scope.tags.split(" ") + "]");

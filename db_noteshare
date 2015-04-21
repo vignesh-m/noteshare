@@ -67,6 +67,8 @@ alter table user add dateLastLoggedOut Date;
 alter table user add views int;
 
 alter table notifications add dateCreated Date;
+alter table notifications add purpose varchar(10);
+alter table notifications add link varchar(100);
 
 alter table uploads add dateUploaded Date;
 
@@ -84,6 +86,8 @@ alter table uploads add year INTEGER;
 alter table user add email VARCHAR(100);
 alter table user add newpass VARCHAR(100);
 alter table user add isupdatingpass BOOLEAN;
+
+alter table uploads modify semester varchar(10);
 
 
 //userid follows the one in follows..

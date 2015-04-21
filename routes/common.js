@@ -37,6 +37,7 @@ app.get('/get/all', function (req, res) {
 									topDownloads.push(upload[0]);
 									if(topDownloads.length == result.length) {
 										console.log('result-length');
+										debugger;
 										stats.topDownloads = topDownloads;
 										res.end(JSON.stringify(stats));
 
@@ -48,6 +49,10 @@ app.get('/get/all', function (req, res) {
 					} else {
 						stats.topDownloads=[];
 						res.end(JSON.stringify(stats))
+					}
+					else {
+						stats.topDownloads = [];
+						res.end(JSON.stringify(stats));
 					}
 				});
 			});

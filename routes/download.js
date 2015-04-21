@@ -58,7 +58,13 @@ else {
 				else {
 					pages = 10;
 				}
-				res.render('pdfview.ejs',{"viewPath":"../views/" + upload_id, "pages":pages});
+				var qs = "UPDATE noteshare.uploads SET views=views+1 WHERE id=" + upload_id;
+				db.querydb(qs, function(result) {
+					console.log(qs);
+					console.log(result);
+					console.log("updating view");
+					res.render('pdfview.ejs',{"viewPath":"../views/" + upload_id, "pages":pages});
+				});
 			});
 		}
 
@@ -74,7 +80,12 @@ else {
 					//res.render('pdfview.ejs', {"viewPath":"../views/" + upload_id, "pages":pages});
 
 					util.getPages(upload_id, res, function (upload_id, res, pages) {
-						res.render('pdfview.ejs',{"viewPath":"../views/" + upload_id, "pages":pages});
+						var qs = "UPDATE noteshare.uploads SET views=views+1 WHERE id=" + upload_id;
+						db.querydb(qs, function(result) {
+							console.log(qs);
+							console.log(result);
+							res.render('pdfview.ejs',{"viewPath":"../views/" + upload_id, "pages":pages});
+						});
 					});
 					//res.render('pdftest.ejs',{"SWFFileName":"../views/test1.swf?random=884873648269"});
 					/*res.download('./uploads/' + upload[0].filename, function(err) {

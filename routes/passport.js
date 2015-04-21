@@ -40,9 +40,9 @@ module.exports = function(passport) {
     var FacebookStrategy = require('passport-facebook').Strategy;
 
     passport.use('facebook',new FacebookStrategy({
-        clientID: 1044610165555460,
+        clientID: '101982750133452',
         clientSecret: "af6b415565123732d6df58c7e27679ce",
-        callbackURL: "http://localhost:8080/auth/facebook/callback"
+        callbackURL: "facebook/callback"
         },
         function(accessToken, refreshToken, profile, done) {
             /*User.findOrCreate(..., function(err, user) {
@@ -84,7 +84,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.use('google',new GoogleStrategy({
     clientID: '419932949832-es2h8m4k4vmr97ckqsntd9v1unh7mjoa.apps.googleusercontent.com',
     clientSecret: 'dSVVSQXKC-pyFS-tQvspYJ8n',
-    callbackURL: "http://localhost:8080/auth/google/callback"
+    callbackURL: "auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
    /* User.findOrCreate({ googleId: profile.id }, function (err, user) {
