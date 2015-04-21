@@ -137,10 +137,10 @@
 						</h2>
 						<div class="input-group">
 							<input type="text" class="form-control placeholder-black
-							" placeholder="Search Notes..." style="color:#000000" ng-model="searchInput"></input>
+							" placeholder="Search Notes..." style="color:#000000" onKeyDown="javascript:if(event.keyCode==13) { $('#search').click(); window.location.hash = '#searchLink'; };" ng-model="searchInput"></input>
 							<span class="input-group-btn">
-								<a href="#section-works">
-									<button class="btn btn-default" style="background:#2e9ba0;color:#fff;border:0px;border-radius:2px;height:138%;margin-top:-0.62%;padding-left:20%;padding-right:20%;" type="button" ng-click="getSearchResults(searchInput)"> <strong>SEARCH</strong>
+								<a href="#section-works" id="searchLink">
+									<button class="btn btn-default" id="search" style="background:#2e9ba0;color:#fff;border:0px;border-radius:2px;height:138%;margin-top:-0.62%;padding-left:20%;padding-right:20%;" type="button" ng-click="getSearchResults(searchInput)"> <strong>SEARCH</strong>
 									</button>
 								</a>
 							</span>
