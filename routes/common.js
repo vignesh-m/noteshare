@@ -42,13 +42,13 @@ app.get('/get/all', function (req, res) {
 										res.end(JSON.stringify(stats));
 
 									}
+									else {
+										stats.topDownloads=[];
+										res.end(JSON.stringify(stats));
+									}
 								}
 							});
 						}
-
-					} else {
-						stats.topDownloads=[];
-						res.end(JSON.stringify(stats))
 					}
 					else {
 						stats.topDownloads = [];
