@@ -104,7 +104,7 @@ passport.use('google',new GoogleStrategy({
         function(req, username, password,done) {
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
-            console.log(req.body);
+           //console.log(req.body);
             connection.query("SELECT * FROM user WHERE username = ?",[username], function(err, rows) {
                 if (err)
                     return done(err);

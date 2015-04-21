@@ -6,7 +6,7 @@ var db = require('../public/db_structure');
 var _ = require('underscore');
 
 var isAuth = function(req, res, next) {
-    console.log('Authenticating');
+   //console.log('Authenticating');
     if (req.isAuthenticated())
         next();
     else {
@@ -22,7 +22,7 @@ app.get('/get', isAuth,function(req, res) {
 	querystring = "SELECT * FROM noteshare.notifications WHERE userid=" + mysql.escape(user_id);
 
 	db.querydb(querystring,function(arrNotifications){
-		console.log(querystring);
+	//console.log(querystring);
 
 		var arrNotificationsUnread = [];
 		var arrNotificationsRead = [];
@@ -53,7 +53,7 @@ app.get('/set/read', isAuth, function(req, res) {
 
 	querystring = "UPDATE noteshare.notifications SET type=" + mysql.escape("Read") + " WHERE notifications.id=" + mysql.escape(notification_id) + " AND notifications.userid=" + mysql.escape(user_id);
 	db.querydb(querystring, function(result) {
-		console.log(result);
+	//console.log(result);
 		res.end(JSON.stringify({result:true}));
 	});
 
