@@ -13,7 +13,7 @@ app.get('/login', function(req, res) {
     res.render('login.ejs', { message: req.flash('loginMessage') });
 });
 
-app.get('/forgotpassword', isLoggedIn,function (req, res) {
+app.get('/forgotpassword',function (req, res) {
     res.render('forgotpassword.ejs', { message : ""});
 });
 app.get('/changepass',isLoggedIn,function(req,res){
