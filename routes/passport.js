@@ -42,7 +42,7 @@ module.exports = function(passport) {
     passport.use('facebook',new FacebookStrategy({
         clientID: '101982750133452',
         clientSecret: "e2aa9d68d8a47fa9cb507a2a5ba5d8b5",
-        callbackURL: "/login"
+        callbackURL: "/auth/facebook/login"
         },
         function(accessToken, refreshToken, profile, done) {
             /*User.findOrCreate(..., function(err, user) {
