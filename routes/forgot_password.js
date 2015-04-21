@@ -22,12 +22,12 @@ router.get("/forgot",function(req,res){
     if(req.query.username){
         db.querydb("SELECT * from noteshare.user where username="+mysql.escape(req.query.username)+";",function(result){
             var user=result[0];
-            //console.log(user);
+            console.log(user);
             crypto.randomBytes(20,function(err,buf){
                 var newpass_plain=buf.toString('hex');
-                //console.log(newpass_plain)
+                console.log(newpass_plain)
                 var newpass=bcrypt.hashSync(newpass_plain);
-                db.querydb("UPDATE noteshare.user set newpass = "+mysql.escape(newpass)+",isupdatingpass= true "+"where username="+mysql.escape(user.username),function(result){
+                db.querydb("UPDATE noteshare.user set newpass = "+mysql.escape(newpass)+",isupdatingpass= true "+"where username="+mysql.escape(req.query.username),function(result){
                     mailer.sendMail(req.query.email,'Reset Noteshare Password ','Your new password is '+newpass_plain+'\nClick this link to activate your password : '+reset_url(user,newpass));
                     res.end("{result:true}");
                 })
@@ -71,13 +71,12 @@ router.get("/activate",function(req,res){
     db.querydb("SELECT * from noteshare.user where username="+mysql.escape(req.query.username)+";",function(result){
         var user=result[0];
         if(req.query.code == user.newpass){
-            db.querydb("UPDATE noteshare.user set password = "+mysql.escape(req.query.code)+",isupdatingpass= false "+"where username="+mysql.escape(user.username)+";",function(result){
-                res.end("successfully changed password");
-            })
+            req.LogIn()
         } else {
             res.end('invalid request')
         }
     })
+
 })
 router.post("/change",isAuth,function(req,res){
     //console.log('oldpass ' +req.body.oldpass);
