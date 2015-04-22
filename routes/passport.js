@@ -66,7 +66,7 @@ module.exports = function(passport) {
                     debugger;
                     var newUserMysql = {
                         username: profile.name.givenName+profile.id,
-                        password: bcrypt.hashSync("nothing", null, null)  // use the generateHash function in our user model
+                        password: bcrypt.hashSync(profile.id+"039809283", null, null)  // use the generateHash function in our user model
                     };
 	console.log(newUserMysql.username);
                     var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,credits,views, dateCreated) values (?,?,?,?,?,0,0,?)";
@@ -122,9 +122,9 @@ passport.use('google',new GoogleStrategy({
                         password: bcrypt.hashSync(password,null,null)  // use the generateHash function in our user model
                     };
                     debugger;
-                    var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,credits,views, dateCreated) values (?,?,?,?,?,0,0,?)";
+                    var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,email,credits,views, dateCreated) values (?,?,?,?,?,?,0,0,?)";
 
-                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password,req.body.college,req.body.firstname,req.body.lastname,util.dateToMysqlFormat(new Date())],function(err, rows) {
+                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password,req.body.college,req.body.name,"",req.body.email,util.dateToMysqlFormat(new Date())],function(err, rows) {
                         newUserMysql.id = rows.insertId;
                         //todo mailer.sendMail()
                         return done(null, newUserMysql);
