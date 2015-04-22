@@ -10,6 +10,7 @@ var dbconfig = require('../public/db_structure');
 var db=require('./util/db_structure');
 var util = require('./util/util');
 var connection = mysql.createConnection(dbconfig.connection);
+var mailer=require('./util/mailer');
 connection.query('USE '+dbconfig.database);
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -123,7 +124,7 @@ passport.use('google',new GoogleStrategy({
 
                     connection.query(insertQuery,[newUserMysql.username, newUserMysql.password,req.body.college,req.body.firstname,req.body.lastname,util.dateToMysqlFormat(new Date())],function(err, rows) {
                         newUserMysql.id = rows.insertId;
-
+                        //todo mailer.sendMail()
                         return done(null, newUserMysql);
                     });
                 }

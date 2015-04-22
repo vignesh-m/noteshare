@@ -55,8 +55,7 @@ router.get("/forgot",function(req,res){
             crypto.randomBytes(8,function(err,buf){
                 var newpass_plain=buf.toString('hex');
                 //console.log(newpass_plain)
-                var newpass=bcrypt.hashSync(newpass_plain);
-                db.querydb("UPDATE noteshare.user set newpass = "+mysql.escape(newpass)+",isupdatingpass= true "+"where username="+mysql.escape(user.username),function(result){
+                db.querydb("UPDATE noteshare.user set newpass = "+newpass_plain+",isupdatingpass= true "+"where username="+mysql.escape(user.username),function(result){
                     mailer.sendMail(req.query.email,'Reset Noteshare Password ','Your new password is '+newpass_plain+'\nClick this link to activate your password : '+reset_url(user,newpass));
                     res.end('done');})
             })
@@ -70,8 +69,11 @@ router.get("/activate",function(req,res){
     }
     db.querydb("SELECT * from noteshare.user where username="+mysql.escape(req.query.username)+";",function(result){
         var user=result[0];
-        if(req.query.code == user.newpass){
-            req.LogIn()
+        var newpasshash=bcrypt.hashSync(user.newpass);
+        if(req.query.code == newpasshash){
+            db.querydb("UPDATE noteshare.user set password = "+mysql.escape(req.query.code)+",isupdatingpass= false "+"where username="+mysql.escape(user.username)+";",function(result){
+                req.session.message="Succesfully changed password. Use this password to login : "+newpasshash;
+            })
         } else {
             res.end('invalid request')
         }
