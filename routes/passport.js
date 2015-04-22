@@ -124,9 +124,9 @@ passport.use('google',new GoogleStrategy({
                     debugger;
                     var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,email,credits,views, dateCreated) values (?,?,?,?,?,?,0,0,?)";
 
-                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password,req.body.college,req.body.name,"",req.body.email,util.dateToMysqlFormat(new Date())],function(err, rows) {
+                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password,req.body.college,req.body.firstname,"",req.body.email,util.dateToMysqlFormat(new Date())],function(err, rows) {
                         newUserMysql.id = rows.insertId;
-                        //todo mailer.sendMail()
+                        mailer.sendMail(req.body.email,"Welcome to noteshare","Have fun sharing notes ☺");
                         return done(null, newUserMysql);
                     });
                 }
