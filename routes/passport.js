@@ -10,6 +10,7 @@ var dbconfig = require('../public/db_structure');
 var db=require('./util/db_structure');
 var util = require('./util/util');
 var connection = mysql.createConnection(dbconfig.connection);
+var mailer=require('./util/mailer');
 connection.query('USE '+dbconfig.database);
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -50,27 +51,27 @@ module.exports = function(passport) {
                 done(null, user);
             });*/
                 debugger;
-                 connection.query("SELECT * FROM user WHERE username = ?",[profile.name.givenName+' '+profile.name.familyName], function(err, rows) {
+                 connection.query("SELECT * FROM user WHERE username = ?",[profile.name.givenName+profile.id], function(err, rows) {
                     debugger;
                 if (err){
-console.log(err);
+                    console.log(err);
                     return done(err);
-}                
-if (rows.length) {
+                }
+                if (rows.length) {
 
-                    return done(null, false);
+                    return done(null, rows[0]);
                 } else {
                     // if there is no user with that username
                     // create the user
                     debugger;
                     var newUserMysql = {
-                        username: profile.name.givenName+' '+profile.name.familyName,
-                        password: bcrypt.hashSync("nothing", null, null)  // use the generateHash function in our user model
+                        username: profile.name.givenName+profile.id,
+                        password: bcrypt.hashSync(profile.id+"039809283", null, null)  // use the generateHash function in our user model
                     };
 	console.log(newUserMysql.username);
-                    var insertQuery = "INSERT INTO user ( username, password, dateCreated) values (?,?,?)";
+                    var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,credits,views, dateCreated) values (?,?,?,?,?,0,0,?)";
 
-                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password, util.dateToMysqlFormat(new Date())],function(err, rows) {
+                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password, 'unknown' ,profile.name.givenName,profile.name.familyName,util.dateToMysqlFormat(new Date())],function(err, rows) {
                         debugger;
                         newUserMysql.id = rows.insertId;
 
@@ -121,11 +122,11 @@ passport.use('google',new GoogleStrategy({
                         password: bcrypt.hashSync(password,null,null)  // use the generateHash function in our user model
                     };
                     debugger;
-                    var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,credits,views, dateCreated) values (?,?,?,?,?,0,0,?)";
+                    var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,email,credits,views, dateCreated) values (?,?,?,?,?,?,0,0,?)";
 
-                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password,req.body.college,req.body.firstname,req.body.lastname,util.dateToMysqlFormat(new Date())],function(err, rows) {
+                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password,req.body.college,req.body.firstname,"",req.body.email,util.dateToMysqlFormat(new Date())],function(err, rows) {
                         newUserMysql.id = rows.insertId;
-
+                        mailer.sendMail(req.body.email,"Welcome to noteshare","Have fun sharing notes ☺");
                         return done(null, newUserMysql);
                     });
                 }
