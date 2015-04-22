@@ -35,14 +35,14 @@
 <style>
 .notification-counter {   
     position: absolute;
-    top: -4px !important;
-    left: 16px;
+    top: 12px;
+    left: 35px;
     
     background-color: rgba(212, 19, 13, 1);
     color: #fff;
-    border-radius: 3px;
-    padding: 1px 3px;
-    font-size: 0.5em;
+    border-radius: 2px;
+    padding: 3px 3px;
+    font-size: 0.3em;
 }
 
 .vert-center-note {
@@ -173,7 +173,7 @@
     height:1px;
 }
 .card-container {
-    background-color:white;
+    background-color:rgb(245, 244, 244);
     padding:25px;
     margin-top:15px;
     border:1px solid rgba(204, 204, 204, 0.32);
@@ -268,7 +268,7 @@ input[type="text"] {
 .navbar-profile-pic-img-circular{
     width: 28px;
     height: 28px;
-    background-image: url('../img/team/member4.jpg');
+    background-image: url('../default-profile-pic.jpg');
     background-size: cover;
     display: block;
     opacity: 0.7;
@@ -360,7 +360,7 @@ table { border-collapse: collapse; }
     text-align: center;
     color: #BBB;
     font-size: 2em;
-    font-family: Arial, sans-serif;
+    font-family: Helvetica;
 }
 .dropbox span {
     margin-top: 0.9em;
@@ -374,7 +374,7 @@ table { border-collapse: collapse; }
 }
 .nodivider-table
 {
-    font-family:calibri;
+    font-family:Helvetica;
     border-collapse:collapse;
     border-color:transparent;
     border: 0px solid transparent;
@@ -422,19 +422,19 @@ table { border-collapse: collapse; }
 .book-preview-card {
     background: #fff;
     border-radius: 2px;
-    padding-left:20px;
-    padding-right: 20px;
-    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
-    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+    padding-left:5px;
+    padding-right: 5px;
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.12);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.12);
 }
 .book-preview-card:hover {
     background: #fff;
     border-radius: 2px;
     cursor: pointer;
-    -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .book-preview-a {
@@ -479,7 +479,7 @@ input[type='checkbox']:checked {
 }
 </style>
 
-<html ng-app="">
+<html ng-app="" style="background:#E7E7E7;">
 <div ng-controller="profileView"  style="background:#E7E7E7;font-family:Helvetica" ng-init="user = <%= JSON.stringify(user) %>;otherUser = <%= JSON.stringify(otherUser) %>;">
     <head>
         <link rel="stylesheet" href="/css/my-profile.css">
@@ -531,7 +531,7 @@ input[type='checkbox']:checked {
                         </div>
                     </li>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                 </div>
                 <li id="notification-li" class="nav-button notification-container dropdown">
                     <a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" ng-show="notificationCount!=0" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
@@ -658,9 +658,9 @@ input[type='checkbox']:checked {
                     </center>
                 </div> 
             </div>
-            <div class="row" style="cursor:pointer" ng-click="followOtherUser()" ng-show="!isFollowingOtherUser && visFollow">
-                <div class="row separator-small"></div>
-                <div class="col-lg-10 nopadding">
+            <div class="row separator-small"></div>
+            <div class="row" style="cursor:pointer;width:265px" ng-click="followOtherUser()" ng-show="!isFollowingOtherUser && visFollow">
+                <div class="col-lg-12 nopadding">
                     <big>
                         <div style="padding-top:15px !important;padding-bottom: 15px !important;background:#2e9ba0;color:#fff;border-radius:2px;">
                             <center>
@@ -672,9 +672,9 @@ input[type='checkbox']:checked {
                     </big>
                 </div>
             </div>
-            <div class="row" style="cursor:pointer" ng-click="dontFollowOtherUser()" ng-show="isFollowingOtherUser && visFollow">
                 <div class="row separator-small"></div>
-                <div class="col-lg-10 nopadding">
+            <div class="row" style="cursor:pointer;width:265px" ng-click="dontFollowOtherUser()" ng-show="isFollowingOtherUser && visFollow">
+                <div class="col-lg-12 nopadding">
                     <big>
                         <div style="padding-top:15px !important;padding-bottom: 15px !important;background:#2e9ba0;color:#fff;border-radius:2px;">
                             <center>
@@ -690,8 +690,8 @@ input[type='checkbox']:checked {
             <div class="row separator-small"></div>
             <div class="row separator-small"></div>
             
-            <div class="row">
-                <div class="col-lg-10 nopadding">
+            <div class="row" style="width:265px">
+                <div class="col-lg-12 nopadding">
                     <div class="user-details-card" style="padding:10px">
                         <strong>
                             <div class="col-md-4">
@@ -745,7 +745,7 @@ input[type='checkbox']:checked {
                                     </img>
                                     <div class="row">
                                         <div style="color:#000;opacity:0.87;">
-                                            <big>{{truncateString(uploadElement.name,10)}}</big>
+                                            {{truncateString(uploadElement.name,10)}}
                                         </div>
                                         <!-- 
                                         {{uploadElement.rating + "/5.0"}} -->

@@ -85,30 +85,30 @@ function query_upload(req,callback){
     }
     if(req.tagname){
        //console.log(req.tagname);
-        conditions.push('tag.name='+mysql.escape(req.tagname));
-    }
-    if(req.college){
-        conditions.push('user.college = '+mysql.escape(req.college));
-    }
+       conditions.push('tag.name='+mysql.escape(req.tagname));
+   }
+   if(req.college){
+    conditions.push('user.college = '+mysql.escape(req.college));
+}
 
-    querystring ='SELECT ';
-    for(var i=0;i<columns.length;i++){
-        if(i<columns.length-1) querystring+=columns[i]+",";
-        else querystring+=columns[i];
-    }
-    querystring+=' FROM ';
-    for(var i=0;i<tables.length;i++){
-        if(i<tables.length-1) querystring+='noteshare.'+tables[i]+",";
-        else querystring+='noteshare.'+tables[i];
-    }
-    if(conditions.length>0)
-        querystring+=' WHERE ';
-    for(var i=0;i<conditions.length;i++){
-        if(i<conditions.length-1) querystring+=conditions[i]+" AND ";
-        else querystring+=conditions[i];
-    }
-    if(sort.length>0)
-        querystring+=' ORDER BY ';
+querystring ='SELECT ';
+for(var i=0;i<columns.length;i++){
+    if(i<columns.length-1) querystring+=columns[i]+",";
+    else querystring+=columns[i];
+}
+querystring+=' FROM ';
+for(var i=0;i<tables.length;i++){
+    if(i<tables.length-1) querystring+='noteshare.'+tables[i]+",";
+    else querystring+='noteshare.'+tables[i];
+}
+if(conditions.length>0)
+    querystring+=' WHERE ';
+for(var i=0;i<conditions.length;i++){
+    if(i<conditions.length-1) querystring+=conditions[i]+" AND ";
+    else querystring+=conditions[i];
+}
+if(sort.length>0)
+    querystring+=' ORDER BY ';
     for(var i=0;i<sort.length;i++){//todo manage desc and asc
         if(i<sort.length-1) querystring+=mysql.escapeId(sort[i])+" DESC, ";
         else querystring+=mysql.escapeId(sort[i])+" DESC";
@@ -122,8 +122,8 @@ function query_upload(req,callback){
     querystring+=';';
     db.querydb(querystring,function(result){
        //console.log(querystring);
-        callback(result);
-    });
+       callback(result);
+   });
 }
 router.get('/', function(req, res) {
     var query=req.query;
@@ -142,12 +142,18 @@ router.get('/user',function(req,res){
     var querystring="";
     if(req.query.name){
         querystring="SELECT user.*,"+match_name(req.query.name,"user.username,user.firstname,user.lastname","score")+" FROM " +
-        "noteshare.user ORDER BY score DESC;";
+        "noteshare.user ORDER BY score DESC";
+        if(req.query.limit) {
+            querystring+=' LIMIT ' + req.query.limit;
+        }
+        if(req.query.offset) {
+            querystring+=' OFFSET ' + req.query.offset + ";";
+        }
         db.querydb(querystring,function(result){
-           //console.log(querystring);
-           //console.log(result);
-            res.end(JSON.stringify(result));
-        });
+           console.log(querystring);
+           console.log(result);
+           res.end(JSON.stringify(result));
+       });
     } else {
         res.end("error");
     }

@@ -38,7 +38,7 @@
 	box-shadow: 0 1px 1px #349a9a inset, 0 0 8px #349a9a !important;
 }
 .placeholder-black::-webkit-input-placeholder {
-	color: black !important;
+	color: rgba(0,0,0,0.3);
 }
 .placeholder-black:-moz-placeholder {
 	/* FF 4-18 */
@@ -97,7 +97,7 @@
 }
 </style>
 
-<body ng-app="" ng-controller="index" style="font-family:Helvetica">
+<body ng-app="" ng-controller="index" style="font-family:Helvetica !important">
 	<section id="header" class="appear" style="background:#2e9ba0" ng-init="redirectIfLoggedIn()"></section>
 	<div class="navbar navbar-fixed-top" role="navigation" data-0="line-height:100px; height:80px; background-color:#2e9ba0;" data-300="line-height:60px; height:60px;">
 		<img class="navbar-logo pull-left" src="logo.png" style="width:8%;margin-left:2%;"></img>
@@ -112,17 +112,17 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
-					<li class="active"><a href="index.html">Home</a></li>
-					<li><a href="#section-about">About</a></li>
+					<li class="active"><a href="index.html" style="letter-spacing:0px;font-size:13px;"><strong>Home</strong></a></li>
+					<li><a href="#section-about" style="letter-spacing:0px;font-size:13px;"><strong>About</strong></a></li>
 					<!-- <li><a href="#section-contact">Contact</a></li> -->
 					<!-- <li><a href="/signup">Register</a></li> -->
-					<li><a href="/login">Login</a></li>
+					<li><a href="/login" style="letter-spacing:0px;font-size:13px;"><strong>Login</strong></a></li>
 				</ul>
 			</div><!--/.navbar-collapse -->
 		</div>
 	</div>
 
-	<section class="featured" style="background:#555">
+	<section class="featured" style="background:#333">
 		<div class="container"> 
 			<div class="row mar-bot40">
 				<div class="col-md-6">
@@ -130,17 +130,17 @@
 						<br>
 						<br>
 						<h2 class="slogan">
-							<h4 style="font-size: 26px;color:#fff">
-								<strong>Your Note Search</strong>
-								<span style="color:#000;">starts here</span>
+							<h4 style="font-size: 32px;color:#fff;letter-spacing:-1px !important;margin-left:12%;">
+								Your Note Search
+								<span style="color:#2e9ba0;font-weight:600;letter-spacing:0px;">starts here</span>
 							</h4>
 						</h2>
 						<div class="input-group">
 							<input type="text" class="form-control placeholder-black
-							" placeholder="Search Notes..." style="color:#000;" ng-model="searchInput"></input>
+							" placeholder="Search Notes..." style="color:#000000" onKeyDown="javascript:if(event.keyCode==13) { $('#search').click(); window.location.hash = '#searchLink'; };" ng-model="searchInput"></input>
 							<span class="input-group-btn">
-								<a href="#section-works">
-									<button class="btn btn-default" style="background:#2e9ba0;color:#fff;border:0px;border-radius:2px;" type="button" ng-click="getSearchResults(searchInput)">&nbsp&nbspSearch&nbsp
+								<a href="#section-works" id="searchLink">
+									<button class="btn btn-default" id="search" style="background:#2e9ba0;color:#fff;border:0px;border-radius:2px;height:138%;margin-top:-0.62%;padding-left:20%;padding-right:20%;" type="button" ng-click="getSearchResults(searchInput)"> <strong>SEARCH</strong>
 									</button>
 								</a>
 							</span>
@@ -163,7 +163,7 @@
 		<div class="row mar-bot40">
 			<div class="col-md-offset-3 col-md-6">
 				<div class="section-header">
-					<h2 class="section-heading animated" data-animation="bounceInUp">Search results</h2>
+					<h1 data-animation="bounceInUp" style="letter-spacing:-1px;">Search results</h1>
 				</div>
 			</div>
 		</div>
@@ -215,7 +215,7 @@
 		<div class="row mar-bot40">
 			<div class="col-md-offset-3 col-md-6">
 				<div class="section-header">
-					<h2 class="section-heading animated" data-animation="bounceInUp">TOP DOWNLOADS</h2>
+					<big><h1 class="animated" data-animation="bounceInUp" style="letter-spacing:-1px">Top downloads</h1></big>
 				</div>
 			</div>
 		</div>
@@ -323,7 +323,7 @@
 </section>
 
 <!-- services -->
-<section id="section-services" class="section pad-bot30 bg-white">
+<!-- <section id="section-services" class="section pad-bot30 bg-white">
 	<div class="container"> 
 
 		<div class="row mar-bot40" style="margin-top:4%;">
@@ -354,7 +354,7 @@
 			</div>	
 
 		</div>
-	</section>
+	</section> -->
 	<!-- spacer section:stats -->
 
 <!-- <section id="parallax2" class="section parallax" data-stellar-background-ratio="0.5">	
@@ -417,48 +417,68 @@
 <!-- about -->
 <section id="section-about" class="section appear clearfix">
 	<div class="container">
-
 		<div class="row mar-bot40">
 			<div class="col-md-offset-3 col-md-6">
 				<div class="section-header">
-					<h2 class="section-heading animated" data-animation="bounceInUp">About Us</h2>
+					<big><h1 class="animated" data-animation="bounceInUp" style="letter-spacing:-1px">About us</h1></big>
 				</div>
 			</div>
 		</div>
 
 		<div class="row align-center mar-bot40">
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<div class="team-member">
-					<figure class="member-photo"><img src="img/team/member1.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
+					<figure class="member-photo"><img src="img/team/member1.png" style="width:160px !important;height:160px !important;" alt="" /></figure>
 					<div class="team-detail">
-						<h4>Rohith Dharavath</h4>
+						<h4 data-animation="bounceInUp" style="letter-spacing:0px;font-weight:400;margin-bottom:0px">Rohith Dharavath</h4>
 						<span>Founder</span>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<div class="team-member">
 					<figure class="member-photo"><img src="img/team/member2.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
 					<div class="team-detail">
-						<h4>Anvesh Bandari</h4>
+						<h4 data-animation="bounceInUp" style="letter-spacing:0px;font-weight:400;margin-bottom:0px">Anvesh Bandari</h4>
 						<span>Co Founder</span>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<div class="team-member">
 					<figure class="member-photo"><img src="img/team/member3.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
 					<div class="team-detail">
-						<h4>Bharath Kumar</h4>
+						<h4 data-animation="bounceInUp" style="letter-spacing:0px;font-weight:400;margin-bottom:0px">Saideep K</h4>
 						<span>Web designer</span>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
+		</div>
+
+		<div class="row align-center mar-bot40">
+			<div class="col-md-4">
 				<div class="team-member">
 					<figure class="member-photo"><img src="img/team/member4.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
 					<div class="team-detail">
-						<h4>Aravind Suresh</h4>
+						<h4 data-animation="bounceInUp" style="letter-spacing:0px;font-weight:400;margin-bottom:0px">Aravind Suresh</h4>
+						<span>Tech Team</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="team-member">
+					<figure class="member-photo"><img src="img/team/member5.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
+					<div class="team-detail">
+						<h4 data-animation="bounceInUp" style="letter-spacing:0px;font-weight:400;margin-bottom:0px">Vignesh Manoharan</h4>
+						<span>Tech Team</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="team-member">
+					<figure class="member-photo"><img src="img/team/member6.jpg" style="width:160px !important;height:160px !important;" alt="" /></figure>
+					<div class="team-detail">
+						<h4 data-animation="bounceInUp" style="letter-spacing:0px;font-weight:400;margin-bottom:0px">Sugan Prabu</h4>
 						<span>Tech Team</span>
 					</div>
 				</div>
@@ -470,14 +490,14 @@
 
 <section id="footer" class="section footer">
 	<div class="container">
-		<div class="row animated opacity mar-bot20" data-andown="fadeIn" data-animation="animation">
-			<div class="col-sm-12 align-center">
+		<div class="row align-center animated opacity mar-bot20" data-andown="fadeIn" data-animation="animation">
+			<div class="col-sm-12">
 				<ul class="social-network social-circle">
-					<li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
-					<li><a href="http://www.facebook.com/justnoteshare" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-					<li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+					<!-- <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li> -->
+					<li><a target="_blank" href="http://www.facebook.com/justnoteshare" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li> Connect with us
+					<!-- <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
 					<li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
-					<li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+					<li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li> -->
 				</ul>				
 			</div>
 		</div>

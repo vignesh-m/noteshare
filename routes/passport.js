@@ -53,9 +53,11 @@ module.exports = function(passport) {
                 debugger;
                  connection.query("SELECT * FROM user WHERE username = ?",[profile.name.givenName+' '+profile.name.familyName], function(err, rows) {
                     debugger;
-                if (err)
+                if (err){
+console.log(err);
                     return done(err);
-                if (rows.length) {
+}                
+if (rows.length) {
 
                     return done(null, false);
                 } else {
@@ -66,8 +68,8 @@ module.exports = function(passport) {
                         username: profile.name.givenName+' '+profile.name.familyName,
                         password: bcrypt.hashSync("nothing", null, null)  // use the generateHash function in our user model
                     };
-
-                    var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,credits,views, dateCreated) values (?,?,?,?,?,0,0,?)";
+	console.log(newUserMysql.username);
+                    var insertQuery = "INSERT INTO user ( username, password, dateCreated) values (?,?,?)";
 
                     connection.query(insertQuery,[newUserMysql.username, newUserMysql.password, 'unknown' ,profile.name.givenName,profile.name.familyName,0,0,util.dateToMysqlFormat(new Date())],function(err, rows) {
                         debugger;
