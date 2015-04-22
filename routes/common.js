@@ -21,11 +21,17 @@ app.get('/get/all', function (req, res) {
 				stats.totalUsers = count[0]["count(*)"];
 				//console.log("users :"+stats.totalUsers)
 				//TODO : ORDER BY user id here
-				var querystring = "SELECT uploadid,count(*) FROM noteshare.downloads GROUP BY uploadid" + " LIMIT 12 OFFSET 0";
+				var querystring = "SELECT * FROM noteshare.uploads ORDER BY views DESC" + " LIMIT 12 OFFSET 0";
 				db.querydb(querystring, function (result){
 					//console.log(result)
-					var topDownloads = [];
+					console.log(querystring);
 					if(result.length!=0) {
+						stats.topDownloads = result;
+						console.log(result);
+						res.end(JSON.stringify(stats));
+					}
+
+					/*if(result.length!=0) {
 						for(var i=0;i<result.length;i++) {
 							var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(result[i].uploadid);
 							db.querydb(querystring1,function(upload){
@@ -49,7 +55,7 @@ app.get('/get/all', function (req, res) {
 								}
 							});
 						}
-					}
+					}*/
 					else {
 						stats.topDownloads = [];
 						res.end(JSON.stringify(stats));

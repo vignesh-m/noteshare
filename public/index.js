@@ -95,6 +95,7 @@ var index = function($scope, $rootScope, $http, $window) {
 
 	$http.get(link).
 	success(function(data, status, headers, config) {
+		console.log(data);
 		for(var i=0;i<data.topDownloads.length;i++) {
 			var path;
 			if($rootScope.imageExists('/views/' + data.topDownloads[i].id + "/page-0.png")) {
