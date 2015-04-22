@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt');
 var mysql = require('mysql');
 var dbconfig = require('../public/db_structure');
 var passport = require('passport');
+var db = require('../public/db_structure');
 var connection = mysql.createConnection(dbconfig.connection);
 app.get('/', function(req, res) {
     res.render('index.ejs');
@@ -42,7 +43,20 @@ function(req, res) {
     res.redirect('/');
 });
 
-
+app.get('/editprofile',isAuth,function(req,res){
+    db.querydb("select * from noteshare.user where username="+mysql.escape(req.user.username)+";",function(rows){
+        var user=rows[0];
+        res.render('change_profile.ejs',user);
+    });
+});
+app.post('/editprofile',isAuth,function(req,res){
+    var updates="";
+    updates="firstname = "+mysql.escape(req.body.firstname)+","+"lastname = "+mysql.escape(req.body.lastname)+","
+    +"college = "+mysql.escape(req.body.college)+","+"email = "+mysql.escape(req.body.email);
+    db.querydb("update noteshare.user set "+updates+" where username="+mysql.escape(req.user.username)+";",function(rows){
+        res.redirect('/profile')
+    });
+});
 app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { successRedirect: '/profile',
