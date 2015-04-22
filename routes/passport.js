@@ -51,21 +51,21 @@ module.exports = function(passport) {
                 done(null, user);
             });*/
                 debugger;
-                 connection.query("SELECT * FROM user WHERE username = ?",[profile.name.givenName+' '+profile.name.familyName], function(err, rows) {
+                 connection.query("SELECT * FROM user WHERE username = ?",[profile.name.givenName+profile.id], function(err, rows) {
                     debugger;
                 if (err){
-console.log(err);
+                    console.log(err);
                     return done(err);
-}                
-if (rows.length) {
+                }
+                if (rows.length) {
 
-                    return done(null, false);
+                    return done(null, true);
                 } else {
                     // if there is no user with that username
                     // create the user
                     debugger;
                     var newUserMysql = {
-                        username: profile.name.givenName+' '+profile.name.familyName,
+                        username: profile.name.givenName+profile.id,
                         password: bcrypt.hashSync("nothing", null, null)  // use the generateHash function in our user model
                     };
 	console.log(newUserMysql.username);
