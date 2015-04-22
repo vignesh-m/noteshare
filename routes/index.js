@@ -19,7 +19,7 @@ app.get('/forgotpassword',function (req, res) {
 app.get('/changepass',isLoggedIn,function(req,res){
     res.render('changepass.ejs');
 });
-app.get('/info',isLoggedIn,function(req,res){
+app.get('/info',function(req,res){
     if(req.session.message!="") {
         res.render('blank_template.ejs', {content: req.session.message});
         req.session.message="";
