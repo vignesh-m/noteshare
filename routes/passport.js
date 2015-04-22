@@ -59,7 +59,7 @@ module.exports = function(passport) {
                 }
                 if (rows.length) {
 
-                    return done(null, true);
+                    return done(null, rows[0]);
                 } else {
                     // if there is no user with that username
                     // create the user
@@ -69,9 +69,9 @@ module.exports = function(passport) {
                         password: bcrypt.hashSync("nothing", null, null)  // use the generateHash function in our user model
                     };
 	console.log(newUserMysql.username);
-                    var insertQuery = "INSERT INTO user ( username, password, dateCreated) values (?,?,?)";
+                    var insertQuery = "INSERT INTO user ( username, password ,college,firstname,lastname,credits,views, dateCreated) values (?,?,?,?,?,0,0,?)";
 
-                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password, 'unknown' ,profile.name.givenName,profile.name.familyName,0,0,util.dateToMysqlFormat(new Date())],function(err, rows) {
+                    connection.query(insertQuery,[newUserMysql.username, newUserMysql.password, 'unknown' ,profile.name.givenName,profile.name.familyName,util.dateToMysqlFormat(new Date())],function(err, rows) {
                         debugger;
                         newUserMysql.id = rows.insertId;
 
