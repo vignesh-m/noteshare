@@ -43,13 +43,13 @@ function(req, res) {
     res.redirect('/');
 });
 
-app.get('/editprofile',isAuth,function(req,res){
+app.get('/editprofile',isLoggedIn,function(req,res){
     db.querydb("select * from noteshare.user where username="+mysql.escape(req.user.username)+";",function(rows){
         var user=rows[0];
         res.render('change_profile.ejs',user);
     });
 });
-app.post('/editprofile',isAuth,function(req,res){
+app.post('/editprofile',isLoggedIn,function(req,res){
     var updates="";
     updates="firstname = "+mysql.escape(req.body.firstname)+","+"lastname = "+mysql.escape(req.body.lastname)+","
     +"college = "+mysql.escape(req.body.college)+","+"email = "+mysql.escape(req.body.email);
