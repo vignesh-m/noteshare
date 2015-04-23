@@ -54,8 +54,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
-                <li><a href="index.html">Home</a></li>
-                <li class="active"><a href="/login">Login</a></li>
+                <li><a href="/profile">Back to dashboard</a></li>
             </ul>
         </div>
     </div>
@@ -71,15 +70,11 @@
             <form action="/editprofile" method="post">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" placeholder=<%=username%> class="form-control placeholder-black" disabled>
+                    <input type="text" placeholder=<%=username%>   class="form-control placeholder-black" disabled>
                 </div>
                 <div class="form-group">
-                    <label>Firstname</label>
-                    <input type="text" placeholder=<%=firstname%> class="form-control placeholder-black" name="firstname">
-                </div>
-                <div class="form-group">
-                    <label>Lastname</label>
-                    <input type="text"   placeholder=<%=lastname%>  class="form-control placeholder-black" name="lastname">
+                    <label>Name</label>
+                    <input type="text" placeholder=<%=firstname%>    class="form-control placeholder-black" name="firstname">
                 </div>
                 <div class="form-group">
                     <label>College</label>
@@ -87,7 +82,7 @@
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="text"  placeholder=<%=email%> class="form-control placeholder-black" name="email">
+                    <input type="text"  placeholder=<%=email || "-NIL-"%>    class="form-control placeholder-black" name="email">
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary btn-lg" style="border-radius:4px">Save Changes</button>

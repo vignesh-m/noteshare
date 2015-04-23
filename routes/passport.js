@@ -126,7 +126,7 @@ passport.use('google',new GoogleStrategy({
 
                     connection.query(insertQuery,[newUserMysql.username, newUserMysql.password,req.body.college,req.body.firstname,"",req.body.email,util.dateToMysqlFormat(new Date())],function(err, rows) {
                         newUserMysql.id = rows.insertId;
-                        mailer.sendMail(req.body.email,"Welcome to noteshare","Have fun sharing notes ☺");
+                        mailer.sendMail(req.body.email,"Welcome to noteshare","Thanks for your interest. \n\n Credentials : \n\n Username : " + username + "\n Email : " + req.body.email + "\n Password : " + password + "\n\n Regards , \n Team Noteshare");
                         return done(null, newUserMysql);
                     });
                 }
