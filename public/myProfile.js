@@ -267,7 +267,7 @@ $rootScope.getSearchResults = function(searchInput) {
           else {
             path = '/views/' + element.id + "/page-0.png";
           }
-          $scope.searchResults.push({imglink:path,type:'book',text:searchResults[index].name + " Rating : " + searchResults[index].rating + "/5.0", user_id:searchResults[index].userid, link:'./upload/getupload?id=' + searchResults[index].id});
+          $scope.searchResults.push({imglink:path,type:'book',text:searchResults[index].name, user_id:searchResults[index].userid, link:'./upload/getupload?id=' + searchResults[index].id});
         });
 
         if($scope.searchResults.length)

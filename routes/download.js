@@ -39,9 +39,18 @@ app.get('/view', isAuth, function (req, res) {
 				//console.log(err);
 				}
 			});*/
-util.getPages(upload_id, res, function (upload_id, res, pages) {
-	res.render('pdfview.ejs',{"viewPath":"../views/" + upload_id, "pages":pages});
-});
+if(req.query.view) {
+	util.getPages(upload_id, res, function (upload_id, res, pages) {
+		res.render('pdfview.ejs',{"viewPath":"../views/" + upload_id, "pages":pages});
+	});
+}
+else {
+	res.download('./uploads/' + upload[0].filename, function(err) {
+		if(err) {
+							//console.log(err);
+						}
+					});
+}
 }
 
 else {
@@ -84,7 +93,12 @@ else {
 						db.querydb(qs, function(result) {
 							//console.log(qs);
 							//console.log(result);
-							res.render('pdfview.ejs',{"viewPath":"../views/" + upload_id, "pages":pages});
+							//res.render('pdfview.ejs',{"viewPath":"../views/" + upload_id, "pages":pages});
+							res.download('./uploads/' + upload[0].filename, function(err) {
+								if(err) {
+							//console.log(err);
+						}
+					});
 						});
 					});
 					//res.render('pdftest.ejs',{"SWFFileName":"../views/test1.swf?random=884873648269"});
@@ -93,9 +107,9 @@ else {
 							//console.log(err);
 						}
 					});*/
-		});
-		}
-	});
+});
+}
+});
 }
 
 });
@@ -119,14 +133,14 @@ app.get('/create', isAuth, function (req, res) {
 		db.querydb(querystring2,function(result){
 		//console.log(querystring2);
 
-			var querystring3 = "INSERT INTO noteshare.downloads(userid, uploadid, dateDownloaded) VALUES (" + mysql.escape(req.user.id) + "," + mysql.escape(upload_id) + "," + mysql.escape(util.dateToMysqlFormat(new Date())) + ");";
-			db.querydb(querystring3,function(result){
+		var querystring3 = "INSERT INTO noteshare.downloads(userid, uploadid, dateDownloaded) VALUES (" + mysql.escape(req.user.id) + "," + mysql.escape(upload_id) + "," + mysql.escape(util.dateToMysqlFormat(new Date())) + ");";
+		db.querydb(querystring3,function(result){
 			//console.log(querystring3);
 			//console.log(result);
-				notification.notify(upload[0].userid, "Unread", req.user.name + "has downloaded your file : " + upload[0].name, "Download", '/upload/getupload?id=' + upload[0].id);
-				res.end(JSON.stringify(result));
-			});
+			notification.notify(upload[0].userid, "Unread", req.user.name + "has downloaded your file : " + upload[0].name, "Download", '/upload/getupload?id=' + upload[0].id);
+			res.end(JSON.stringify(result));
 		});
+	});
 		
 	});
 
@@ -152,32 +166,32 @@ app.get('/get', isAuth, function(req, res) {
 	var querystring = "SELECT * FROM noteshare.downloads WHERE userid=" + mysql.escape(user_id)  + " ORDER BY downloads.dateDownloaded";
 	db.querydb(querystring,function(result){
 	//console.log(querystring);
-		for(var i=0;i<result.length;i++) {
+	for(var i=0;i<result.length;i++) {
 		//console.log(i);
-			var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(result[i].uploadid);
-			db.querydb(querystring1,function(uploadArr){
+		var querystring1 = "SELECT * FROM noteshare.uploads WHERE id=" + mysql.escape(result[i].uploadid);
+		db.querydb(querystring1,function(uploadArr){
 			//console.log(querystring1);
-				if(uploadArr.length!=0) {
-					var querystring2 = "SELECT * FROM noteshare.user WHERE id=" + mysql.escape(uploadArr[0].userid);
-					db.querydb(querystring2,function(uploadedUser){
-						myDownloads.push({user:uploadedUser[0], file:uploadArr[0]});
+			if(uploadArr.length!=0) {
+				var querystring2 = "SELECT * FROM noteshare.user WHERE id=" + mysql.escape(uploadArr[0].userid);
+				db.querydb(querystring2,function(uploadedUser){
+					myDownloads.push({user:uploadedUser[0], file:uploadArr[0]});
 					//console.log(querystring2);
-						if(myDownloads.length == result.length) {
+					if(myDownloads.length == result.length) {
 						//console.log('result-length');
-							res.end(JSON.stringify({result:true, downloads:myDownloads}));
-						}
-					});
-				}
-				else {
+						res.end(JSON.stringify({result:true, downloads:myDownloads}));
+					}
+				});
+			}
+			else {
 				//console.log('length-0');
-					res.end(JSON.stringify({result:true, downloads:myDownloads}));
-				}
-			});			
-		}
-		if(result.length == 0) {
-			res.end(JSON.stringify({result:true, downloads:myDownloads}));
-		}
-	});
+				res.end(JSON.stringify({result:true, downloads:myDownloads}));
+			}
+		});			
+	}
+	if(result.length == 0) {
+		res.end(JSON.stringify({result:true, downloads:myDownloads}));
+	}
+});
 });
 
 module.exports = app;
