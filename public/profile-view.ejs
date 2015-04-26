@@ -619,8 +619,8 @@ input[type='checkbox']:checked {
       </li>
   </ul>
 </li>
-  <li class="badge" style="background:transparent;border-radius:3px;margin-top:12%">      
-    <!-- {{truncateString(user.firstname, 10)}} -->Aravind
+  <li class="badge" ng-click="redirect('/profile')" style="background:transparent;border-radius:3px;margin-top:12%;cursor:pointer">      
+    {{truncateString(user.firstname, 10)}}
   </li>
 </ul>
 </div><!-- /.navbar-collapse -->
