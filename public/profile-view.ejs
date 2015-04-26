@@ -490,137 +490,141 @@ input[type='checkbox']:checked {
         </title>
     </head>
 
-    <nav class="fixed-top-nav navbar navbar-default navbar-schema col-md-12">
-        <div class="container-fluid">
-            <a href="#"><img class="navbar-logo" src="../logo.png"></img></a>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav row">
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-6 nopadding">
-                        <li>
-                            <div class="nav-center">
-                                <div class="input-group">
-                                    <input ng-blur="hideSearchResultsDropdown()" ng-focus="getSearchResults(searchInput)" ng-change="getSearchResults(searchInput)" placeholder="Search for notes.." id="filter-by" class="form-control input dropdown" style="line-height:2;border-radius:2px;" ng-model="searchInput">
-                                    <ul id="search-li-dropdown" class="dropdown-menu" style="width:100%" ng-mouseover="hoverSearchResult=true" ng-mouseleave="hoverSearchResult=false"> 
-                                        <div ng-show="searchResultSpinner">
-                                            <center>
-                                                <img src="../spinner.gif" style="margin:10px"></img>
-                                            </center>
-                                        </div>
-                                        <li ng-repeat="searchResult in searchResults">
-                                            <div class="notification-item" ng-click="searchResponse(searchResult)">
-                                                <div class="notification-item-text-body"  style="height:54px;">
-                                                    <div class="row" style="margin:3px">
-                                                        <img ng-src="{{searchResult.imglink}}" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
-                                                    </img>
-                                                    <big>{{truncateString(searchResult.text,45)}}</big>
-                                                </div>
-                                            </div>
-                                            <div style="background:#aaaaaa">
-                                                <div class="row separator-very-small">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul></input>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" style="background:#555;color:#fff;border:0px;border-radius:2px;" type="button">&nbsp&nbspSearch&nbsp
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-                </div>
-                <div class="col-md-2">
-                </div>
-                <li id="notification-li" class="nav-button notification-container dropdown">
-                    <a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" ng-show="notificationCount!=0" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
-                    <ul id="notification-li-dropdown" class="dropdown-menu pull-right" style="border: 1px solid #000"> 
-                        <li class="notifications-panel-head" ng-show="notificationsDownloads.length==0 && notificationsUploads.length==0">
-                            No new notifications                            
-                        </li>
-                        <li class="notifications-panel-head" ng-show="notificationsDownloads.length!=0">
-                            Downloads                           
-                    </li><!-- 
-                    <div style="color:black;margin-top:10px" ng-show="notificationsDownloads.length==0">
-                        <center>No new Downloads</center>
-                    </div> -->
-                    <div style="background:#aaaaaa" ng-show="notificationsDownloads.length!=0">
-                        <div class="row separator-very-small">
-                        </div>
-                    </div>
-                    <li ng-repeat="notification in notificationsDownloads">
-                        <div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, notification.link)">
-                            <div class="notification-item-text-body"  style="height:54px;">
-                                <div class="row" style="margin:2px">
-                                    <img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
-                                </img>
-                                <div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
-                                <!-- <div class="row pull-right" style="margin-top:4%">
-                                    <a class="book-preview-a" ng-href="{'/view?id=' + notification.because}">
-                                        <button type="button" class="btn btn-default"><i class="fa fa-external-link fa-1x"></i></button>
-                                    </a>
-                                </div> -->
-                            </div>
-                        </div>
-                        <div style="background:#aaaaaa">
-                            <div class="row separator-very-small">
-                            </div>
-                        </div>
-                    </div>
-                </li>
+   <nav class="navbar navbar-default navbar-fixed-top" style="background:#2e9ba0;margin:0px;padding:0px;color:#ffffff;z-index:100">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header" style="margin-left:0%;margin-top:-2%">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" style="z-index:50" href="#"><img src="../logo.png" style="height:120px;width:120px;"></img></a>
+    </div>
 
-                <li class="notifications-panel-head" ng-show="notificationsUploads.length!=0">
-                    Uploads
-                </li>
-                <div style="background:#aaaaaa" ng-show="notificationsUploads.length!=0">
-                    <div class="row separator-very-small">
-                    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-left:20%;">
+      <ul class="nav navbar-nav" style="width:100%">
+      <form class="navbar-form navbar-left" style="width:80%" role="search">
+        <div class="form-group">
+          <input ng-blur="hideSearchResultsDropdown()" ng-focus="getSearchResults(searchInput)" ng-change="getSearchResults(searchInput)" placeholder="Search for notes.." id="filter-by" class="form-control input dropdown" style="line-height:2;border-radius:2px;width:500px;margin-top:1%" ng-model="searchInput">
+          <ul id="search-li-dropdown" class="dropdown-menu" ng-mouseover="hoverSearchResult=true" ng-mouseleave="hoverSearchResult=false"> 
+            <div ng-show="searchResultSpinner">
+              <center>
+                <img src="/spinner.gif" style="margin:10px"></img>
+              </center>
+            </div>
+            <li ng-repeat="searchResult in searchResults">
+              <div class="notification-item" ng-click="searchResponse(searchResult)">
+                <div class="notification-item-text-body"  style="height:54px;">
+                  <div class="row" style="margin:3px">
+                    <img ng-src="{{searchResult.imglink}}" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
+                  </img>
+                  <big>{{truncateString(searchResult.text,45)}}</big>
                 </div>
-                <li ng-repeat="notification in notificationsUploads">
-                    <div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, notification.link)">
-                        <div class="notification-item-text-body"  style="height:54px;">
-                            <div class="row" style="margin:3px">
-                                <img src="prev-0.jpg" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
-                            </img>
-                            <div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
-                            <!-- <div class="row pull-right" style="margin-top:4%">
-                                <a class="book-preview-a" ng-href="{'/download/view?id=' + notification.uploadid}">
-                                    <button type="button" ng-click="notificationMarkAsRead(1,$index)" class="btn btn-default"><i class="fa fa-download fa-1x"></i></button>
-                                </a>
-                                <a class="book-preview-a" ng-href="{'/view?id=' + notification.because}">
-                                    <button type="button" class="btn btn-default"><i class="fa fa-external-link fa-1x"></i></button>
-                                </a>
-                            </div> -->
-                        </div>
-                    </div>
-                    <div style="background:#aaaaaa">
-                        <div class="row separator-very-small">
-                        </div>
-                    </div>
+              </div>
+              <div style="background:#aaaaaa">
+                <div class="row separator-very-small">
                 </div>
-            </li>
-
+              </div>
+            </div>
+          </li>
         </ul>
-    </li><!-- 
-    <div class="col-md-2 row" style="margin-top:1.4%;"> -->
-        <li class="dropdown" style="margin-top:0.3%">
-            <a href="#" class="dropdown-toggle " id="dropdown" data-toggle="dropdown"><div class="navbar-profile-pic-img-circular"></div></a>
-            <ul class="dropdown-menu"> 
-                <li>
-                    <a href="javascript:void(0)" ng-click="settings()"><i class="fa fa-fw fa-cog"></i> Settings</a>
-                </li>         
-                <li>
-                    <a href="/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                </li>
-            </ul>
+      </div>
+      </form>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li id="notification-li" class="nav-button notification-container dropdown">
+          <a href="javascript:void(0)" ng-click="updateNotification()" class="dropdown-toggle" id="notificationDropdown" data-toggle="dropdown">&nbsp<i class="fa fa-globe fa-2x"><span id="notificationCount" ng-show="notificationCount!=0" class="notification-counter">{{notificationCount}}</span></i>&nbsp</a>
+          <ul id="notification-li-dropdown" class="dropdown-menu pull-right" style="border: 1px solid #000"> 
+            <li class="notifications-panel-head" ng-show="notificationsDownloads.length==0 && notificationsUploads.length==0">
+              No new notifications              
+            </li>
+            <li class="notifications-panel-head" ng-show="notificationsDownloads.length!=0">
+              Downloads             
+          </li><!-- 
+          <div style="color:black;margin-top:10px" ng-show="notificationsDownloads.length==0">
+            <center>No new Downloads</center>
+          </div> -->
+          <div style="background:#aaaaaa" ng-show="notificationsDownloads.length!=0">
+            <div class="row separator-very-small">
+            </div>
+          </div>
+          <li ng-repeat="notification in notificationsDownloads">
+            <div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, notification.link)">
+              <div class="notification-item-text-body"  style="height:54px;">
+                <div class="row" style="margin:2px">
+                  <img ng-src="{{notification.path}}" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:5px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-2px;">
+                </img>
+                <div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
+                <!-- <div class="row pull-right" style="margin-top:4%">
+                  <a class="book-preview-a" ng-href="{'/view?id=' + notification.because}">
+                    <button type="button" class="btn btn-default"><i class="fa fa-external-link fa-1x"></i></button>
+                  </a>
+                </div> -->
+              </div>
+            </div>
+            <div style="background:#aaaaaa">
+              <div class="row separator-very-small">
+              </div>
+            </div>
+          </div>
         </li>
-        <li class="badge" ng-click="redirect('../profile')" style="background:transparent;border-radius:3px;padding:8px;margin-top:1.4%;margin-left:-1.4%;cursor:pointer">
-            {{truncateString(user.firstname, 10)}}
+
+        <li class="notifications-panel-head" ng-show="notificationsUploads.length!=0">
+          Uploads
         </li>
+        <div style="background:#aaaaaa" ng-show="notificationsUploads.length!=0">
+          <div class="row separator-very-small">
+          </div>
+        </div>
+        <li ng-repeat="notification in notificationsUploads">
+          <div class="notification-item" ng-class="{'notificationUnread':notification.unread, 'notificationRead':!notification.unread}" ng-click="notificationMarkAsRead(notification.purpose, $index, notification.link)">
+            <div class="notification-item-text-body"  style="height:54px;">
+              <div class="row" style="margin:3px">
+                <img ng-src="{{notification.path}}" style="float:left;width:14%;height:65px;margin-left:-2px;margin-right:10px;border-radius:2px;border:1px solid #777;margin-top:-6px;margin-bottom:-3px;">
+              </img>
+              <div style="width:100%"><big>{{truncateString(notification.text,45)}}</big></div>
+              <!-- <div class="row pull-right" style="margin-top:4%">
+                <a class="book-preview-a" ng-href="{'/download/view?id=' + notification.uploadid}">
+                  <button type="button" ng-click="notificationMarkAsRead(1,$index)" class="btn btn-default"><i class="fa fa-download fa-1x"></i></button>
+                </a>
+                <a class="book-preview-a" ng-href="{'/view?id=' + notification.because}">
+                  <button type="button" class="btn btn-default"><i class="fa fa-external-link fa-1x"></i></button>
+                </a>
+              </div> -->
+            </div>
+          </div>
+          <div style="background:#aaaaaa">
+            <div class="row separator-very-small">
+            </div>
+          </div>
+        </div>
+      </li>
+
     </ul>
-</div>
-</div>
+  </li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle " id="dropdown" data-toggle="dropdown"><div class="navbar-profile-pic-img-circular"></div></a>
+    <ul class="dropdown-menu"> 
+      <li>
+        <a href="/editprofile" ng-click="settings()"><i class="fa fa-fw fa-cog"></i> Edit Profile</a>
+      </li>         
+      <li>
+        <a href="/logout" ng-click="setIsLoggedInToFalse()"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+      </li>
+      <li>
+        <a href="/changepass" ng-click="setIsLoggedInToFalse()">Change Password</a>
+      </li>
+  </ul>
+</li>
+  <li class="badge" style="background:transparent;border-radius:3px;margin-top:12%">      
+    <!-- {{truncateString(user.firstname, 10)}} -->Aravind
+  </li>
+</ul>
+</div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
 </nav>
 
 
