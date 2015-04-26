@@ -520,7 +520,7 @@ input[type='checkbox']:checked {
       <form class="navbar-form navbar-left" style="width:80%" role="search">
         <div class="form-group">
           <input ng-blur="hideSearchResultsDropdown()" ng-focus="getSearchResults(searchInput)" ng-change="getSearchResults(searchInput)" placeholder="Search for notes.." id="filter-by" class="form-control input dropdown" style="line-height:2;border-radius:2px;width:500px;margin-top:1%" ng-model="searchInput">
-          <ul id="search-li-dropdown" class="dropdown-menu" ng-mouseover="hoverSearchResult=true" ng-mouseleave="hoverSearchResult=false"> 
+          <ul id="search-li-dropdown" class="dropdown-menu" style="width:500px;margin-left:21.8%;" ng-mouseover="hoverSearchResult=true" ng-mouseleave="hoverSearchResult=false"> 
             <div ng-show="searchResultSpinner">
               <center>
                 <img src="/spinner.gif" style="margin:10px"></img>
