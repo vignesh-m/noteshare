@@ -21,7 +21,19 @@ var app = express();
 var util = require('./routes/util/util');
 var forgot=require('./routes/forgot_password');
 
+var isAuth = function(req, res, next) {
+    //console.log('Authenticating');
+    if (req.isAuthenticated())
+        next();
+    else {
+        res.redirect('/login')
+    }
+};
+
 // view engine setup
+app.use('/views/:uploadid/:imgname', isAuth, function (req, res, next) {
+    next();
+});
 app.set('views', path.join(__dirname,'public'));
 app.set('view engine', 'ejs');
 

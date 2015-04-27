@@ -61,12 +61,7 @@ else {
 		if(req.query.view) {
 			//console.log('viewing');
 			util.getPages(upload_id, res, function (upload_id, res, pages) {
-				if(pages*1<10) {
-					pages = pages;
-				}
-				else {
-					pages = 10;
-				}
+				
 				var qs = "UPDATE noteshare.uploads SET views=views+1 WHERE id=" + upload_id;
 				db.querydb(qs, function(result) {
 					//console.log(qs);
