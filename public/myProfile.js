@@ -557,14 +557,14 @@ $scope.getDetails();
 	}
 
   var dropbox = document.getElementById("dropbox")
-  $scope.dropText = 'Drag or drop files here...'
+  $scope.dropText = 'Drag and drop a file..'
 
     // init event handlers
     function dragEnterLeave(evt) {
       evt.stopPropagation()
       evt.preventDefault()
       $scope.$apply(function(){
-        $scope.dropText = 'Drag or drop files here...'
+        $scope.dropText = 'Upload a file..'
         $scope.dropClass = ''
       })
     }
@@ -576,7 +576,7 @@ $scope.getDetails();
       var clazz = 'not-available'
       var ok = evt.dataTransfer && evt.dataTransfer.types && evt.dataTransfer.types.indexOf('Files') >= 0
       $scope.$apply(function(){
-        $scope.dropText = ok ? 'Drop files here...' : 'Only files are allowed!'
+        $scope.dropText = ok ? 'Drag and drop a file..' : 'Only files are allowed!'
         $scope.dropClass = ok ? 'over' : 'not-available'
       })
     }, false)
@@ -585,15 +585,15 @@ $scope.getDetails();
       evt.stopPropagation()
       evt.preventDefault()
       $scope.$apply(function(){
-        $scope.dropText = 'Drop files here...'
+        $scope.dropText = 'Drag and drop a file..'
         $scope.dropClass = ''
       })
       var files = evt.dataTransfer.files
       if (files.length > 0) {
         $scope.$apply(function(){
-          $scope.files = []
-          for (var i = 0; i < files.length; i++) {
-            $scope.files.push(files[i])
+          $scope.files = [];
+          for (var i = 0; i < 1; i++) {
+            $scope.files.push(files[i]);
           }
         })
       }

@@ -23,9 +23,14 @@ var forgot=require('./routes/forgot_password');
 
 var isAuth = function(req, res, next) {
     //console.log('Authenticating');
-    if (req.isAuthenticated())
+    if (req.isAuthenticated()) {
+        debugger;
+        console.log(req);
         next();
+    }
     else {
+        debugger;
+        console.log(req);
         res.redirect('/login')
     }
 };

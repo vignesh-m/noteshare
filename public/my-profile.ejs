@@ -987,7 +987,7 @@ input[type='checkbox']:checked {
 								</span>
 								&nbsp Browse</button>
 							</a>
-							<input type="file" style="visibility:hidden" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" />
+							<input type="file" style="visibility:hidden" ng-model-instant id="fileToUpload" accept=".pdf" onchange="angular.element(this).scope().setFiles(this)" />
 						</center>
 					</div>
 					<br>
