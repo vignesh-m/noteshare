@@ -21,24 +21,19 @@ var app = express();
 var util = require('./routes/util/util');
 var forgot=require('./routes/forgot_password');
 
-var isAuth = function(req, res, next) {
-    //console.log('Authenticating');
-    if (req.isAuthenticated()) {
-        debugger;
-        console.log(req);
+app.use('/views/:uploadid/:imgname', function (req, res, next) {
+    if(req.params.imgname == "page.png" || req.params.imgname == "page-0.png") {
+        next();
+    }
+    else if(req.isAuthenticated()) {
         next();
     }
     else {
-        debugger;
-        console.log(req);
-        res.redirect('/login')
+        res.redirect('/login');
     }
-};
+});
 
 // view engine setup
-app.use('/views/:uploadid/:imgname', isAuth, function (req, res, next) {
-    next();
-});
 app.set('views', path.join(__dirname,'public'));
 app.set('view engine', 'ejs');
 
